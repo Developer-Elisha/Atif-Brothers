@@ -3,9 +3,9 @@ import { ArrowDown, ArrowUp, DollarSign, BarChart2 } from "lucide-react";
 
 export function StatsCards() {
   return (
-    <div className="flex justify-center items-center gap-6 p-6">
+    <div className="flex flex-wrap justify-center items-center gap-6 p-6">
       {/* Sales Card */}
-      <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-start w-64 relative">
+      <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-start w-full sm:w-64 relative">
         <div className="absolute -top-5 left-5 bg-purple-700 p-4 rounded-xl shadow-md">
           <DollarSign className="text-white" />
         </div>
@@ -18,7 +18,7 @@ export function StatsCards() {
       </div>
 
       {/* Performance Card */}
-      <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-start w-64 relative">
+      <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-start w-full sm:w-64 relative">
         <div className="absolute -top-5 left-5 bg-blue-600 p-4 rounded-xl shadow-md">
           <BarChart2 className="text-white" />
         </div>
