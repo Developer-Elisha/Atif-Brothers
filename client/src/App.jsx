@@ -27,19 +27,11 @@ const Dashboard = () => (
   </div>
 );
 
-
-// const PrivateRoute = ({ element }) => {
-//   const token = localStorage.getItem("token");
-//   return token ? element : <Navigate to="/login" />;
-// };
-
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
-        {/* <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
-        <Route path="*" element={<Navigate to="/login" />} /> */}
       </Routes>
     </Router>
   );
