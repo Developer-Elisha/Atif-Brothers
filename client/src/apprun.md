@@ -1,4 +1,4 @@
-import React from "react";
+<!-- import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import StatsCards from "./components/Cards";
@@ -32,4 +32,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; -->

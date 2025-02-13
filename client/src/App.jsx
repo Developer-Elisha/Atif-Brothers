@@ -1,8 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import StatsCards from "./components/Cards";
 import MainTbl from "./components/Dashboard";
+// import Login from "./components/Login";
 import Charts from "./components/Charts";
 import BarChart from "./components/BarChart";
 
@@ -12,21 +13,32 @@ const Dashboard = () => (
       <Header />
     </div>
     <div className="flex flex-col items-center justify-center p-8 mt-20 w-full">
-      <StatsCards />
+        <StatsCards />
+
       <MainTbl />
-      <div className="mt-5 flex w-full justify-center space-x-4">
-        <Charts className="w-full" />
-        <BarChart className="w-full" />
+
+      {/* Charts Container */}
+      <div className="mt-5 flex w-[90%] justify-center space-x-4 relative z-10">
+        <Charts className="w-full md:w-1/2" />
+        <BarChart className="w-full md:w-1/2" />
       </div>
     </div>
   </div>
 );
+
+
+// const PrivateRoute = ({ element }) => {
+//   const token = localStorage.getItem("token");
+//   return token ? element : <Navigate to="/login" />;
+// };
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        {/* <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
+        <Route path="*" element={<Navigate to="/login" />} /> */}
       </Routes>
     </Router>
   );
