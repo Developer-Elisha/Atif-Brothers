@@ -24,7 +24,7 @@ import {
       colors: ["#D8B4FE"], // purple-300
       plotOptions: {
         bar: {
-          columnWidth: "40%",
+          columnWidth: "90%",
           borderRadius: 2,
         },
       },
@@ -34,7 +34,7 @@ import {
   
   const BarChart = () => {
     return (
-      <Card>
+      <Card className="w-full">
         <CardHeader
           floated={false}
           shadow={false}
@@ -51,11 +51,12 @@ import {
           </div>
         </CardHeader>
         <CardBody className="px-2 pb-0">
-          <Chart {...chartConfig} />
+          <Chart {...chartConfig} className="w-full" />
         </CardBody>
       </Card>
     );
   };
+  
   
   export default BarChart;
   

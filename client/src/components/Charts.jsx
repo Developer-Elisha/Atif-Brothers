@@ -17,7 +17,7 @@ import {
       },
     ],
     options: {
-      colors: ["#D8B4FE"], // purple-300
+      colors: ["#D8B4FE"], 
       stroke: {
         lineCap: "round",
         curve: "smooth",
@@ -28,7 +28,7 @@ import {
   
   const Charts = () => {
     return (
-      <Card>
+      <Card className="w-full">
         <CardHeader
           floated={false}
           shadow={false}
@@ -45,11 +45,12 @@ import {
           </div>
         </CardHeader>
         <CardBody className="px-2 pb-0">
-          <Chart {...chartConfig} />
+          <Chart {...chartConfig} className="w-full" />
         </CardBody>
       </Card>
     );
   };
+  
   
   export default Charts;
   
