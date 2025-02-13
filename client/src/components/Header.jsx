@@ -1,5 +1,6 @@
 import React from "react";
 import { LogOut } from "lucide-react";
+import Logo from "../../public/Logo.jpeg";
 import { useNavigate } from "react-router-dom";
 
 export function Header() {
@@ -22,7 +23,7 @@ export function Header() {
 
       <div className="flex items-center space-x-4">
         <img
-          src={localStorage.getItem("profilePic") || "default-avatar.png"}
+          src={Logo}
           alt="User"
           className="h-10 w-10 rounded-full border"
         />
