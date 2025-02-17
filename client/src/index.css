@@ -1,16 +1,20 @@
 @import "tailwindcss";
 
-/* Custom Scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #9333ea; /* Purple scrollbar */
-    border-radius: 10px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: #f3e8ff; /* Light purple track */
-  }
-  
+/* Custom scrollbar */
+.scrollbar-purple::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-purple::-webkit-scrollbar-thumb {
+  background-color: #d8b4fe; /* Tailwind purple-300 */
+  border-radius: 10px;
+}
+
+.scrollbar-purple::-webkit-scrollbar-track {
+  background: #f3e8ff; /* Lighter purple background */
+}
+
+/* Firefox support */
+.scrollbar-purple {
+  scrollbar-color: #d8b4fe #f3e8ff;
+}

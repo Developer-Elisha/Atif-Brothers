@@ -1,6 +1,5 @@
 import React from "react";
 import { LogOut } from "lucide-react";
-import Logo from "../../public/Logo.jpeg";
 import { useNavigate } from "react-router-dom";
 
 export function Header() {
@@ -8,11 +7,10 @@ export function Header() {
 
   const handleLogout = () => {
     // Clear authentication data
-    localStorage.removeItem("token"); // Remove JWT token
-    localStorage.removeItem("profilePic"); // Remove profile pic if stored
+    localStorage.removeItem("token");
+    localStorage.removeItem("profilePic");
 
-    // Redirect to login page
-    navigate("/");
+    navigate("/login"); 
   };
 
   return (
@@ -23,7 +21,7 @@ export function Header() {
 
       <div className="flex items-center space-x-4">
         <img
-          src={Logo}
+          src="/Logo.jpeg"
           alt="User"
           className="h-10 w-10 rounded-full border"
         />
