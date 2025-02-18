@@ -17,7 +17,7 @@ const Login = () => {
             const res = await loginUser(formData);
             if (res.data && res.data.token) {
                 localStorage.setItem("token", res.data.token);
-                navigate("/dashboard"); // Redirects after login
+                navigate("/");
             } else {
                 throw new Error("Invalid credentials");
             }
