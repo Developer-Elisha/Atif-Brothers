@@ -7,8 +7,9 @@ const Sidebar = () => {
 
   return (
     <div className={`bg-purple-300 min-h-screen p-5 pt-8 duration-300 ${isOpen ? "w-60" : "w-20"} relative`}>
+      {/* Adjusted FaBars position to align with the content */}
       <FaBars
-        className="absolute top-6 right-4 text-white cursor-pointer"
+        className="absolute top-8 left-8 text-white cursor-pointer"
         size={24}
         onClick={() => setIsOpen(!isOpen)}
       />
