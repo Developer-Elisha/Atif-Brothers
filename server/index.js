@@ -1,9 +1,9 @@
 const express = require('express');
-const connectDB = require('./db');
 const cors = require('cors');
-const path = require('path');
-require('dotenv').config();
+const connectDB = require('./db');
+const authRoutes = require('./routes/auth');
 
+require('dotenv').config();
 
 const app = express();
 connectDB();
@@ -11,12 +11,16 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/auth', require('./routes/auth'));
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
     res.send('API is running');
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+module.exports = app; // ✅ Required for Vercel
+
+// Only start the server locally (not in Vercel's serverless environment)
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 3001;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
