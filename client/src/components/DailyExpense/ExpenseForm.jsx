@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 const ExpenseForm = ({ records, setRecords }) => {
-    const [forms, setForms] = useState([{ quantity: "", payment: "", bill: "", tag: "", kariger: "", description: "", amount: "", balance: "" }]);
+    const [forms, setForms] = useState([{ quantity: "50", payment: "", bill: "412", tag: "563", kariger: "Kariger1", description: "Kariger ajkdfl", amount: "500", balance: "631" }]);
 
     const handleAddForm = () => {
-        setForms([...forms, { quantity: "", payment: "", bill: "", tag: "", kariger: "", description: "", amount: "", balance: "" }]);
+        setForms([...forms, { quantity: "50", payment: "", bill: "412", tag: "563", kariger: "Kariger1", description: "Kariger ajkdfl", amount: "500", balance: "631" }]);
     };
 
     const handleChange = (index, e) => {
@@ -20,7 +20,7 @@ const ExpenseForm = ({ records, setRecords }) => {
 
     const handleSubmit = () => {
         setRecords([...records, ...forms]); 
-        setForms([{ quantity: "", payment: "", bill: "", tag: "", kariger: "", description: "", amount: "", balance: "" }]); // Clear form after submit
+        setForms([{ quantity: "50", payment: "", bill: "412", tag: "563", kariger: "Kariger1", description: "Kariger ajkdfl", amount: "500", balance: "631"  }]); // Clear form after submit
     };
 
     return (

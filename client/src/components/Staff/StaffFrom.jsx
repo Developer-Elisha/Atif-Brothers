@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const StaffForm = ({ records, setRecords }) => {
-    const [forms, setForms] = useState([{ name: "", amount: "" }]);
+    const [forms, setForms] = useState([{ name: "", amount: "3000" }]);
 
     const handleChange = (index, e) => {
         const { name, value } = e.target;
@@ -11,7 +11,7 @@ const StaffForm = ({ records, setRecords }) => {
     };
 
     const handleAddForm = () => {
-        setForms([...forms, { name: "", amount: "" }]);
+        setForms([...forms, { name: "", amount: "3000" }]);
     };
 
     const handleRemoveForm = (index) => {
@@ -26,7 +26,7 @@ const StaffForm = ({ records, setRecords }) => {
         }
 
         setRecords([...records, ...forms]);
-        setForms([{ name: "", amount: "" }]);
+        setForms([{ name: "", amount: "3000" }]);
     };
 
     return (
@@ -53,9 +53,9 @@ const StaffForm = ({ records, setRecords }) => {
                             required
                         >
                             <option value="" disabled>Select Staff</option>
-                            <option value="Umer">Umer</option>
-                            <option value="Hassan">Hassan</option>
-                            <option value="Elisha">Elisha</option>
+                            <option value="Staff 1">Staff 1</option>
+                            <option value="Staff 2">Staff 2</option>
+                            <option value="Staff 3">Staff 3</option>
                         </select>
                     </div>
 

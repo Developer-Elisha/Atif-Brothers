@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const ExpenseFrom = ({ records, setRecords }) => {
-    const [forms, setForms] = useState([{ item: "", amount: "" }]);
+    const [forms, setForms] = useState([{ item: "20", amount: 50000 }]);
 
     const handleChange = (index, e) => {
         const { name, value } = e.target;
@@ -12,7 +12,7 @@ const ExpenseFrom = ({ records, setRecords }) => {
 
 
     const handleAddForm = () => {
-        setForms([...forms, { item: "", amount: "" }]);
+        setForms([...forms, { item: "20", amount: 50000 }]);
     };
 
     const handleRemoveForm = (index) => {
@@ -26,7 +26,7 @@ const ExpenseFrom = ({ records, setRecords }) => {
             return;
         }
         setRecords([...records, ...forms]);
-        setForms([{ item: "", amount: "" }]);
+        setForms([{ item: "20", amount: 50000 }]);
     };
 
 

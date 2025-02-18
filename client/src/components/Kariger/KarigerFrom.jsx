@@ -7,15 +7,15 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
     {
       date: today,
       role: "",
-      quantity: "",
+      quantity: "5",
       bill: "",
       tag: `AB-${lastTagNumber}`,
-      items: "",
-      color: "",
-      fabric: "",
-      description: "",
-      design: "",
-      rate: "",
+      items: "5",
+      color: "Red",
+      fabric: "Cotton",
+      description: "Red Cotton Shirt",
+      design: "New arrival",
+      rate: "50",
       payment: "",
       duePayment: "",
     },
@@ -27,15 +27,13 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
     updatedForms[index] = {
       ...updatedForms[index],
       [name]: value,
-      // When role is "Shop", set bill to "Shop"
       ...(name === "role" && value === "Shop" ? { bill: "Shop" } : {}),
-      // If role is not "Shop", reset bill to empty (if needed)
       ...(name === "role" && value !== "Shop" ? { bill: "" } : {}),
     };
     setForms(updatedForms);
   };
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState("Kariger1");
 
   const handleAddForm = () => {
     setForms([
@@ -43,15 +41,15 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
       {
         date: today,
         role: "",
-        quantity: "",
+        quantity: "5",
         bill: "",
-        tag: `AB-${lastTagNumber + forms.length}`,
-        items: "",
-        color: "",
-        fabric: "",
-        description: "",
-        design: "",
-        rate: "",
+        tag: `AB-${lastTagNumber}`,
+        items: "5",
+        color: "Red",
+        fabric: "Cotton",
+        description: "Red Cotton Shirt",
+        design: "New arrival",
+        rate: "50",
         payment: "",
         duePayment: "",
       },
@@ -199,7 +197,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
               <input
                 type="text"
                 name="bill"
-                value={formData.bill} // This should reflect the updated state of bill
+                value={formData.bill}
                 onChange={(e) => handleChange(index, e)}
                 className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
                 placeholder="Enter Bill No"

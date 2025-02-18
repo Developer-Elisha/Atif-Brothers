@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 const KapraForm = ({ setRecords, records }) => {
-  const [forms, setForms] = useState([{ description: "", amount: "", bill: "" }]);
+  const [forms, setForms] = useState([{ description: "Silk", amount: "500", bill: "500" }]);
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
@@ -11,7 +11,7 @@ const KapraForm = ({ setRecords, records }) => {
   };
 
   const handleAddForm = () => {
-    setForms([...forms, { description: "", amount: "", bill: "" }]);
+    setForms([...forms, { description: "Silk", amount: "500", bill: "500" }]);
   };
 
   const handleRemoveForm = (index) => {
@@ -25,8 +25,8 @@ const KapraForm = ({ setRecords, records }) => {
       return;
     }
 
-    setRecords([...records, ...forms]); // Update records
-    setForms([{ description: "", amount: "", bill: "" }]);
+    setRecords([...records, ...forms]); 
+    setForms([{ description: "Silk", amount: "500", bill: "500" }]);
   };
 
   return (
