@@ -12,6 +12,7 @@ const ExpenseTBL = ({ records }) => {
                     <thead>
                         <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <th className="py-3 px-6 text-center">Quantity</th>
+                            <th className="py-3 px-6 text-center">Payment</th>
                             <th className="py-3 px-6 text-center">Bill No</th>
                             <th className="py-3 px-6 text-center">Tag No</th>
                             <th className="py-3 px-6 text-center">Kariger</th>
@@ -25,6 +26,7 @@ const ExpenseTBL = ({ records }) => {
                             records.map((record, index) => (
                                 <tr key={index} className="border-b border-gray-200">
                                     <td className="py-3 px-6 text-center">{record.quantity}</td>
+                                    <td className="py-3 px-6 text-center">{record.payment}</td>
                                     <td className="py-3 px-6 text-center">{record.bill}</td>
                                     <td className="py-3 px-6 text-center">{record.tag}</td>
                                     <td className="py-3 px-6 text-center">{record.kariger}</td>

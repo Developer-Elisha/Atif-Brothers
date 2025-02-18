@@ -67,7 +67,7 @@ const StaffForm = ({ records, setRecords }) => {
                             value={formData.amount}
                             onChange={(e) => handleChange(index, e)}
                             className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                            placeholder="Enter amount"
+                            placeholder="Enter Amount"
                             required
                         />
                     </div>

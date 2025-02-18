@@ -7,6 +7,8 @@ import DailyExpense from "./components/DailyExpense/DailyExpense";
 import KarigerDashboard from "./components/Kariger/KarigerDashboard";
 import Layout from "./components/Layout";
 import StaffDashboard from "./components/Staff/StaffDashboard";
+import KapraDashboard from "./components/Kapra/KapraDashboard";
+
 
 const PrivateRoute = ({ element }) => {
   const token = localStorage.getItem("token");
@@ -28,6 +30,10 @@ function App() {
         <Route
           path="/dashboard"
           element={<PrivateRoute element={<Layout><KarigerDashboard /></Layout>} />}
+        />
+        <Route
+          path="/kapra"
+          element={<PrivateRoute element={<Layout><KapraDashboard /></Layout>} />}
         />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Navigate to="/" replace />} />
