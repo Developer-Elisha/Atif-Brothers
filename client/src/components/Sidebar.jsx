@@ -20,6 +20,12 @@ const Sidebar = () => {
             {isOpen && <span>Daily Expense</span>}
           </li>
         </Link>
+        <Link to="/expense">
+          <li className="flex items-center gap-x-4 p-2 text-white cursor-pointer hover:bg-purple-400 rounded-md mt-4">
+            <FaMoneyBill size={20} />
+            {isOpen && <span>Expense</span>}
+          </li>
+        </Link>
         <Link to="/staff">
           <li className="flex items-center gap-x-4 p-2 text-white cursor-pointer hover:bg-purple-400 rounded-md mt-4">
             <FaAddressCard size={20} />
