@@ -9,11 +9,12 @@ connectDB();
 
 // ✅ Configure CORS properly
 app.use(cors({
-    origin: 'http://localhost:5173',  // Allow frontend origin
-    credentials: true, // Allow cookies and authentication headers
-    methods: 'GET,POST,PUT,DELETE', // Allow only necessary methods
-    allowedHeaders: 'Content-Type,Authorization' // Allow specific headers
+    origin: '*', // Allow all origins temporarily for testing
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 
 app.use(express.json());
 
