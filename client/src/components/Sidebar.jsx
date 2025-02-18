@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaHome, FaUser, FaCog, FaBars, FaNetworkWired, FaTencentWeibo, FaAddressBook, FaAddressCard, FaClone, FaAnkh, FaFastBackward } from "react-icons/fa";
+import { FaHome, FaUser, FaCog, FaBars, FaNetworkWired, FaTencentWeibo, FaAddressBook, FaAddressCard, FaClone, FaAnkh, FaFastBackward, FaMoneyBill, FaMoneyBillAlt, FaMoneyCheck, FaMoneyCheckAlt, FaMoneyBillWave, FaBlackTie, FaMoneyBillWaveAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
@@ -35,6 +35,12 @@ const Sidebar = () => {
           <li className="flex items-center gap-x-4 p-2 text-white cursor-pointer hover:bg-purple-400 rounded-md mt-4">
             <FaClone size={20} />
             {isOpen && <span>Kapra</span>}
+          </li>
+        </Link>
+        <Link to="/customer">
+          <li className="flex items-center gap-x-4 p-2 text-white cursor-pointer hover:bg-purple-400 rounded-md mt-4">
+            <FaMoneyBillWave size={20} />
+            {isOpen && <span>Customer</span>}
           </li>
         </Link>
       </ul>
