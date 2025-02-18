@@ -196,14 +196,15 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
               <input
                 type="number"
                 name="bill"
-                value={formData.role === "Shop" ? "" : formData.bill} // Set to empty if role is "Shop"
+                value={formData.role === "Shop" ? "Shop" : formData.bill}
                 onChange={(e) => handleChange(index, e)}
                 className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
                 placeholder="Enter Bill No"
                 required
-                disabled={formData.role === "Shop"}
+                disabled={formData.role === "Shop"} 
               />
             </div>
+
 
             <div className="w-1/2">
               <label className="block text-gray-700 font-medium">Item</label>
