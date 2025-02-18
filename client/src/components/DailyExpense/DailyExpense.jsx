@@ -7,7 +7,7 @@ const DailyExpense = () => {
 
     return (
         <div className="bg-white shadow-lg rounded-lg p-4 w-full max-h-[100vh] overflow-auto flex flex-col gap-4">
-            <div className="max-h-[50vh] overflow-y-auto scrollbar-purple">
+            <div className="max-h-[70vh] overflow-y-auto scrollbar-purple">
                 <Form
                     records={records}
                     setRecords={setRecords} 
