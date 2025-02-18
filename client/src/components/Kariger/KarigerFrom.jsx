@@ -27,7 +27,10 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
     updatedForms[index] = {
       ...updatedForms[index],
       [name]: value,
+      // When role is "Shop", set bill to "Shop"
       ...(name === "role" && value === "Shop" ? { bill: "Shop" } : {}),
+      // If role is not "Shop", reset bill to empty (if needed)
+      ...(name === "role" && value !== "Shop" ? { bill: "" } : {}),
     };
     setForms(updatedForms);
   };
@@ -194,15 +197,14 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
             <div className="w-1/2">
               <label className="block text-gray-700 font-medium">Bill No</label>
               <input
-                type="number"
+                type="text"
                 name="bill"
-                value={formData.role === "Shop" ? "Shop" : formData.bill}
+                value={formData.bill} // This should reflect the updated state of bill
                 onChange={(e) => handleChange(index, e)}
                 className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
                 placeholder="Enter Bill No"
                 required
-                disabled={formData.role === "Shop"} 
-              />
+                disabled={formData.role === "Shop"} />
             </div>
 
 
