@@ -2,12 +2,12 @@
 
 /* Custom scrollbar */
 .scrollbar-purple::-webkit-scrollbar {
-  width: 8px;
+  width: 3px;
 }
 
 .scrollbar-purple::-webkit-scrollbar-thumb {
   background-color: #d8b4fe; /* Tailwind purple-300 */
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .scrollbar-purple::-webkit-scrollbar-track {
@@ -18,3 +18,24 @@
 .scrollbar-purple {
   scrollbar-color: #d8b4fe #f3e8ff;
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printTable, #printTable * {
+    visibility: visible;
+  }
+  #printTable {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  .print:hidden {
+    display: none !important;
+  }
+  .print:block {
+    display: block !important;
+  }
+} 

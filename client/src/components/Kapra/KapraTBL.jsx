@@ -13,12 +13,12 @@ const KapraTBL = ({ records }) => {
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
         <div className="flex justify-between items-center bg-purple-300 p-3 rounded-lg">
           <h2 className="text-black font-semibold">Kapra</h2>
-          {/* <button
+          <button
             className="w-[10%] bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-100 transition-all duration-200"
             onClick={handlePrint}
           >
             Print
-          </button> */}
+          </button>
         </div>
   
         <div id="printTable">

@@ -44,6 +44,12 @@ const Sidebar = () => {
             {isOpen && <span>Kapra</span>}
           </li>
         </Link>
+        <Link to="/dealer">
+          <li className="flex items-center gap-x-4 p-2 text-white cursor-pointer hover:bg-purple-400 rounded-md mt-4">
+            <FaUser size={20} />
+            {isOpen && <span>Dealer Kapra</span>}
+          </li>
+        </Link>
         <Link to="/customer">
           <li className="flex items-center gap-x-4 p-2 text-white cursor-pointer hover:bg-purple-400 rounded-md mt-4">
             <FaMoneyBillWave size={20} />

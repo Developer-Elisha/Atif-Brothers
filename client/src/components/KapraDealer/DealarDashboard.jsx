@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Form from "./StaffFrom";
-import Table from "./StaffTBL";
+import Form from "./DealerKapraFrom";
+import Table from "./DealerKapraTBL";
 
-const StaffDashboard = () => {
+const DealerDashboard = () => {
   const [records, setRecords] = useState([]);
   const [lastTagNumber, setLastTagNumber] = useState(101);
 
@@ -11,8 +11,8 @@ const StaffDashboard = () => {
     <div className="bg-white shadow-lg rounded-lg p-4 w-full max-h-[100vh] overflow-auto flex flex-col gap-4">
       <div className="max-h-[50vh] overflow-y-auto scrollbar-purple">
         <Form
-          records={records}
           setRecords={setRecords}
+          records={records}
           lastTagNumber={lastTagNumber}
           setLastTagNumber={setLastTagNumber}
         />
@@ -27,4 +27,4 @@ const StaffDashboard = () => {
   );
 }
 
-export default StaffDashboard;
+export default DealerDashboard;

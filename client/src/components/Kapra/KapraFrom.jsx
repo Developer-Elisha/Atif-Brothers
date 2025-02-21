@@ -43,6 +43,19 @@ const KapraForm = ({ setRecords, records }) => {
 
       {forms.map((formData, index) => (
         <div key={index} className="flex gap-4 my-4">
+          
+          <div className="w-1/2">
+            <label className='block text-gray-700 font-medium'>Bill No</label>
+            <input
+              type="number"
+              name="bill"
+              value={formData.bill}
+              onChange={(e) => handleChange(index, e)}
+              className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+              placeholder="Enter Bill No"
+              required
+            />
+          </div>
           <div className="w-1/2">
             <label className='block text-gray-700 font-medium'>Description</label>
             <input
@@ -64,18 +77,6 @@ const KapraForm = ({ setRecords, records }) => {
               onChange={(e) => handleChange(index, e)}
               className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
               placeholder="Enter Amount"
-              required
-            />
-          </div>
-          <div className="w-1/2">
-            <label className='block text-gray-700 font-medium'>Bill No</label>
-            <input
-              type="number"
-              name="bill"
-              value={formData.bill}
-              onChange={(e) => handleChange(index, e)}
-              className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-              placeholder="Enter Bill No"
               required
             />
           </div>

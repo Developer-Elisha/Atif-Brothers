@@ -9,13 +9,13 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
       role: "",
       quantity: "5",
       bill: "",
-      tag: `AB-${lastTagNumber}`,
+      tag: `AB-101`,
       items: "5",
       color: "Red",
       fabric: "Cotton",
       description: "Red Cotton Shirt",
       design: "New arrival",
-      rate: "50",
+      rate: "",
       payment: "",
       duePayment: "",
     },
@@ -30,6 +30,13 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
       ...(name === "role" && value === "Shop" ? { bill: "Shop" } : {}),
       ...(name === "role" && value !== "Shop" ? { bill: "" } : {}),
     };
+
+    if (name === "rate" || name === "quantity") {
+      const rate = parseFloat(updatedForms[index].rate) || 0;
+      const quantity = parseFloat(updatedForms[index].quantity) || 0;
+      updatedForms[index].amount = (rate * quantity).toFixed(2);
+    }
+
     setForms(updatedForms);
   };
 
@@ -43,13 +50,13 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
         role: "",
         quantity: "5",
         bill: "",
-        tag: `AB-${lastTagNumber}`,
+        tag: `AB-${lastTagNumber + forms.length}`,
         items: "5",
         color: "Red",
         fabric: "Cotton",
         description: "Red Cotton Shirt",
         design: "New arrival",
-        rate: "50",
+        rate: "",
         payment: "",
         duePayment: "",
       },
@@ -75,7 +82,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
     const newRecords = forms.map((form, index) => ({
       ...form,
       name,
-      tag: `AB-${lastTagNumber + index}`,
+      tag: `AB-${lastTagNumber + index + 1}`,
       date: today.split("-").reverse().join("-"),
       duePayment: form.duePayment.trim() === "" ? "-" : form.duePayment,
     }));
@@ -89,7 +96,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
         role: "",
         quantity: "",
         bill: "",
-        tag: `AB-${lastTagNumber + forms.length}`,
+        tag: `AB-${lastTagNumber + forms.length + 1}`,
         items: "",
         color: "",
         fabric: "",
@@ -283,34 +290,16 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
             </div>
 
             <div className="w-1/2">
-              <label className="block text-gray-700 font-medium">Payment</label>
-              <select
-                name="payment"
-                value={formData.payment}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                required
-              >
-                <option value="" disabled>Select Payment</option>
-                <option value="Paid">Paid</option>
-                <option value="To be Paid">To be Paid</option>
-              </select>
+              <label className="block text-gray-700 font-medium">Amount</label>
+              <input
+                type="text"
+                name="amount"
+                value={formData.amount}
+                disabled
+                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1 bg-gray-200 text-gray-600"
+              />
+
             </div>
-
-            {formData.payment === "To be Paid" && (
-              <div className="w-1/2">
-                <label className="block text-gray-700 font-medium">Due Payment</label>
-                <input
-                  type="text"
-                  name="duePayment"
-                  value={formData.duePayment}
-                  onChange={(e) => handleChange(index, e)}
-                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                  placeholder="Enter Due Payment"
-                />
-              </div>
-
-            )}
           </div>
 
           <div className="mt-15"></div>
