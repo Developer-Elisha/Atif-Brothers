@@ -1,28 +1,48 @@
+import React from "react";
+
 const KarigerTBL = ({ records }) => {
   const handlePrint = () => {
-    const printContents = document.getElementById("printTable").innerHTML;
-    const originalContents = document.body.innerHTML;
+    const printContent = document.getElementById("printTable").innerHTML;
+    const printWindow = window.open("", "", "width=1000,height=700");
 
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-    window.location.reload(); 
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Record List</title>
+          <style>
+            body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid black; padding: 8px; text-align: center; }
+            th { background-color: #f2f2f2; }
+            h2 { margin-bottom: 10px; }
+          </style>
+        </head>
+        <body>
+          <h2>Record List</h2>
+          ${printContent}
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
   };
 
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+      {/* Header Section */}
       <div className="flex justify-between items-center bg-purple-300 p-3 rounded-lg">
-        <h2 className="text-black font-semibold">Record List</h2>
+        <h2 className="text-black font-semibold text-xl text-center flex-grow">Record List</h2>
         <button
-          className="w-[10%] bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-100 transition-all duration-200"
+          className="bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-100 transition-all duration-200"
           onClick={handlePrint}
         >
           Print
         </button>
       </div>
 
-      {/* Add ID to the div wrapping the table */}
-      <div id="printTable">
+      {/* Printable Section */}
+      <div id="printTable" className="p-4">
         <table className="min-w-full border-collapse">
           <thead>
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -39,7 +59,8 @@ const KarigerTBL = ({ records }) => {
               <th className="py-3 px-6 text-center">Design</th>
               <th className="py-3 px-6 text-center">Rate</th>
               <th className="py-3 px-6 text-center">Payment</th>
-              <th className="py-3 px-6 text-center">Dues</th>
+              <th className="py-3 px-6 text-center">Bank</th>
+              <th className="py-3 px-6 text-center">Due Payment</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 text-sm">
@@ -59,11 +80,14 @@ const KarigerTBL = ({ records }) => {
                   <td className="py-3 px-6 text-center">{record.design}</td>
                   <td className="py-3 px-6 text-center">{record.rate}</td>
                   <td className="py-3 px-6 text-center">{record.payment}</td>
+                  <td className="py-3 px-6 text-center">{record.bank}</td>
                   <td className="py-3 px-6 text-center">{record.duePayment}</td>
                 </tr>
               ))
             ) : (
-              <tr><td colSpan="14" className="py-4 text-center text-gray-500">No records found</td></tr>
+              <tr>
+                <td colSpan="15" className="py-4 text-center text-gray-500">No records found</td>
+              </tr>
             )}
           </tbody>
         </table>

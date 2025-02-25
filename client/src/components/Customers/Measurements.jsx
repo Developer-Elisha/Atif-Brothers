@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-const MeasurementForm = ({ setShowMeasurementForm }) => {
+const MeasurementForm = ({ setShowMeasurementForm, setMeasurementsRecords }) => {
+  const [billNo, setBillNo] = useState("");
   const [selectedOption, setSelectedOption] = useState("both");
 
   const [measurements, setMeasurements] = useState({
@@ -38,9 +39,59 @@ const MeasurementForm = ({ setShowMeasurementForm }) => {
     }));
   };
 
+  const handleSubmit = () => {
+    if (!billNo.trim()) {
+      alert("Please enter a valid Bill No.");
+      return;
+    }
+
+    const newRecord = { billNo, measurements };
+    setMeasurementsRecords((prev) => [...prev, newRecord]);
+
+    setBillNo("");
+    setMeasurements({
+      shirtMaxi: {
+        length: "",
+        shoulder: "",
+        chest: "",
+        waist: "",
+        hip: "",
+        daman: "",
+        sleeves: "",
+        bicep: "",
+        mori: "",
+        armHole: "",
+        backLength: "",
+      },
+      trouserSharara: {
+        length: "",
+        thigh: "",
+        bottom: "",
+        palta: "",
+        balls: "",
+        clutch: "",
+        inner: "",
+      },
+    });
+
+    setShowMeasurementForm(false);
+  };
+
   return (
     <div className="w-full max-w-lg p-6">
       <h3 className="text-lg font-bold mb-4 text-center">Measurement Form</h3>
+
+      {/* Bill No Input */}
+      <div className="mb-4">
+        <label className="block font-semibold text-gray-700">Enter Bill No:</label>
+        <input
+          type="text"
+          value={billNo}
+          onChange={(e) => setBillNo(e.target.value)}
+          className="w-full border p-2 rounded"
+          placeholder="Enter Bill No"
+        />
+      </div>
 
       {/* Select Dropdown */}
       <div className="mb-4">
@@ -92,9 +143,17 @@ const MeasurementForm = ({ setShowMeasurementForm }) => {
         </div>
       )}
 
+      {/* Submit Button */}
+      <button
+        onClick={handleSubmit}
+        className="w-full bg-purple-200 text-black py-2 rounded hover:bg-purple-300"
+      >
+        Submit
+      </button>
+
       {/* Close Button */}
       <button
-        className="w-full bg-purple-500 text-white py-2 rounded hover:bg-purple-600"
+        className="w-full bg-purple-200 text-black py-2 rounded hover:bg-purple-300 mt-4"
         onClick={() => setShowMeasurementForm(false)}
       >
         Close

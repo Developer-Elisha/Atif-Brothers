@@ -13,7 +13,7 @@ const CustomerTBL = ({ records }) => {
   };
 
   const handlePrintSelected = () => {
-    setSinglePrintRecord(null); 
+    setSinglePrintRecord(null);
     setTimeout(() => {
       window.print();
     }, 100);
@@ -50,10 +50,11 @@ const CustomerTBL = ({ records }) => {
           <thead>
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-center">Select</th>
+              <th className="py-3 px-6 text-center">S.No</th>
               <th className="py-3 px-6 text-center">Date</th>
+              <th className="py-3 px-6 text-center">Bill No</th>
               <th className="py-3 px-6 text-center">Name</th>
               <th className="py-3 px-6 text-center">Phone No</th>
-              <th className="py-3 px-6 text-center">Bill No</th>
               <th className="py-3 px-6 text-center">Quantity</th>
               <th className="py-3 px-6 text-center">Description</th>
               <th className="py-3 px-6 text-center">Rate</th>
@@ -73,10 +74,11 @@ const CustomerTBL = ({ records }) => {
                       checked={selectedRecords.includes(record)}
                     />
                   </td>
+                  <td className="py-3 px-6 text-center">{index + 1}</td>
                   <td className="py-3 px-6 text-center">{record.date}</td>
+                  <td className="py-3 px-6 text-center">{record.bill}</td>
                   <td className="py-3 px-6 text-center">{record.name}</td>
                   <td className="py-3 px-6 text-center">{record.phone}</td>
-                  <td className="py-3 px-6 text-center">{record.bill}</td>
                   <td className="py-3 px-6 text-center">{record.quantity}</td>
                   <td className="py-3 px-6 text-center">{record.description}</td>
                   <td className="py-3 px-6 text-center">{record.rate}</td>
@@ -94,7 +96,7 @@ const CustomerTBL = ({ records }) => {
               ))
             ) : (
               <tr>
-                <td colSpan="11" className="py-4 text-center text-gray-500">
+                <td colSpan="12" className="py-4 text-center text-gray-500">
                   No records found
                 </td>
               </tr>
@@ -150,7 +152,12 @@ const CustomerTBL = ({ records }) => {
             <hr className="my-2 border-gray-400" />
             <p className="text-right font-bold">Total Advance Payment: Rs. {singlePrintRecord ? singlePrintRecord.advancePayment : totalAdvance}</p>
             <p className="text-right font-bold">Total Due Payment: Rs. {singlePrintRecord ? singlePrintRecord.dueAmount : totalDue}</p>
-            <p className="text-right font-bold">Grand Total: Rs. {singlePrintRecord ? singlePrintRecord.rate : totalAmount}</p>
+            <p className="text-right font-bold">
+              Grand Total: Rs. {singlePrintRecord
+                ? Number(singlePrintRecord.advancePayment) + Number(singlePrintRecord.dueAmount)
+                : totalAmount + totalAdvance + totalDue}
+            </p>
+
 
             <hr className="my-2 border-gray-400" />
             <p className="text-center text-sm">Thank you for your purchase!</p>

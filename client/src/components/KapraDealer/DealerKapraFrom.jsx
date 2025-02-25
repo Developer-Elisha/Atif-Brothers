@@ -69,13 +69,14 @@ const DealerKapraForm = ({ setRecords, records }) => {
             <label className='block text-gray-700 font-medium'>Description</label>
             <input type="text" name="description" value={formData.description} onChange={(e) => handleChange(index, e)} placeholder="Enter Description" className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" required />
           </div>
-          <div className="w-1/2">
-            <label className='block text-gray-700 font-medium'>Payment</label>
-            <input type="number" name="payment" value={formData.payment} onChange={(e) => handleChange(index, e)} placeholder="Enter Payment" className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" required />
-          </div>
+          
           <div className="w-1/2">
             <label className='block text-gray-700 font-medium'>Description Amount</label>
             <input type="number" name="descriptionAmount" value={formData.descriptionAmount} onChange={(e) => handleChange(index, e)} placeholder="Enter Amount" className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" required />
+          </div>
+          <div className="w-1/2">
+            <label className='block text-gray-700 font-medium'>Payment</label>
+            <input type="number" name="payment" value={formData.payment} onChange={(e) => handleChange(index, e)} placeholder="Enter Payment" className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" required />
           </div>
           <div className="w-1/2">
             <label className='block text-gray-700 font-medium'>Previous Payment</label>

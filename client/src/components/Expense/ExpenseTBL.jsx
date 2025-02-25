@@ -1,24 +1,43 @@
 const ExpenseTBL = ({ records }) => {
-    const handlePrint = () => {
-      const printContents = document.getElementById("printTable").innerHTML;
-      const originalContents = document.body.innerHTML;
-  
-      document.body.innerHTML = printContents;
-      window.print();
-      document.body.innerHTML = originalContents;
-      window.location.reload(); 
-    };
+  const handlePrint = () => {
+    const printContent = document.getElementById("printTable").innerHTML;
+    const printWindow = window.open("", "", "width=1000,height=700");
+
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Kapra Dealer</title>
+          <style>
+            body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid black; padding: 8px; text-align: center; }
+            th { background-color: #f2f2f2; }
+            h2 { margin-bottom: 10px; }
+          </style>
+        </head>
+        <body>
+          <h2>Kapra Dealer</h2>
+          ${printContent}
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
+  };
+
   
     return (
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-        <div className="flex justify-between items-center bg-purple-300 p-3 rounded-lg">
-          <h2 className="text-black font-semibold">Expense</h2>
-          {/* <button
-            className="w-[10%] bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-100 transition-all duration-200"
-            onClick={handlePrint}
-          >
-            Print
-          </button> */}
+      {/* Header Section */}
+      <div className="flex justify-between items-center bg-purple-300 p-3 rounded-lg">
+        <h2 className="text-black font-semibold text-xl text-center flex-grow">Expense</h2>
+          <button
+          className="bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-100 transition-all duration-200"
+          onClick={handlePrint}
+        >
+          Print
+        </button>
         </div>
   
         <div id="printTable">
