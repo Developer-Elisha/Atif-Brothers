@@ -3,7 +3,11 @@ import { NavLink } from "react-router-dom";
 import { 
   FaHome, FaUsers, FaBars, FaBox, FaWarehouse, 
   FaMoneyCheckAlt, FaUserTie, FaClipboardList, 
-  FaCut, FaMoneyBillWave
+  FaCut, FaMoneyBillWave,
+  FaUserFriends,
+  FaHandHoldingUsd,
+  FaUndoAlt,
+  FaExchangeAlt
 } from "react-icons/fa";
 
 const Sidebar = () => {
@@ -28,10 +32,12 @@ const Sidebar = () => {
         <SidebarItem to="/kapra" icon={<FaBox size={20} />} label="Kapra" isOpen={isOpen} />
         <SidebarItem to="/dealer" icon={<FaWarehouse size={20} />} label="Dealer Kapra" isOpen={isOpen} />
         <SidebarItem to="/expense" icon={<FaMoneyCheckAlt size={20} />} label="Expense" isOpen={isOpen} />
-        <SidebarItem to="/staff" icon={<FaUserTie size={20} />} label="Staff" isOpen={isOpen} />
+        <SidebarItem to="/staff" icon={<FaUserFriends size={20} />} label="Staff" isOpen={isOpen} />
         <SidebarItem to="/details" icon={<FaClipboardList size={20} />} label="Details" isOpen={isOpen} />
         <SidebarItem to="/bank" icon={<FaMoneyBillWave size={20} />} label="Bank" isOpen={isOpen} />
         <SidebarItem to="/stitching" icon={<FaCut size={20} />} label="Stitching" isOpen={isOpen} />
+        <SidebarItem to="/dasti" icon={<FaHandHoldingUsd size={20} />} label="Dasti" isOpen={isOpen} />
+        <SidebarItem to="/return" icon={<FaExchangeAlt size={20} />} label="Return" isOpen={isOpen} />
       </ul>
     </div>
   );

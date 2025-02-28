@@ -12,6 +12,8 @@ import DealerDashboard from "./components/KapraDealer/DealarDashboard";
 import DetailsDashboard from "./components/Details/DetailsDashboard";
 import BankDashboard from "./components/Bank/BankDashboard";
 import StitchingDashboard from "./components/Stitching/StitchingDashboard";
+import DastiDashboard from "./components/Dasti/DastiDashboard";
+import ReturnDashboard from "./components/Return/ReturnDashboard";
 
 // const PrivateRoute = ({ element }) => {
 //   const token = localStorage.getItem("token");
@@ -73,6 +75,14 @@ function App() {
         <Route
           path="/stitching"
           element={<Layout><StitchingDashboard /></Layout>}
+        />
+        <Route
+          path="/dasti"
+          element={<Layout><DastiDashboard /></Layout>}
+        />
+        <Route
+          path="/return"
+          element={<Layout><ReturnDashboard /></Layout>}
         />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Navigate to="/" replace />} />

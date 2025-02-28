@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const CustomerTBL = ({ records }) => {
   const [selectedRecords, setSelectedRecords] = useState([]);
@@ -63,6 +64,7 @@ const CustomerTBL = ({ records }) => {
                 <th className="py-3 px-6 text-center">Advance Payment</th>
                 <th className="py-3 px-6 text-center">Due Payment</th>
                 <th className="py-3 px-6 text-center">Actions</th>
+                <th className="py-3 px-6 text-center">Edit/Delete</th>
               </tr>
             </thead>
             <tbody className="text-gray-700 text-sm">
@@ -93,6 +95,15 @@ const CustomerTBL = ({ records }) => {
                         onClick={() => handlePrintSingle(record)}
                       >
                         Print
+                      </button>
+                    </td>
+                    <td className="py-3 px-6 text-center">
+
+                      <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                        <FaEdit />
+                      </button>
+                      <button className="bg-red-400 text-white p-2 ml-3 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
+                        <FaTrash />
                       </button>
                     </td>
                   </tr>

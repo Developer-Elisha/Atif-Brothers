@@ -1,4 +1,5 @@
 import React from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const KarigerTBL = ({ records }) => {
   const handlePrint = () => {
@@ -8,17 +9,25 @@ const KarigerTBL = ({ records }) => {
     printWindow.document.write(`
       <html>
         <head>
-          <title>Record List</title>
+          <title>Karigar</title>
           <style>
             body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
             table { width: 100%; border-collapse: collapse; margin-top: 20px; }
             th, td { border: 1px solid black; padding: 8px; text-align: center; }
             th { background-color: #f2f2f2; }
             h2 { margin-bottom: 10px; }
+            @media print {
+              button {
+                display: none;
+              }
+              th:last-child, td:last-child {
+                display: none;
+              }
+            }
           </style>
         </head>
         <body>
-          <h2>Record List</h2>
+          <h2>Karigar</h2>
           ${printContent}
         </body>
       </html>
@@ -32,7 +41,7 @@ const KarigerTBL = ({ records }) => {
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
       {/* Header Section */}
       <div className="flex justify-between items-center bg-purple-300 p-3 rounded-lg">
-        <h2 className="text-black font-semibold text-xl text-center flex-grow">Record List</h2>
+        <h2 className="text-black font-semibold text-xl text-center flex-grow">Karigar</h2>
         <button
           className="bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-100 transition-all duration-200"
           onClick={handlePrint}
@@ -49,19 +58,20 @@ const KarigerTBL = ({ records }) => {
               <th className="py-3 px-6 text-center">Name</th>
               <th className="py-3 px-6 text-center">Role</th>
               <th className="py-3 px-6 text-center">Date</th>
-              <th className="py-3 px-6 text-center">Quantity</th>
-              <th className="py-3 px-6 text-center">Bill No</th>
-              <th className="py-3 px-6 text-center">Tag No</th>
-              <th className="py-3 px-6 text-center">Suit No</th>
+              <th className="py-3 px-6 text-center">Qty</th>
+              <th className="py-3 px-6 text-center">Bill</th>
+              <th className="py-3 px-6 text-center">Tag</th>
+              <th className="py-3 px-6 text-center">Suit</th>
               <th className="py-3 px-6 text-center">Item</th>
               <th className="py-3 px-6 text-center">Color</th>
               <th className="py-3 px-6 text-center">Fabric</th>
-              <th className="py-3 px-6 text-center">Description</th>
+              <th className="py-3 px-6 text-center">Desc</th>
               <th className="py-3 px-6 text-center">Design</th>
               <th className="py-3 px-6 text-center">Rate</th>
-              <th className="py-3 px-6 text-center">Payment</th>
+              <th className="py-3 px-6 text-center">Pay</th>
               <th className="py-3 px-6 text-center">Bank</th>
-              <th className="py-3 px-6 text-center">Due Payment</th>
+              <th className="py-3 px-6 text-center">Due Pay</th>
+              <th className="py-3 px-6 text-center">Actions</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 text-sm">
@@ -84,11 +94,19 @@ const KarigerTBL = ({ records }) => {
                   <td className="py-3 px-6 text-center">{record.payment}</td>
                   <td className="py-3 px-6 text-center">{record.bank}</td>
                   <td className="py-3 px-6 text-center">{record.duePayment}</td>
+                  <td className="py-3 px-6 text-center">
+                    <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                      <FaEdit />
+                    </button>
+                    <button className="bg-red-400 text-white p-2 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
+                      <FaTrash />
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="15" className="py-4 text-center text-gray-500">No records found</td>
+                <td colSpan="17" className="py-4 text-center text-gray-500">No records found</td>
               </tr>
             )}
           </tbody>

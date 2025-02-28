@@ -10,6 +10,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
   const [formDataLess, setFormDataLess] = useState({ billNo: "", description: "", amount: "" });
 
   const [lastSuitNumber, setLastSuitNumber] = useState(1);
+  const [bankAccounts, setBankAccounts] = useState(["Faisal"]);
   
   const today = new Date();
   const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
@@ -170,7 +171,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
   return (
     <div className="p-6 w-full max-h-[80vh] relative mb-10">
       <h2 className="text-xl font-semibold text-center mb-6">Kariger</h2>
-      <div className="flex items-center justify-between w-full mb-5">
+      <div className="flex items-center justify-center w-full mb-5">
         <button
           className="bg-purple-200 ml-5 hover:bg-purple-300 text-black text-lg cursor-pointer py-2 px-4 rounded-lg"
           onClick={() => setIsOpenAdd(true)}
@@ -184,7 +185,17 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
         >
           Less
         </button>
-        <div className="w-1/3 mx-auto">
+
+        <button
+          className="bg-purple-200 hover:bg-purple-300 ml-5 text-black text-2xl cursor-pointer py-2 px-4 rounded-lg"
+          onClick={handleAddForm}
+        >
+          +
+        </button>
+      </div>
+
+      <div className="flex items-center justify-between w-full mb-5">
+        <div className="w-1/4 mx-auto">
           <label className="block text-gray-700 font-medium">Name</label>
           <input
             type="text"
@@ -196,13 +207,6 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
             required
           />
         </div>
-
-        <button
-          className="bg-purple-200 hover:bg-purple-300 text-black text-2xl cursor-pointer py-2 px-4 rounded-lg"
-          onClick={handleAddForm}
-        >
-          +
-        </button>
       </div>
 
       {forms.map((formData, index) => (

@@ -1,11 +1,11 @@
 import React from 'react';
 
-const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccounts }) => {
+const MainForm = ({ formData, index, handleChange, handleRemoveForm,  bankAccounts = []  }) => {
   return (
     <>
       <div key={index}>
-        <div className="flex gap-4 my-4 mt-20">
-          <div className="w-1/2">
+        <div className="flex gap-4 justify-center my-4 mt-20">
+          <div className="w-1/5">
             <label className="block text-gray-700 font-medium">Date</label>
             <input
               type="text"
@@ -16,7 +16,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
             />
           </div>
 
-          <div className="w-1/2">
+          <div className="w-1/5">
             <label className="block text-gray-700 font-medium">Payment / Data Entry</label>
             <select
               name="dropdown"
@@ -30,7 +30,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
             </select>
           </div>
 
-          <div className="w-1/2">
+          <div className="w-1/5">
             <label className="block text-gray-700 font-medium">Due Amount</label>
             <input
               disabled
@@ -44,8 +44,8 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
         </div>
 
         {formData.dropdown === "Payment" ? (
-          <div className="flex gap-4 my-4">
-            <div className="w-1/2">
+          <div className="flex gap-4 my-4 justify-center">
+            <div className="w-1/4">
               <label className="block text-gray-700 font-medium">Amount</label>
               <input
                 type="number"
@@ -56,7 +56,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
               />
             </div>
 
-            <div className="w-1/2">
+            <div className="w-1/4">
               <label className="block text-gray-700 font-medium">Total Balance</label>
               <input
                 type="number"
@@ -221,7 +221,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
         )}
 
         <div className="flex gap-4 my-4 mt-20">
-          <div className="w-1/2">
+          <div className="w-1/5">
             <label className="block text-gray-700 font-medium">Payment</label>
             <select
               name="payment"
@@ -237,7 +237,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
           </div>
 
           {formData.payment === "Bank" && (
-            <div className="w-1/2">
+            <div className="w-1/5">
               <label className="block text-gray-700 font-medium">Select Bank</label>
               <select
                 name="bank"
@@ -247,11 +247,11 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
                 required
               >
                 <option value="" disabled>Select Bank</option>
-                {bankAccounts.map((bank, i) => (
-                  <option key={i} value={bank}>
-                    {bank}
-                  </option>
-                ))}
+                  <option value="Meezan">Meezan</option>
+                  <option value="UBL">UBL</option>
+                  <option value="Faisal">Faisal</option>
+                  <option value="Easypaisa">Easypaisa</option>
+                  <option value="JazzCash">JazzCash</option>
               </select>
             </div>
           )}
