@@ -92,6 +92,6 @@ const TotalExpenseTBL = ({ records }) => {
       </div>
     </div>
   );
-};
+}; 
 
 export default TotalExpenseTBL;
