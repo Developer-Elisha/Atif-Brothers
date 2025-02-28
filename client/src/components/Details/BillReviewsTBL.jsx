@@ -1,4 +1,5 @@
 import React from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const handlePrint = () => {
     const printContents = document.getElementById("printTable").innerHTML;
@@ -14,6 +15,11 @@ const handlePrint = () => {
                     th { background-color: #f2f2f2; }
                     .no-print { display: none !important; }
                     h2 { margin: 0; padding: 10px 0; font-size: 20px; }
+                    @media print {
+                        th:last-child, td:last-child {
+                            display: none;
+                        }
+                    }
                 </style>
             </head>
             <body>
@@ -51,6 +57,7 @@ const ExpenseTBL = ({ records }) => {
                             <th className="py-3 px-6 text-center">Date</th>
                             <th className="py-3 px-6 text-center">Description</th>
                             <th className="py-3 px-6 text-center">Amount</th>
+                            <th className="py-3 px-6 text-center no-print">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="text-gray-700 text-sm">
@@ -62,11 +69,19 @@ const ExpenseTBL = ({ records }) => {
                                     <td className="py-3 px-6 text-center">{record.date}</td>
                                     <td className="py-3 px-6 text-center">{record.description}</td>
                                     <td className="py-3 px-6 text-center">{record.amount}</td>
+                                    <td className="py-3 px-6 text-center no-print">
+                                        <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                                            <FaEdit />
+                                        </button>
+                                        <button className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
+                                            <FaTrash />
+                                        </button>
+                                    </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="4" className="py-4 text-center text-gray-500">
+                                <td colSpan="6" className="py-4 text-center text-gray-500">
                                     No records found
                                 </td>
                             </tr>
