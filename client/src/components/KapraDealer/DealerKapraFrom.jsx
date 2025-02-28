@@ -86,12 +86,12 @@ const DealerKapraForm = ({ setRecords, records }) => {
             <label className='block text-gray-700 font-medium'>Total</label>
             <input type="number" name="total" value={formData.total} readOnly className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 bg-gray-200" />
           </div>
-          <button onClick={() => handleRemoveForm(index)} className="bg-red-500 text-white px-5 py-2 mt-5 h-12 rounded-lg hover:bg-red-600 transition-all">✕</button>
+          <button onClick={() => handleRemoveForm(index)} className="bg-red-500 cursor-pointer text-white px-5 py-2 mt-5 h-12 rounded-lg hover:bg-red-600 transition-all">✕</button>
         </div>
       ))}
 
       <div className="flex justify-center gap-4 mt-6">
-        <button onClick={handleSubmit} className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg hover:bg-purple-300 transition-all">Save</button>
+        <button onClick={handleSubmit} className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all">Save</button>
       </div>
     </div>
   );

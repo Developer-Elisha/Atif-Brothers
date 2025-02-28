@@ -21,9 +21,8 @@ const CustomerDashboard = () => {
       <div className="shadow-lg rounded-lg p-4 w-full max-h-[90vh] flex flex-row gap-4">
         {/* Customer Form */}
         <div
-          className={`bg-white transition-all duration-300 rounded-lg ${
-            showMeasurement ? "w-[70%]" : "w-full"
-          } max-h-[90vh] overflow-y-auto scrollbar-purple`}
+          className={`bg-white transition-all duration-300 rounded-lg w-full ${showMeasurement ? "md:w-[70%]" : "w-full"
+            } max-h-[90vh] overflow-y-auto scrollbar-purple`}
         >
           <p className="ml-2 mt-2">{formattedDate}</p>
           <p className="ml-4">{dayName}</p>
@@ -38,7 +37,11 @@ const CustomerDashboard = () => {
 
         {showMeasurement && (
           <div className="bg-white w-[30%] p-6 rounded-lg shadow-lg max-h-[90vh] overflow-y-auto transition-all duration-300">
-            <MeasurementForm setShowMeasurementForm={setShowMeasurement} setMeasurementsRecords={setMeasurementsRecords} />
+            <MeasurementForm
+              setShowMeasurementForm={setShowMeasurement}
+              setMeasurementsRecords={setMeasurementsRecords}
+              customerRecords={records} // Pass customer records
+            />
           </div>
         )}
       </div>
@@ -54,7 +57,7 @@ const CustomerDashboard = () => {
 
         {/* Measurement Table (Added Here) */}
         {measurementsRecords.length > 0 && (
-          <div className="mt-6">    
+          <div className="mt-6">
             <MeasurementTable records={measurementsRecords} />
           </div>
         )}

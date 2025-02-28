@@ -73,7 +73,7 @@ const StaffForm = ({ records, setRecords }) => {
                     </div>
                     <button
                         onClick={() => handleRemoveForm(index)}
-                        className="bg-red-500 text-white mt-6 px-5 py-2 h-12 rounded-lg hover:bg-red-600 transition-all"
+                        className="bg-red-500 text-white mt-6 px-5 py-2 h-12 rounded-lg cursor-pointer hover:bg-red-600 transition-all"
                     >
                         ✕
                     </button>
@@ -83,7 +83,7 @@ const StaffForm = ({ records, setRecords }) => {
             <div className="flex justify-center  gap-4 mt-6">
                 <button
                     onClick={handleSubmit}
-                    className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg hover:bg-purple-300 transition-all"
+                    className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all"
                 >
                     Save
                 </button>

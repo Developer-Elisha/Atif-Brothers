@@ -52,7 +52,7 @@ export function StatsCards() {
           </div>
           <h3 className="text-gray-500 mt-10">{title}</h3>
           {title === "Bank Balance" ? (
-            <select onChange={(e) => handleSelectAccount(e.target.value)} className="mt-2 p-2 border rounded">
+            <select onChange={(e) => handleSelectAccount(e.target.value)} className="mt-2 p-2 border rounded cursor-pointer">
               <option value="">Select Account</option>
               {bankAccounts.map((account) => (
                 <option key={account.name} value={account.name}>

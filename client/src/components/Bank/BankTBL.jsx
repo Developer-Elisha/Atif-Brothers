@@ -48,6 +48,7 @@ const BankTBL = ({ records }) => {
               <th className="py-3 px-6 text-center">Bank</th>
               <th className="py-3 px-6 text-center">Credit/Debit</th>
               <th className="py-3 px-6 text-center">Amount</th>
+              <th className="py-3 px-6 text-center">Current Balance</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 text-sm">
@@ -58,6 +59,7 @@ const BankTBL = ({ records }) => {
                   <td className="py-3 px-6 text-center">{record.bank || "N/A"}</td>
                   <td className="py-3 px-6 text-center">{record.credit}</td>
                   <td className="py-3 px-6 text-center">{record.amount}</td>
+                  <td className="py-3 px-6 text-center">{record.current}</td>
                 </tr>
               ))
             ) : (

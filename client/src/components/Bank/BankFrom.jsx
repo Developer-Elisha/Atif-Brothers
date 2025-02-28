@@ -3,17 +3,29 @@ import React, { useState } from 'react';
 const BankForm = ({ setRecords, records }) => {
   const today = new Date().toISOString().split("T")[0];
 
-  const [forms, setForms] = useState([{ date: today, credit: "", amount: "500", bank: "" }]);
+  const [forms, setForms] = useState([
+    { date: today, credit: "", amount: "500", bank: "", current: "1000000" }
+  ]);
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
     const updatedForms = [...forms];
     updatedForms[index][name] = value;
+
+    let amount = parseFloat(updatedForms[index].amount) || 0;
+    let initialBalance = parseFloat(updatedForms[index].current) || 1000000; // Default balance
+
+    if (updatedForms[index].credit === "Credit") {
+      updatedForms[index].current = (initialBalance + amount).toString();
+    } else if (updatedForms[index].credit === "Debit") {
+      updatedForms[index].current = (initialBalance - amount).toString();
+    }
+
     setForms(updatedForms);
   };
 
   const handleAddForm = () => {
-    setForms([...forms, { date: today, credit: "", amount: "", bank: ""  }]);
+    setForms([...forms, { date: today, credit: "", amount: "", bank: "", current: "1000000" }]);
   };
 
   const handleRemoveForm = (index) => {
@@ -30,7 +42,7 @@ const BankForm = ({ setRecords, records }) => {
     }
 
     setRecords([...records, ...forms]);
-    setForms([{ date: today, credit: "", amount: "500", bank: ""  }]);
+    setForms([{ date: today, credit: "", amount: "500", bank: "", current: "1000000" }]);
   };
 
   return (
@@ -72,7 +84,7 @@ const BankForm = ({ setRecords, records }) => {
                 <option value="" disabled>Select</option>
                 <option value="Meezan">Meezan</option>
                 <option value="UBL">UBL</option>
-                <option value="Faisal">Faisal</option>
+                <option value="Faisal">Faysal</option>
                 <option value="Easypaisa">Easypaisa</option>
                 <option value="Jazzcash">Jazzcash</option>
               </select>
@@ -106,10 +118,22 @@ const BankForm = ({ setRecords, records }) => {
               />
             </div>
 
+            <div className="w-1/2">
+              <label className='block text-gray-700 font-medium'>Current Balance</label>
+              <input
+                type="text"
+                name="current"
+                value={formData.current}
+                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                disabled
+                required
+              />
+            </div>
+
             <button
               type="button"
               onClick={() => handleRemoveForm(index)}
-              className="bg-red-500 text-white mt-6 px-5 py-2 h-12 rounded-lg hover:bg-red-600 transition-all"
+              className="bg-red-500 text-white cursor-pointer mt-6 px-5 py-2 h-12 rounded-lg hover:bg-red-600 transition-all"
             >
               ✕
             </button>
@@ -119,7 +143,7 @@ const BankForm = ({ setRecords, records }) => {
         <div className="flex justify-center gap-4 mt-6">
           <button
             type="submit"
-            className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg hover:bg-purple-300 transition-all"
+            className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all"
           >
             Save
           </button>

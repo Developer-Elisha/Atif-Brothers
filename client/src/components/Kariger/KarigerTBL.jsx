@@ -52,6 +52,7 @@ const KarigerTBL = ({ records }) => {
               <th className="py-3 px-6 text-center">Quantity</th>
               <th className="py-3 px-6 text-center">Bill No</th>
               <th className="py-3 px-6 text-center">Tag No</th>
+              <th className="py-3 px-6 text-center">Suit No</th>
               <th className="py-3 px-6 text-center">Item</th>
               <th className="py-3 px-6 text-center">Color</th>
               <th className="py-3 px-6 text-center">Fabric</th>
@@ -73,6 +74,7 @@ const KarigerTBL = ({ records }) => {
                   <td className="py-3 px-6 text-center">{record.quantity}</td>
                   <td className="py-3 px-6 text-center">{record.bill}</td>
                   <td className="py-3 px-6 text-center">{record.tag}</td>
+                  <td className="py-3 px-6 text-center">{record.suit}</td>
                   <td className="py-3 px-6 text-center">{record.items}</td>
                   <td className="py-3 px-6 text-center">{record.color}</td>
                   <td className="py-3 px-6 text-center">{record.fabric}</td>
