@@ -45,6 +45,7 @@ const DealerKapraTBL = ({ records }) => {
           <thead>
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-center">Name</th>
+              <th className="py-3 px-6 text-center">Date</th>
               <th className="py-3 px-6 text-center">Description</th>
               <th className="py-3 px-6 text-center">Payment</th>
               <th className="py-3 px-6 text-center">Description Amount</th>
@@ -57,6 +58,7 @@ const DealerKapraTBL = ({ records }) => {
               records.map((record, index) => (
                 <tr key={index} className="border-b border-gray-200">
                   <td className="py-3 px-6 text-center">{record.name}</td>
+                  <td className="py-3 px-6 text-center">{record.date}</td>
                   <td className="py-3 px-6 text-center">{record.description}</td>
                   <td className="py-3 px-6 text-center">{record.payment}</td>
                   <td className="py-3 px-6 text-center">{record.descriptionAmount}</td>

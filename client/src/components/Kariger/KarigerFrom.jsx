@@ -10,12 +10,14 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
   const [formDataLess, setFormDataLess] = useState({ billNo: "", description: "", amount: "" });
 
   const [lastSuitNumber, setLastSuitNumber] = useState(1);
-  const today = new Date().toISOString().split("T")[0];
+  
+  const today = new Date();
+  const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
   const [name, setName] = useState("Kariger1");
   const [forms, setForms] = useState([
     {
-      date: today,
+      date: formattedToday, // Use formatted date
       role: "",
       quantity: "5",
       bill: "",
@@ -26,7 +28,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
       fabric: "Cotton",
       description: "Red Cotton Shirt",
       design: "New arrival",
-      rate: "",
+      rate: "5000",
       duePayment: "5000",
       payment: "",
       bank: "",
@@ -55,7 +57,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
               ...record,
               description: formData.description || record.description,
               rate: (parseFloat(record.rate) + (isAdding ? amountValue : -amountValue)).toString(),
-              dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
+              duePayment: (parseFloat(record.duePayment) + (isAdding ? amountValue : -amountValue)).toString(),
             }
           : record
       )
@@ -93,7 +95,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
     setForms([
       ...forms,
       {
-        date: today,
+        date: formattedToday, // Use formatted date
         role: "",
         quantity: "5",
         bill: "",
@@ -104,7 +106,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
         fabric: "Cotton",
         description: "Red Cotton Shirt",
         design: "New arrival",
-        rate: "",
+        rate: "5000",
         duePayment: "5000",
         payment: "",
         bank: "",
@@ -129,7 +131,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
       name,
       tag: `AB-${lastTagNumber + index}`,
       suit: `S-${lastSuitNumber + index}`,
-      date: today.split("-").reverse().join("-"),
+      date: form.date, // Keep the date in dd-mm-yyyy format
       duePayment: form.duePayment.trim() === "" ? "-" : form.duePayment,
     }));
 
@@ -139,7 +141,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
 
     setForms([
       {
-        date: today,
+        date: formattedToday, // Use formatted date
         role: "",
         quantity: "5",
         bill: "",
@@ -150,7 +152,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) =
         fabric: "Cotton",
         description: "Red Cotton Shirt",
         design: "New arrival",
-        rate: "",
+        rate: "5000",
         duePayment: "5000",
         payment: "",
         bank: "",

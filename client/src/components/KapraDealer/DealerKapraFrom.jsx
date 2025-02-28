@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
 
 const DealerKapraForm = ({ setRecords, records }) => {
+  const today = new Date();
+  const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
   const [forms, setForms] = useState([
-    { name: "", description: "Silk", descriptionAmount: "500", payment: "", previousPayment: "", total: "500" }
+    { name: "Dealer1", description: "Silk", descriptionAmount: "500", payment: "500", previousPayment: "10000", total: "500", date: formattedToday },
   ]);
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
     const updatedForms = [...forms];
     updatedForms[index][name] = value;
-    
+
     if (name === "descriptionAmount" || name === "previousPayment") {
       const descriptionAmount = parseFloat(updatedForms[index].descriptionAmount) || 0;
       const previousPayment = parseFloat(updatedForms[index].previousPayment) || 0;
       updatedForms[index].total = descriptionAmount + previousPayment;
     }
-    
+
     setForms(updatedForms);
   };
 
   const handleAddForm = () => {
-    setForms([...forms, { name: "", description: "Silk", descriptionAmount: "500", payment: "", previousPayment: "", total: "500" }]);
+    setForms([...forms, { name: "Dealer1", description: "Silk", descriptionAmount: "500", payment: "500", previousPayment: "10000", total: "500", date: formattedToday }]);
   };
 
   const handleRemoveForm = (index) => {
@@ -29,12 +31,12 @@ const DealerKapraForm = ({ setRecords, records }) => {
   };
 
   const handleSubmit = () => {
-    if (forms.some(form => !form.name || !form.description || !form.descriptionAmount || !form.payment || !form.previousPayment)) { 
+    if (forms.some(form => !form.name || !form.description || !form.descriptionAmount || !form.payment || !form.previousPayment)) {
       alert("Please fill in all fields!");
       return;
     }
     setRecords([...records, ...forms]);
-    setForms([{ name: "", description: "Silk", descriptionAmount: "500", payment: "", previousPayment: "", total: "500" }]);
+    setForms([{ name: "Dealer1", description: "Silk", descriptionAmount: "500", payment: "500", previousPayment: "10000", total: "500", date: formattedToday }]);
   };
 
   return (
@@ -65,11 +67,23 @@ const DealerKapraForm = ({ setRecords, records }) => {
 
       {forms.map((formData, index) => (
         <div key={index} className="flex gap-4 my-4">
+
+          <div className="w-1/2">
+            <label className="block text-gray-700 font-medium">Date</label>
+            <input
+              type="text"
+              name="date"
+              value={formData.date}
+              disabled
+              className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
+            />
+          </div>
+
           <div className="w-1/2">
             <label className='block text-gray-700 font-medium'>Description</label>
             <input type="text" name="description" value={formData.description} onChange={(e) => handleChange(index, e)} placeholder="Enter Description" className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" required />
           </div>
-          
+
           <div className="w-1/2">
             <label className='block text-gray-700 font-medium'>Description Amount</label>
             <input type="number" name="descriptionAmount" value={formData.descriptionAmount} onChange={(e) => handleChange(index, e)} placeholder="Enter Amount" className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" required />

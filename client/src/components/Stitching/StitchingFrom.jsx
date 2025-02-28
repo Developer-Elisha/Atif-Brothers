@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
 const StitchingForm = ({ setRecords, records }) => {
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date();
+  const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
-  const [forms, setForms] = useState([{ date: today, bill: "50", amount: "500", description: "Black Shirt" }]);
+  const [forms, setForms] = useState([{ date: formattedToday, bill: "50", amount: "500", description: "Black Shirt" }]);
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
@@ -13,7 +14,7 @@ const StitchingForm = ({ setRecords, records }) => {
   };
 
   const handleAddForm = () => {
-    setForms([...forms, { date: today, bill: "50", amount: "", description: "Black Shirt" }]);
+    setForms([...forms, { date: formattedToday, bill: "50", amount: "", description: "Black Shirt" }]);
   };
 
   const handleRemoveForm = (index) => {
@@ -30,7 +31,7 @@ const StitchingForm = ({ setRecords, records }) => {
     }
 
     setRecords([...records, ...forms]);
-    setForms([{ date: today, bill: "50", amount: "500", description: "Black Shirt" }]);
+    setForms([{ date: formattedToday, bill: "50", amount: "500", description: "Black Shirt" }]);
   };
 
   return (
@@ -52,12 +53,12 @@ const StitchingForm = ({ setRecords, records }) => {
             <div className="w-1/2">
               <label className="block text-gray-700 font-medium">Date</label>
               <input
-                type="date"
-                name="date"
-                value={formData.date}
-                disabled
-                className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
-              />
+              type="text"
+              name="date"
+              value={formData.date}
+              disabled
+              className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
+            />
             </div>
 
             <div className="w-1/2">

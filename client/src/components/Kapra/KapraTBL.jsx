@@ -44,6 +44,7 @@ const KapraTBL = ({ records }) => {
         <table className="min-w-full border-collapse">
           <thead>
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+              <th className="py-3 px-6 text-center">Date</th>
               <th className="py-3 px-6 text-center">Description</th>
               <th className="py-3 px-6 text-center">Amount</th>
               <th className="py-3 px-6 text-center">Bill No</th>
@@ -53,6 +54,7 @@ const KapraTBL = ({ records }) => {
             {records.length > 0 ? (
               records.map((record, index) => (
                 <tr key={index} className="border-b border-gray-200">
+                  <td className="py-3 px-6 text-center">{record.date}</td>
                   <td className="py-3 px-6 text-center">{record.description}</td>
                   <td className="py-3 px-6 text-center">{record.amount}</td>
                   <td className="py-3 px-6 text-center">{record.bill}</td>

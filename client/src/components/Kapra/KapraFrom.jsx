@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 
 const KapraForm = ({ setRecords, records }) => {
-  const [forms, setForms] = useState([{ description: "Silk", amount: "500", bill: "500" }]);
+  const today = new Date();
+  const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
+  const [forms, setForms] = useState([{ description: "Silk", amount: "500", bill: "500", date: formattedToday }]);
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
@@ -11,7 +13,7 @@ const KapraForm = ({ setRecords, records }) => {
   };
 
   const handleAddForm = () => {
-    setForms([...forms, { description: "Silk", amount: "500", bill: "500" }]);
+    setForms([...forms, { description: "Silk", amount: "500", bill: "500", date: formattedToday }]);
   };
 
   const handleRemoveForm = (index) => {
@@ -20,13 +22,13 @@ const KapraForm = ({ setRecords, records }) => {
   };
 
   const handleSubmit = () => {
-    if (forms.some(form => !form.description || !form.amount || !form.bill)) { 
+    if (forms.some(form => !form.description || !form.amount || !form.bill)) {
       alert("Please fill in all fields!");
       return;
     }
 
-    setRecords([...records, ...forms]); 
-    setForms([{ description: "Silk", amount: "500", bill: "500" }]);
+    setRecords([...records, ...forms]);
+    setForms([{ description: "Silk", amount: "500", bill: "500", date: formattedToday }]);
   };
 
   return (
@@ -43,7 +45,18 @@ const KapraForm = ({ setRecords, records }) => {
 
       {forms.map((formData, index) => (
         <div key={index} className="flex gap-4 my-4">
-          
+
+          <div className="w-1/2">
+            <label className="block text-gray-700 font-medium">Date</label>
+            <input
+              type="text"
+              name="date"
+              value={formData.date}
+              disabled
+              className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
+            />
+          </div>
+
           <div className="w-1/2">
             <label className='block text-gray-700 font-medium'>Bill No</label>
             <input

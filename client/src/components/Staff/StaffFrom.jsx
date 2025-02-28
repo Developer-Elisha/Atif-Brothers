@@ -1,7 +1,9 @@
 import { useState } from "react";
 
 const StaffForm = ({ records, setRecords }) => {
-    const [forms, setForms] = useState([{ name: "", amount: "3000" }]);
+    const today = new Date();
+    const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
+    const [forms, setForms] = useState([{ name: "", amount: "3000", date: formattedToday }]);
 
     const handleChange = (index, e) => {
         const { name, value } = e.target;
@@ -11,7 +13,7 @@ const StaffForm = ({ records, setRecords }) => {
     };
 
     const handleAddForm = () => {
-        setForms([...forms, { name: "", amount: "3000" }]);
+        setForms([...forms, { name: "", amount: "3000", date: formattedToday }]);
     };
 
     const handleRemoveForm = (index) => {
@@ -26,7 +28,7 @@ const StaffForm = ({ records, setRecords }) => {
         }
 
         setRecords([...records, ...forms]);
-        setForms([{ name: "", amount: "3000" }]);
+        setForms([{ name: "", amount: "3000", date: formattedToday }]);
     };
 
     return (
@@ -43,6 +45,18 @@ const StaffForm = ({ records, setRecords }) => {
 
             {forms.map((formData, index) => (
                 <div key={index} className="flex gap-4 my-4">
+
+                    <div className="w-1/2">
+                        <label className="block text-gray-700 font-medium">Date</label>
+                        <input
+                            type="text"
+                            name="date"
+                            value={formData.date}
+                            disabled
+                            className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
+                        />
+                    </div>
+
                     <div className="w-1/2">
                         <label className="block text-gray-700 font-medium">Name</label>
                         <select

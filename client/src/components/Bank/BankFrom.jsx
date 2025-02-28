@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
 const BankForm = ({ setRecords, records }) => {
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date();
+  const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
   const [forms, setForms] = useState([
-    { date: today, credit: "", amount: "500", bank: "", current: "1000000" }
+    { date: formattedToday, credit: "", amount: "500", bank: "", current: "1000000" }
   ]);
 
   const handleChange = (index, e) => {
@@ -25,7 +26,7 @@ const BankForm = ({ setRecords, records }) => {
   };
 
   const handleAddForm = () => {
-    setForms([...forms, { date: today, credit: "", amount: "", bank: "", current: "1000000" }]);
+    setForms([...forms, { date: formattedToday, credit: "", amount: "", bank: "", current: "1000000" }]);
   };
 
   const handleRemoveForm = (index) => {
@@ -42,7 +43,7 @@ const BankForm = ({ setRecords, records }) => {
     }
 
     setRecords([...records, ...forms]);
-    setForms([{ date: today, credit: "", amount: "500", bank: "", current: "1000000" }]);
+    setForms([{ date: formattedToday, credit: "", amount: "500", bank: "", current: "1000000" }]);
   };
 
   return (
@@ -64,12 +65,12 @@ const BankForm = ({ setRecords, records }) => {
             <div className="w-1/2">
               <label className="block text-gray-700 font-medium">Date</label>
               <input
-                type="date"
-                name="date"
-                value={formData.date}
-                disabled
-                className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
-              />
+              type="text"
+              name="date"
+              value={formData.date}
+              disabled
+              className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
+            />
             </div>
 
             <div className="w-1/2">
