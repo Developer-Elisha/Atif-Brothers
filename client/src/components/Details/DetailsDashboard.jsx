@@ -18,6 +18,10 @@ const DetailsDashboard = () => {
     const sampleRecords = [
         { quantity: 2, bill: "10", tag: "A1", kariger: "John", description: "Gold Ring", amount: 500, balance: 50, date: "01-01-2020", rate: 500, kapra: "Silk", sticting: "Hand Stitching", cost: 100, profit: 400 },
         { quantity: 1, bill: "11", tag: "B2", kariger: "Smith", description: "Silver Chain", amount: 300, balance: 30, date: "01-01-2020", rate: 500, kapra: "Silk", sticting: "Hand Stitching", cost: 100, profit: 400 },
+        { quantity: 2, bill: "10", tag: "A1", kariger: "John", description: "Gold Ring", amount: 500, balance: 50, date: "01-01-2020", rate: 500, kapra: "Silk", sticting: "Hand Stitching", cost: 100, profit: 400 },
+        { quantity: 1, bill: "11", tag: "B2", kariger: "Smith", description: "Silver Chain", amount: 300, balance: 30, date: "01-01-2020", rate: 500, kapra: "Silk", sticting: "Hand Stitching", cost: 100, profit: 400 },
+        { quantity: 2, bill: "10", tag: "A1", kariger: "John", description: "Gold Ring", amount: 500, balance: 50, date: "01-01-2020", rate: 500, kapra: "Silk", sticting: "Hand Stitching", cost: 100, profit: 400 },
+        { quantity: 1, bill: "11", tag: "B2", kariger: "Smith", description: "Silver Chain", amount: 300, balance: 30, date: "01-01-2020", rate: 500, kapra: "Silk", sticting: "Hand Stitching", cost: 100, profit: 400 },
     ];
 
     // Filter records based on entered bill number
