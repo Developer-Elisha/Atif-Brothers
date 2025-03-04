@@ -4,7 +4,7 @@ const DealerKapraForm = ({ setRecords, records }) => {
   const today = new Date();
   const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
   const [forms, setForms] = useState([
-    { name: "Dealer1", description: "Silk", descriptionAmount: "500", payment: "500", previousPayment: "10000", total: "500", date: formattedToday },
+    { name: "Dealer1", description: "Silk", descriptionAmount: "500", payment: "", previousPayment: "10000", bank: "", cheque: "", total: "500", date: formattedToday },
   ]);
 
   const handleChange = (index, e) => {
@@ -22,7 +22,7 @@ const DealerKapraForm = ({ setRecords, records }) => {
   };
 
   const handleAddForm = () => {
-    setForms([...forms, { name: "Dealer1", description: "Silk", descriptionAmount: "500", payment: "500", previousPayment: "10000", total: "500", date: formattedToday }]);
+    setForms([...forms, { name: "Dealer1", description: "Silk", descriptionAmount: "500", payment: "", previousPayment: "10000", bank: "", cheque: "", total: "500", date: formattedToday }]);
   };
 
   const handleRemoveForm = (index) => {
@@ -36,7 +36,7 @@ const DealerKapraForm = ({ setRecords, records }) => {
       return;
     }
     setRecords([...records, ...forms]);
-    setForms([{ name: "Dealer1", description: "Silk", descriptionAmount: "500", payment: "500", previousPayment: "10000", total: "500", date: formattedToday }]);
+    setForms([{ name: "Dealer1", description: "Silk", descriptionAmount: "500", payment: "", previousPayment: "10000", bank: "", cheque: "", total: "500", date: formattedToday }]);
   };
 
   return (
@@ -89,9 +89,54 @@ const DealerKapraForm = ({ setRecords, records }) => {
             <input type="number" name="descriptionAmount" value={formData.descriptionAmount} onChange={(e) => handleChange(index, e)} placeholder="Enter Amount" className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" required />
           </div>
           <div className="w-1/2">
-            <label className='block text-gray-700 font-medium'>Payment</label>
-            <input type="number" name="payment" value={formData.payment} onChange={(e) => handleChange(index, e)} placeholder="Enter Payment" className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" required />
+            <label className="block text-gray-700 font-medium">Payment</label>
+            <select
+              name="payment"
+              value={formData.payment}
+              onChange={(e) => handleChange(index, e)}
+              className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+              required
+            >
+              <option value="" disabled>Select</option>
+              <option value="Bank">Bank</option>
+              <option value="Cash">Cash</option>
+              <option value="Cheque">Cheque</option>
+            </select>
           </div>
+
+          {formData.payment === "Bank" && (
+            <div className="w-1/2">
+              <label className="block text-gray-700 font-medium">Select Bank</label>
+              <select
+                name="bank"
+                value={formData.bank}
+                onChange={(e) => handleChange(index, e)}
+                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                required
+              >
+                <option value="" disabled>Select Bank</option>
+                  <option value="Meezan">Meezan</option>
+                  <option value="UBL">UBL</option>
+                  <option value="Faisal">Faisal</option>
+                  <option value="Easypaisa">Easypaisa</option>
+                  <option value="JazzCash">JazzCash</option>
+              </select>
+            </div>
+          )}
+          {formData.payment === "Cheque" && (
+            <div className="w-1/2">
+            <label className="block text-gray-700 font-medium">Cheque No</label>
+            <input
+              type="text"
+              name="cheque"
+              value={formData.cheque}
+              onChange={(e) => handleChange(index, e)}
+              className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+              placeholder="Enter Cheque No"
+              required
+            />
+          </div>
+          )}
           <div className="w-1/2">
             <label className='block text-gray-700 font-medium'>Previous Payment</label>
             <input type="number" name="previousPayment" value={formData.previousPayment} onChange={(e) => handleChange(index, e)} placeholder="Enter Previous Payment" className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" required />

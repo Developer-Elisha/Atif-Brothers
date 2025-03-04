@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Form from "./KarigerFrom";
-import Table from "./KarigerTBL";
+import Form from "./TailorFrom";
+import Table from "./TailorTBL";
 
-const KarigerDashboard = () => {
+const TailorDashboard = () => {
   const [records, setRecords] = useState([]);
   const [lastTagNumber, setLastTagNumber] = useState(101);
   
@@ -36,4 +36,4 @@ const KarigerDashboard = () => {
   );
 };
 
-export default KarigerDashboard;
+export default TailorDashboard;

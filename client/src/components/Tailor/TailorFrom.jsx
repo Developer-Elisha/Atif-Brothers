@@ -2,7 +2,7 @@ import { useState } from "react";
 import OrderForm from "./MainForm"; // Ensure this component is correctly implemented
 import Modal from "./Modal"; // Ensure this component is correctly implemented
 
-const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, setLastTagNumber: propSetLastTagNumber }) => {
+const TailorForm = ({ records, setRecords, lastTagNumber, setLastTagNumber }) => {
   const [isOpenAdd, setIsOpenAdd] = useState(false);
   const [isOpenLess, setIsOpenLess] = useState(false);
 
@@ -10,17 +10,17 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
   const [formDataLess, setFormDataLess] = useState({ billNo: "", description: "", amount: "" });
 
   const [lastSuitNumber, setLastSuitNumber] = useState(1);
-  const [lastTagNumber, setLastTagNumber] = useState(propLastTagNumber); // Use the prop value
-
+  const [bankAccounts, setBankAccounts] = useState(["Faisal"]);
+  
   const today = new Date();
   const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
-  const [name, setName] = useState("Kariger1");
+  const [name, setName] = useState("Tailor");
   const [forms, setForms] = useState([
     {
       date: formattedToday,
       role: "",
-      quantity: "5",
+      quantity: "1",
       bill: "",
       tag: `AB-101`,
       suit: `S-1`,
@@ -34,7 +34,6 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
       payment: "",
       bank: "",
       dropdown: "Data Entry",
-      cheque: "GPT-99449",
     },
   ]);
 
@@ -48,34 +47,35 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
     const amountValue = parseFloat(formData.amount);
 
     if (!formData.suitNo || isNaN(amountValue)) {
-      alert("Please enter Suit No and a valid Amount");
-      return;
+        alert("Please enter Suit No and a valid Amount");
+        return;
     }
 
     setRecords((prevRecords) =>
-      prevRecords.map((record) =>
-        record.suit === formData.suitNo
-          ? {
-              ...record,
-              description: formData.description || record.description,
-              rate: (parseFloat(record.rate) + (isAdding ? amountValue : -amountValue)).toString(),
-              dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
-              shopName: formData.shopName || record.shopName,
-              tagNo: formData.tagNo || record.tagNo,
-              details: formData.details || record.details,
-            }
-          : record
-      )
+        prevRecords.map((record) =>
+            record.suit === formData.suitNo
+                ? {
+                    ...record,
+                    description: formData.description || record.description,
+                    rate: (parseFloat(record.rate) + (isAdding ? amountValue : -amountValue)).toString(),
+                    dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
+                    shopName: formData.shopName || record.shopName, 
+                    tagNo: formData.tagNo || record.tagNo,  
+                    details: formData.details || record.details, 
+                }
+                : record
+        )
     );
 
     if (isAdding) {
-      setIsOpenAdd(false);
-      setFormDataAdd({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "" });
+        setIsOpenAdd(false);
+        setFormDataAdd({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "" });
     } else {
-      setIsOpenLess(false);
-      setFormDataLess({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "" });
+        setIsOpenLess(false);
+        setFormDataLess({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "" });
     }
-  };
+};
+
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
@@ -102,7 +102,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
       {
         date: formattedToday,
         role: "",
-        quantity: "5",
+        quantity: "1",
         bill: "",
         tag: `AB-${lastTagNumber + forms.length}`,
         suit: `S-${lastSuitNumber + forms.length}`,
@@ -116,7 +116,6 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
         payment: "",
         bank: "",
         dropdown: "Data Entry",
-        cheque: "GPT-99449",
       },
     ]);
   };
@@ -137,20 +136,19 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
       name,
       tag: `AB-${lastTagNumber + index}`,
       suit: `S-${lastSuitNumber + index}`,
-      date: form.date,
+      date: form.date, 
       duePayment: form.duePayment.trim() === "" ? "-" : form.duePayment,
     }));
 
     setRecords([...records, ...newRecords]);
-    propSetLastTagNumber(lastTagNumber + forms.length); // Use the prop function to update the last tag number
+    setLastTagNumber(lastTagNumber + forms.length);
     setLastSuitNumber(lastSuitNumber + forms.length);
 
-    // Reset forms after submission
     setForms([
       {
         date: formattedToday,
         role: "",
-        quantity: "5",
+        quantity: "1",
         bill: "",
         tag: `AB-${lastTagNumber + forms.length}`,
         suit: `S-${lastSuitNumber + forms.length}`,
@@ -164,7 +162,6 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
         payment: "",
         bank: "",
         dropdown: "Data Entry",
-        cheque: "GPT-99449",
       },
     ]);
   };
@@ -177,7 +174,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
 
   return (
     <div className="p-6 w-full max-h-[80vh] relative mb-10">
-      <h2 className="text-xl font-semibold text-center mb-6">Kariger</h2>
+      <h2 className="text-xl font-semibold text-center mb-6">Tailor</h2>
       <div className="flex items-center justify-center w-full mb-5">
         <button
           className="bg-purple-200 ml-5 hover:bg-purple-300 text-black text-lg cursor-pointer py-2 px-4 rounded-lg"
@@ -258,4 +255,4 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
   );
 };
 
-export default KarigerForm;
+export default TailorForm;

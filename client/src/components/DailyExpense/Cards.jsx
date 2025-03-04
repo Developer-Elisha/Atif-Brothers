@@ -20,7 +20,7 @@ export function StatsCards() {
   const bankAccounts = [
     { name: "Meezan", balance: 5000 },
     { name: "UBL", balance: 12000 },
-    { name: "Faisal", balance: 8000 },
+    { name: "Faysal", balance: 8000 },
     { name: "Easypaisa", balance: 15000 },
     { name: "Jazzcash", balance: 2000 },
   ];

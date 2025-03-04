@@ -14,6 +14,8 @@ import BankDashboard from "./components/Bank/BankDashboard";
 import StitchingDashboard from "./components/Stitching/StitchingDashboard";
 import DastiDashboard from "./components/Dasti/DastiDashboard";
 import ReturnDashboard from "./components/Return/ReturnDashboard";
+import TailorDashboard from "./components/Tailor/TailorDashboard";
+import MiscellaneousDashboard from "./components/Miscellaneous/MiscellaneousDashboard";
 
 // const PrivateRoute = ({ element }) => {
 //   const token = localStorage.getItem("token");
@@ -83,6 +85,14 @@ function App() {
         <Route
           path="/return"
           element={<Layout><ReturnDashboard /></Layout>}
+        />
+        <Route
+          path="/tailor"
+          element={<Layout><TailorDashboard /></Layout>}
+        />
+        <Route
+          path="/miscellaneous"
+          element={<Layout><MiscellaneousDashboard /></Layout>}
         />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Navigate to="/" replace />} />

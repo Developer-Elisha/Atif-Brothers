@@ -85,7 +85,7 @@ const BankForm = ({ setRecords, records }) => {
                 <option value="" disabled>Select</option>
                 <option value="Meezan">Meezan</option>
                 <option value="UBL">UBL</option>
-                <option value="Faisal">Faysal</option>
+                <option value="Faysal">Faysal</option>
                 <option value="Easypaisa">Easypaisa</option>
                 <option value="Jazzcash">Jazzcash</option>
               </select>

@@ -5,7 +5,7 @@ const DastiForm = ({ setRecords, records }) => {
   const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
   const [forms, setForms] = useState([
-    { date: formattedToday, cash: "", dasti: "", name: "dasti 1", amount: "5000", description: "dasti 1" }
+    { date: formattedToday, cash: "", dasti: "", name: "dasti 1", amount: "5000", description: "dasti 1", bank: "" }
   ]);
 
   const handleChange = (index, e) => {
@@ -16,7 +16,7 @@ const DastiForm = ({ setRecords, records }) => {
   };
 
   const handleAddForm = () => {
-    setForms([...forms, { date: formattedToday, cash: "", dasti: "", name: "dasti 1", amount: "5000", description: "dasti 1" }]);
+    setForms([...forms, { date: formattedToday, cash: "", dasti: "", name: "dasti 1", amount: "5000", description: "dasti 1", bank: "" }]);
   };
 
   const handleRemoveForm = (index) => {
@@ -33,7 +33,7 @@ const DastiForm = ({ setRecords, records }) => {
     }
 
     setRecords([...records, ...forms]);
-    setForms([{ date: formattedToday, cash: "", dasti: "", name: "dasti 1", amount: "5000", description: "dasti 1" }]);
+    setForms([{ date: formattedToday, cash: "", dasti: "", name: "dasti 1", amount: "5000", description: "dasti 1", bank: "" }]);
   };
 
   return (
@@ -51,8 +51,9 @@ const DastiForm = ({ setRecords, records }) => {
 
       <form onSubmit={handleSubmit}>
         {forms.map((formData, index) => (
-          <div key={index} className="flex gap-4 my-4">
-            <div className="w-1/2">
+          <>
+          <div key={index} className="flex justify-center gap-4 my-4">
+            <div className="w-1/4">
               <label className="block text-gray-700 font-medium">Date</label>
               <input
                 type="text"
@@ -63,7 +64,7 @@ const DastiForm = ({ setRecords, records }) => {
               />
             </div>
 
-            <div className="w-1/2">
+            <div className="w-1/4">
               <label className="block text-gray-700 font-medium">Dasti Liya/Diya</label>
               <select
                 name="dasti"
@@ -78,7 +79,7 @@ const DastiForm = ({ setRecords, records }) => {
               </select>
             </div>
 
-            <div className="w-1/2">
+            <div className="w-1/4">
               <label className="block text-gray-700 font-medium">Cash/Bank</label>
               <select
                 name="cash"
@@ -93,7 +94,31 @@ const DastiForm = ({ setRecords, records }) => {
               </select>
             </div>
 
-            <div className="w-1/2">
+            {/* Show Bank Dropdown only if 'Bank' is selected */}
+            {formData.cash === "Bank" && (
+              <div className="w-1/4">
+                <label className="block text-gray-700 font-medium">Bank</label>
+                <select
+                  name="bank"
+                  value={formData.bank}
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  required
+                >
+                  <option value="" disabled>Select</option>
+                  <option value="Meezan">Meezan</option>
+                  <option value="UBL">UBL</option>
+                  <option value="Faysal">Faysal</option>
+                  <option value="Easypaisa">Easypaisa</option>
+                  <option value="Jazzcash">Jazzcash</option>
+                </select>
+              </div>
+            )}
+
+            </div>
+            <div  className="flex gap-4 justify-center my-4">
+
+            <div className="w-1/4">
               <label className="block text-gray-700 font-medium">Name</label>
               <input
                 type="text"
@@ -105,7 +130,7 @@ const DastiForm = ({ setRecords, records }) => {
               />
             </div>
 
-            <div className="w-1/2">
+            <div className="w-1/4">
               <label className="block text-gray-700 font-medium">Description</label>
               <input
                 type="text"
@@ -117,7 +142,7 @@ const DastiForm = ({ setRecords, records }) => {
               />
             </div>
 
-            <div className="w-1/2">
+            <div className="w-1/4">
               <label className="block text-gray-700 font-medium">Amount</label>
               <input
                 type="number"
@@ -134,12 +159,15 @@ const DastiForm = ({ setRecords, records }) => {
               <button
                 type="button"
                 onClick={() => handleRemoveForm(index)}
-                className="bg-red-500 text-white cursor-pointer mt-6 px-5 py-2 h-12 rounded-lg hover:bg-red-600 transition-all"
+                className="bg-red-500 text-white cursor-pointer mt-7 px-4 py-2 h-10 rounded-lg hover:bg-red-600 transition-all"
               >
                 ✕
               </button>
             )}
           </div>
+          <div className='mt-20'></div>
+          <hr />
+          </>
         ))}
 
         <div className="flex justify-center gap-4 mt-6">

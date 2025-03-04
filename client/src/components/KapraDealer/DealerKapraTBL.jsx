@@ -59,6 +59,7 @@ const DealerKapraTBL = ({ records }) => {
               <th className="py-3 px-6 text-center">Date</th>
               <th className="py-3 px-6 text-center">Description</th>
               <th className="py-3 px-6 text-center">Payment</th>
+              <th className="py-3 px-6 text-center">Bank / Cheque</th>
               <th className="py-3 px-6 text-center">Description Amount</th>
               <th className="py-3 px-6 text-center">Previous Amount</th>
               <th className="py-3 px-6 text-center">Total</th>
@@ -73,6 +74,7 @@ const DealerKapraTBL = ({ records }) => {
                   <td className="py-3 px-6 text-center">{record.date}</td>
                   <td className="py-3 px-6 text-center">{record.description}</td>
                   <td className="py-3 px-6 text-center">{record.payment}</td>
+                  <td className="py-3 px-6 text-center">{record.bank || record.cheque}</td>
                   <td className="py-3 px-6 text-center">{record.descriptionAmount}</td>
                   <td className="py-3 px-6 text-center">{record.previousPayment}</td>
                   <td className="py-3 px-6 text-center">{record.total}</td>

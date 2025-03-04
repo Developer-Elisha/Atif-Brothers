@@ -18,7 +18,7 @@ const CustomerDashboard = () => {
 
   return (
     <>
-      <div className="shadow-lg rounded-lg p-4 w-full max-h-[90vh] flex flex-row gap-4">
+      <div className="shadow-lg rounded-lg p-4 w-[90vw] max-h-[90vh] flex flex-row gap-4">
         {/* Customer Form */}
         <div
           className={`bg-white transition-all duration-300 rounded-lg w-full ${showMeasurement ? "md:w-[70%]" : "w-full"
@@ -47,13 +47,13 @@ const CustomerDashboard = () => {
       </div>
 
       {/* Customer Table */}
-      <div className="bg-white shadow-lg rounded-lg p-4 w-full max-h-[100vh] overflow-auto mt-8 flex flex-col gap-4">
+      <div className="bg-white shadow-lg rounded-lg p-4 w-[90vw] max-h-[100vh] overflow-auto mt-8 flex flex-col gap-4">
         <div className="overflow-x-auto flex-1 scrollbar-purple max-h-[100vh]">
           <Table records={records} />
         </div>
       </div>
 
-      <div className="bg-white shadow-lg rounded-lg p-4 w-full max-h-[100vh] overflow-auto mt-8 flex flex-col gap-4">
+      <div className="bg-white shadow-lg rounded-lg p-4 w-[90vw] max-h-[100vh] overflow-auto mt-8 flex flex-col gap-4">
 
         {/* Measurement Table (Added Here) */}
         {measurementsRecords.length > 0 && (

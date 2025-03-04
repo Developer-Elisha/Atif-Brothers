@@ -13,7 +13,6 @@ const ReturnForm = ({ setRecords, records }) => {
     const updatedForms = [...forms];
     updatedForms[index][name] = value;
 
-    // Calculate balance if amount or previous amount changes
     if (name === 'amount' || name === 'previous') {
       const previousAmount = parseFloat(updatedForms[index].previous) || 0;
       const amount = parseFloat(updatedForms[index].amount) || 0;
@@ -33,7 +32,7 @@ const ReturnForm = ({ setRecords, records }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent form refresh
+    e.preventDefault(); 
 
     if (forms.some(form => !form.date || !form.cash || !form.amount || !form.dasti || !form.name || !form.description)) {
       alert("Please fill in all fields!");
@@ -59,8 +58,9 @@ const ReturnForm = ({ setRecords, records }) => {
 
       <form onSubmit={handleSubmit}>
         {forms.map((formData, index) => (
-          <div key={index} className="flex gap-4 my-4">
-            <div className="w-1/2">
+          <>
+          <div key={index} className="flex gap-4 my-4 justify-center mt-20">
+            <div className="w-1/5">
               <label className="block text-gray-700 font-medium">Date</label>
               <input
                 type="text"
@@ -71,8 +71,8 @@ const ReturnForm = ({ setRecords, records }) => {
               />
             </div>
 
-            <div className="w-1/2">
-              <label className="block text-gray-700 font-medium">Dasti Liya/Diya</label>
+            <div className="w-1/5">
+              <label className="block text-gray-700 font-medium">Return Liya/Diya</label>
               <select
                 name="dasti"
                 value={formData.dasti}
@@ -81,12 +81,12 @@ const ReturnForm = ({ setRecords, records }) => {
                 required
               >
                 <option value="" disabled>Select</option>
-                <option value="Dasti Liya">Dasti Liya</option>
-                <option value="Dasti Diya">Dasti Diya</option>
+                <option value="Dasti Liya">Return Liya</option>
+                <option value="Dasti Diya">Return Diya</option>
               </select>
             </div>
 
-            <div className="w-1/2">
+            <div className="w-1/5">
               <label className="block text-gray-700 font-medium">Cash/Bank</label>
               <select
                 name="cash"
@@ -101,7 +101,28 @@ const ReturnForm = ({ setRecords, records }) => {
               </select>
             </div>
 
-            <div className="w-1/2">
+            {/* Show Bank Dropdown only if 'Bank' is selected */}
+            {formData.cash === "Bank" && (
+              <div className="w-1/5">
+                <label className="block text-gray-700 font-medium">Bank</label>
+                <select
+                  name="bank"
+                  value={formData.bank}
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  required
+                >
+                  <option value="" disabled>Select</option>
+                  <option value="Meezan">Meezan</option>
+                  <option value="UBL">UBL</option>
+                  <option value="Faysal">Faysal</option>
+                  <option value="Easypaisa">Easypaisa</option>
+                  <option value="Jazzcash">Jazzcash</option>
+                </select>
+              </div>
+            )}
+
+            <div className="w-1/5">
               <label className="block text-gray-700 font-medium">Name</label>
               <select
                 name="name"
@@ -115,8 +136,11 @@ const ReturnForm = ({ setRecords, records }) => {
                 <option value="Name 2">Name 2</option>
               </select>
             </div>
+            </div>
 
-            <div className="w-1/2">
+            <div className="flex gap-4 my-4 justify-center">
+
+            <div className="w-1/5">
               <label className="block text-gray-700 font-medium">Description</label>
               <input
                 type="text"
@@ -128,7 +152,7 @@ const ReturnForm = ({ setRecords, records }) => {
               />
             </div>
 
-            <div className="w-1/2">
+            <div className="w-1/5">
               <label className="block text-gray-700 font-medium">Previous Amount</label>
               <input
                 type="number"
@@ -141,7 +165,7 @@ const ReturnForm = ({ setRecords, records }) => {
               />
             </div>
 
-            <div className="w-1/2">
+            <div className="w-1/5">
               <label className="block text-gray-700 font-medium">Amount</label>
               <input
                 type="number"
@@ -154,7 +178,7 @@ const ReturnForm = ({ setRecords, records }) => {
               />
             </div>
 
-            <div className="w-1/2">
+            <div className="w-1/5">
               <label className="block text-gray-700 font-medium">Balance</label>
               <input
                 type="text"
@@ -170,12 +194,15 @@ const ReturnForm = ({ setRecords, records }) => {
               <button
                 type="button"
                 onClick={() => handleRemoveForm(index)}
-                className="bg-red-500 text-white cursor-pointer mt-6 px-5 py-2 h-12 rounded-lg hover:bg-red-600 transition-all"
+                className="bg-red-500 text-white cursor-pointer mt-7 px-4 py-2 h-10 rounded-lg hover:bg-red-600 transition-all"
               >
                 ✕
               </button>
             )}
           </div>
+          <div className='mt-20'></div>
+          <hr />
+          </>
         ))}
 
         <div className="flex justify-center gap-4 mt-6">

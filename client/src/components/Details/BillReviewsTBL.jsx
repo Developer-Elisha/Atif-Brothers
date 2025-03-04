@@ -33,7 +33,7 @@ const handlePrint = () => {
     newWindow.close();
 };
 
-const ExpenseTBL = ({ records }) => {
+const BillReviewTBL = ({ records }) => {
     return (
         <div className="overflow-x-auto bg-white shadow-md rounded-lg">
             <div className="relative flex items-center bg-purple-300 p-3 rounded-lg">
@@ -93,4 +93,4 @@ const ExpenseTBL = ({ records }) => {
     );
 };
 
-export default ExpenseTBL;
+export default BillReviewTBL;

@@ -5,7 +5,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
         <div key={index}>
             <div className="flex gap-4 my-4 mt-20">
 
-                <div className="w-1/2">
+                <div className="w-1/4">
                     <label className="block text-gray-700 font-medium">Suit No</label>
                     <input
                         type="text"
@@ -16,7 +16,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                     />
                 </div>
 
-                <div className="w-1/2">
+                <div className="w-1/4">
                     <label className="block text-gray-700 font-medium">Kariger Name</label>
                     <input
                         type="text"
@@ -27,7 +27,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                     />
                 </div>
 
-                <div className="w-1/2">
+                <div className="w-1/4">
                     <label className="block text-gray-700 font-medium">Quantity</label>
                     <input
                         type="number"
@@ -38,11 +38,8 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                         placeholder="Enter Quantity"
                     />
                 </div>
-            </div>
-
-            <div className="flex gap-4 my-4">
-                <div className="w-1/2">
-                    <label className="block text-gray-700 font-medium">Payment Type</label>
+                <div className="w-1/4">
+                    <label className="block text-gray-700 font-medium">Payment Status</label>
                     <select
                         name="paymentType"
                         value={formData.paymentType}
@@ -54,35 +51,9 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                         <option value="Final Pay">Final Pay</option>
                     </select>
                 </div>
-
-                <div className="w-1/2">
-                    <label className="block text-gray-700 font-medium">Description</label>
-                    <input
-                        type="text"
-                        name="description"
-                        value={formData.description}
-                        onChange={(e) => handleChange(index, e)}
-                        className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                        placeholder="Enter Description"
-                    />
-                </div>
-
-                <div className="w-1/2">
-                    <label className="block text-gray-700 font-medium">Rate</label>
-                    <input
-                        type="text"
-                        name="rate"
-                        value={formData.rate}
-                        onChange={(e) => handleChange(index, e)}
-                        className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                        placeholder="Enter Rate"
-                        required
-                    />
-                </div>
-
                 {formData.paymentType === "Advance" && (
                     <>
-                        <div className="w-1/2">
+                        <div className="w-1/4">
                             <label className="block text-gray-700 font-medium">Advance Payment</label>
                             <input
                                 type="text"
@@ -94,7 +65,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                                 required
                             />
                         </div>
-                        <div className="w-1/2">
+                        <div className="w-1/4">
                             <label className="block text-gray-700 font-medium">Due Amount</label>
                             <input
                                 type="text"
@@ -108,6 +79,90 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                         </div>
                     </>
                 )}
+            </div>
+
+            <div className="flex gap-4 my-4">
+
+                <div className="w-1/4">
+                    <label className="block text-gray-700 font-medium">Payment</label>
+                    <select
+                        name="payment"
+                        value={formData.payment}
+                        onChange={(e) => handleChange(index, e)}
+                        className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                        required
+                    >
+                        <option value="" disabled>Select</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Bank">Bank</option>
+                    </select>
+                </div>
+
+                {formData.payment === "Bank" && (
+                    <div className="w-1/4">
+                        <label className="block text-gray-700 font-medium">Select Bank</label>
+                        <select
+                            name="bank"
+                            value={formData.bank}
+                            onChange={(e) => handleChange(index, e)}
+                            className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                            required
+                        >
+                            <option value="" disabled>Select Bank</option>
+                            <option value="Meezan">Meezan</option>
+                            <option value="UBL">UBL</option>
+                            <option value="Faisal">Faisal</option>
+                            <option value="Easypaisa">Easypaisa</option>
+                            <option value="JazzCash">JazzCash</option>
+                        </select>
+                    </div>
+                )}
+
+                <div className="w-1/4">
+                    <label className="block text-gray-700 font-medium">Description</label>
+                    <input
+                        type="text"
+                        name="description"
+                        value={formData.description}
+                        onChange={(e) => handleChange(index, e)}
+                        className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                        placeholder="Enter Description"
+                    />
+                </div>
+
+                <div className="w-1/4">
+                    <label className="block text-gray-700 font-medium">Rate</label>
+                    <input
+                        type="text"
+                        name="rate"
+                        value={formData.rate}
+                        onChange={(e) => handleChange(index, e)}
+                        className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                        placeholder="Enter Rate"
+                        required
+                    />
+                </div>
+
+
+
+                {formData.paymentType === "Final Pay" && (
+                    <>
+                        <div className="w-1/4">
+                            <label className="block text-gray-700 font-medium">Due Amount</label>
+                            <input
+                                type="text"
+                                name="previousAmount"
+                                value={formData.previousAmount}
+                                onChange={(e) => handleChange(index, e)}
+                                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                                placeholder="Enter Due Amount"
+                                required
+                            />
+                        </div>
+                    </>
+                )}
+
+
 
                 <div className="w-10 mt-8">
                     <button

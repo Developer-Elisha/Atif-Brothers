@@ -15,8 +15,17 @@ export function Header() {
 
   return (
     <header className="bg-white border-b border-purple-100 py-4 px-6 flex justify-between items-center">
-      <div className="text-purple-500 text-3xl font-bold">
-        Atif Brothers
+      {/* Centered Text */}
+      <div className="flex-1 flex justify-between">
+      <div className="text-purple-400 text-3xl font-bold">
+           Atif Brothers
+        </div>
+        <div className="text-purple-400 text-xl ">
+           Passion for Fashion
+        </div>
+        <div className="text-purple-400 text-3xl font-bold mr-5">
+          عاطف برادرز
+        </div>
       </div>
 
       <div className="flex items-center space-x-4">

@@ -56,13 +56,20 @@ const CustomerTBL = ({ records }) => {
                 <th className="py-3 px-6 text-center">Date</th>
                 <th className="py-3 px-6 text-center">Bill No</th>
                 <th className="py-3 px-6 text-center">Suit No</th>
+                <th className="py-3 px-6 text-center">Sales Man</th>
                 <th className="py-3 px-6 text-center">Name</th>
                 <th className="py-3 px-6 text-center">Phone No</th>
                 <th className="py-3 px-6 text-center">Quantity</th>
+                <th className="py-3 px-6 text-center">Pay Status</th>
+                <th className="py-3 px-6 text-center">Pay With</th>
+                <th className="py-3 px-6 text-center">Bank</th>
                 <th className="py-3 px-6 text-center">Description</th>
                 <th className="py-3 px-6 text-center">Rate</th>
                 <th className="py-3 px-6 text-center">Advance Payment</th>
                 <th className="py-3 px-6 text-center">Due Payment</th>
+                <th className="py-3 px-6 text-center">Shop</th>
+                <th className="py-3 px-6 text-center">Tag</th>
+                <th className="py-3 px-6 text-center">Details</th>
                 <th className="py-3 px-6 text-center">Actions</th>
                 <th className="py-3 px-6 text-center">Edit/Delete</th>
               </tr>
@@ -82,13 +89,20 @@ const CustomerTBL = ({ records }) => {
                     <td className="py-3 px-6 text-center">{record.date}</td>
                     <td className="py-3 px-6 text-center">{record.bill}</td>
                     <td className="py-3 px-6 text-center">{record.suit}</td>
+                    <td className="py-3 px-6 text-center">{record.sale}</td>
                     <td className="py-3 px-6 text-center">{record.name}</td>
                     <td className="py-3 px-6 text-center">{record.phone}</td>
                     <td className="py-3 px-6 text-center">{record.quantity}</td>
+                    <td className="py-3 px-6 text-center">{record.paymentType}</td>
+                    <td className="py-3 px-6 text-center">{record.payment}</td>
+                    <td className="py-3 px-6 text-center">{record.bank}</td>
                     <td className="py-3 px-6 text-center">{record.description}</td>
                     <td className="py-3 px-6 text-center">{record.rate}</td>
                     <td className="py-3 px-6 text-center">{record.advancePayment}</td>
-                    <td className="py-3 px-6 text-center">{record.dueAmount}</td>
+                    <td className="py-3 px-6 text-center">{record.dueAmount || record.previousAmount}</td>
+                    <td className="py-3 px-6 text-center">{record.shopName}</td>
+                    <td className="py-3 px-6 text-center">{record.tagNo}</td>
+                    <td className="py-3 px-6 text-center">{record.details}</td>
                     <td className="py-3 px-6 text-center">
                       <button
                         className="bg-purple-400 text-white py-1 px-3 cursor-pointer rounded-lg hover:bg-purple-500 transition"

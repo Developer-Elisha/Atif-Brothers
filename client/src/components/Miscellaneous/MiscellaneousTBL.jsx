@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
-const DastiTBL = ({ records }) => {
+const MiscellaneousTBL = ({ records }) => {
   const handlePrint = () => {
     const printContent = document.getElementById("printTable").innerHTML;
     const printWindow = window.open("", "", "width=800,height=600");
@@ -9,7 +9,7 @@ const DastiTBL = ({ records }) => {
     printWindow.document.write(`
       <html>
         <head>
-          <title>Dasti Records</title>
+          <title>Miscellaneous Records</title>
           <style>
             body { font-family: Arial, sans-serif; text-align: center; }
             table { width: 100%; border-collapse: collapse; margin-top: 20px; }
@@ -17,17 +17,14 @@ const DastiTBL = ({ records }) => {
             th { background-color: #f2f2f2; }
             h2 { margin-bottom: 10px; }
             @media print {
-              button {
-                display: none;
-              }
-              th:last-child, td:last-child {
-                display: none;
+              .no-print {
+                display: none; /* Hide elements with the 'no-print' class */
               }
             }
           </style>
         </head>
         <body>
-          <h2>Bank</h2>
+          <h2>Miscellaneous</h2>
           ${printContent}
         </body>
       </html>
@@ -41,7 +38,7 @@ const DastiTBL = ({ records }) => {
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
       {/* Header Section */}
       <div className="flex justify-between items-center bg-purple-300 p-3 rounded-lg">
-        <h2 className="text-black font-semibold text-xl text-center flex-grow">Dasti</h2>
+        <h2 className="text-black font-semibold text-xl text-center flex-grow">Miscellaneous</h2>
         <button
           className="bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-100 transition-all duration-200"
           onClick={handlePrint}
@@ -56,13 +53,10 @@ const DastiTBL = ({ records }) => {
           <thead>
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-center">Date</th>
-              <th className="py-3 px-6 text-center">Dasti Liya/Diya</th>
-              <th className="py-3 px-6 text-center">Cash/Bank</th>
-              <th className="py-3 px-6 text-center">Bank</th>
-              <th className="py-3 px-6 text-center">Name</th>
+              <th className="py-3 px-6 text-center">Bill</th>
               <th className="py-3 px-6 text-center">Description</th>
               <th className="py-3 px-6 text-center">Amount</th>
-              <th className="py-3 px-6 text-center">Actions</th>
+              <th className="py-3 px-6 text-center no-print">Actions</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 text-sm">
@@ -70,13 +64,10 @@ const DastiTBL = ({ records }) => {
               records.map((record, index) => (
                 <tr key={index} className="border-b border-gray-200">
                   <td className="py-3 px-6 text-center">{record.date}</td>
-                  <td className="py-3 px-6 text-center">{record.dasti}</td>
-                  <td className="py-3 px-6 text-center">{record.cash}</td>
-                  <td className="py-3 px-6 text-center">{record.bank}</td>
-                  <td className="py-3 px-6 text-center">{record.name}</td>
+                  <td className="py-3 px-6 text-center">{record.bill}</td>
                   <td className="py-3 px-6 text-center">{record.description}</td>
                   <td className="py-3 px-6 text-center">{record.amount}</td>
-                  <td className="py-3 px-6 text-center">
+                  <td className="py-3 px-6 text-center no-print">
                     <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
                       <FaEdit />
                     </button>
@@ -88,7 +79,7 @@ const DastiTBL = ({ records }) => {
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="py-4 text-center text-gray-500">No records found</td>
+                <td colSpan="5" className="py-4 text-center text-gray-500">No records found</td>
               </tr>
             )}
           </tbody>
@@ -98,4 +89,4 @@ const DastiTBL = ({ records }) => {
   );
 };
 
-export default DastiTBL;
+export default MiscellaneousTBL;

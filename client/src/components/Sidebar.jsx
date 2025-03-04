@@ -5,9 +5,10 @@ import {
   FaMoneyCheckAlt, FaUserTie, FaClipboardList, 
   FaCut, FaMoneyBillWave,
   FaUserFriends,
-  FaHandHoldingUsd,
-  FaUndoAlt,
-  FaExchangeAlt
+  FaHandHoldingUsd, 
+  FaExchangeAlt,
+  FaTshirt,
+  FaTasks
 } from "react-icons/fa";
 
 const Sidebar = () => {
@@ -38,6 +39,9 @@ const Sidebar = () => {
         <SidebarItem to="/stitching" icon={<FaCut size={20} />} label="Stitching" isOpen={isOpen} />
         <SidebarItem to="/dasti" icon={<FaHandHoldingUsd size={20} />} label="Dasti" isOpen={isOpen} />
         <SidebarItem to="/return" icon={<FaExchangeAlt size={20} />} label="Return" isOpen={isOpen} />
+        <SidebarItem to="/tailor" icon={<FaTshirt size={20} />} label="Tailor" isOpen={isOpen} />
+        <SidebarItem to="/miscellaneous" icon={<FaTasks size={20} />} label="Miscellaneous" isOpen={isOpen} />
+
       </ul>
     </div>
   );

@@ -5,6 +5,7 @@ import StitchingDetailsTBL from "./StitchingDetailsTBL";
 import KarigerDetailsTBL from "./KarigerDetailsTBL";
 import TotalExpenseTBL from "./TotalExpenseTBL";
 import GrandTotalTBL from "./GrandTotalTBL";
+import MeasurementTBL from "./MeasurementTBL";
 
 const DetailsDashboard = () => {
     const [billNo, setBillNo] = useState("");
@@ -39,6 +40,11 @@ const DetailsDashboard = () => {
 
             {filteredRecords.length > 0 ? (
                 <>
+                    <div className="bg-white shadow-lg rounded-lg p-4 mt-20 w-full max-h-[100vh] overflow-auto flex flex-col gap-4">
+                        <div className="max-h-[70vh] overflow-y-auto scrollbar-purple">
+                            <MeasurementTBL records={filteredRecords} />
+                        </div>
+                    </div>
                     <div className="bg-white shadow-lg rounded-lg p-4 mt-20 w-full max-h-[100vh] overflow-auto flex flex-col gap-4">
                         <div className="max-h-[70vh] overflow-y-auto scrollbar-purple">
                             <ExpenseTBL records={filteredRecords} />

@@ -17,9 +17,13 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
             paymentType: "",
             advancePayment: "",
             dueAmount: "",
+            payment: "",
+            bank: "",
+            previousAmount: "",
         },
     ]);
 
+    const [sale, setSale] = useState("Sales Man 1");
     const [name, setName] = useState("Customer1");
     const [phone, setPhone] = useState("03123456789");
     const [bill, setBill] = useState("10");
@@ -32,6 +36,10 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
         suitNo: "",
         description: "",
         amount: "",
+        order: "",
+        shopName: "",
+        tagNo: "",
+        details: "",
     });
 
     const [formDataLess, setFormDataLess] = useState({
@@ -39,6 +47,10 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
         suitNo: "",
         description: "",
         amount: "",
+        order: "",
+        shopName: "",
+        tagNo: "",
+        details: "",
     });
 
     const handleModalChange = (e, setFormData) => {
@@ -53,56 +65,61 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
     };
 
     const handleSubmitAmountChange = (isAdding) => {
-        const formData = isAdding ? formDataAdd : formDataLess;
-        const amountValue = parseFloat(formData.amount);
+    const formData = isAdding ? formDataAdd : formDataLess;
+    const amountValue = parseFloat(formData.amount);
 
-        if (!formData.suitNo || isNaN(amountValue)) {
-            alert("Please enter Suit No and a valid Amount");
-            return;
-        }
+    if (!formData.suitNo || isNaN(amountValue)) {
+        alert("Please enter Suit No and a valid Amount");
+        return;
+    }
 
-        setRecords((prevRecords) =>
-            prevRecords.map((record) =>
-                record.suit === formData.suitNo
-                    ? {
-                        ...record,
-                        description: formData.description || record.description,
-                        rate: (parseFloat(record.rate) + (isAdding ? amountValue : -amountValue)).toString(),
-                        dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
-                    }
-                    : record
-            )
+    setRecords((prevRecords) =>
+        prevRecords.map((record) =>
+            record.suit === formData.suitNo
+                ? {
+                    ...record,
+                    description: formData.description || record.description,
+                    rate: (parseFloat(record.rate) + (isAdding ? amountValue : -amountValue)).toString(),
+                    dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
+                    shopName: formData.shopName || record.shopName,  // Add this
+                    tagNo: formData.tagNo || record.tagNo,  // Add this
+                    details: formData.details || record.details,  // Add this
+                }
+                : record
+        )
+    );
+
+    if (isAdding) {
+        setIsOpenAdd(false);
+        setFormDataAdd({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "", previousAmount: "" });
+    } else {
+        setIsOpenLess(false);
+        setFormDataLess({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "", previousAmount: "" });
+    }
+};
+
+
+const handleChange = (index, e) => {
+    const { name, value } = e.target;
+
+    setForms((prevForms) => {
+        const updatedForms = prevForms.map((form, i) =>
+            i === index ? { ...form, [name]: value } : form
         );
 
-        if (isAdding) {
-            setIsOpenAdd(false);
-            setFormDataAdd({ billNo: "", suitNo: "", description: "", amount: "" });
-        } else {
-            setIsOpenLess(false);
-            setFormDataLess({ billNo: "", suitNo: "", description: "", amount: "" });
+        // Additional logic for calculating dueAmount, etc.
+        if (["rate", "quantity", "advancePayment"].includes(name)) {
+            const rate = parseFloat(updatedForms[index].rate) || 0;
+            const quantity = parseFloat(updatedForms[index].quantity) || 0;
+            const advance = parseFloat(updatedForms[index].advancePayment) || 0;
+            const due = rate * quantity - advance;
+
+            updatedForms[index].dueAmount = due % 1 === 0 ? due.toString() : due.toFixed(2);
         }
-    };
 
-    const handleChange = (index, e) => {
-        const { name, value } = e.target;
-
-        setForms((prevForms) => {
-            const updatedForms = prevForms.map((form, i) =>
-                i === index ? { ...form, [name]: value } : form
-            );
-
-            if (["rate", "quantity", "advancePayment"].includes(name)) {
-                const rate = parseFloat(updatedForms[index].rate) || 0;
-                const quantity = parseFloat(updatedForms[index].quantity) || 0;
-                const advance = parseFloat(updatedForms[index].advancePayment) || 0;
-                const due = rate * quantity - advance;
-
-                updatedForms[index].dueAmount = due % 1 === 0 ? due.toString() : due.toFixed(2);
-            }
-
-            return updatedForms;
-        });
-    };
+        return updatedForms;
+    });
+};
 
     const handleAddForm = () => {
         setForms([
@@ -116,6 +133,7 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                 paymentType: "",
                 advancePayment: "",
                 dueAmount: "",
+                previousAmount: "",
             },
         ]);
     };
@@ -130,48 +148,49 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
             alert("Please enter a name!");
             return;
         }
-
+    
         if (!phone.trim()) {
             alert("Please enter a phone number!");
             return;
         }
-
+    
         if (!bill.trim()) {
             alert("Please enter a bill number!");
             return;
         }
-
+    
         const isValid = forms.every((form) => {
             const requiredFields = ["kariger", "description", "rate", "paymentType"];
             if (requiredFields.some((field) => !form[field]?.trim())) return false;
-
+    
             if (form.paymentType === "Advance" && (!form.advancePayment?.trim() || !form.dueAmount?.trim())) {
                 return false;
             }
-
+    
             return true;
         });
-
+    
         if (!isValid) {
             alert("Please fill all required fields correctly.");
             return;
         }
-
+    
         const newRecords = forms.map((form, index) => ({
             ...form,
             name,
             phone, // Include phone number
             bill,  // Include bill number
+            sale,  // Include sales man name
             date: `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`,
             suit: `S-${lastSuitNumber + index}`,
             paymentType: form.paymentType || "-",
             advancePayment: form.paymentType === "Advance" ? form.advancePayment : "-",
-            dueAmount: form.paymentType === "Advance" ? form.dueAmount : "-",
+            dueAmount: form.paymentType === "Advance" ? form.dueAmount : "",
         }));
-
+    
         setRecords([...records, ...newRecords]);
         setLastSuitNumber(lastSuitNumber + forms.length);
-
+    
         setForms([
             {
                 suit: `S-${lastSuitNumber + forms.length}`,
@@ -182,10 +201,11 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                 paymentType: "",
                 advancePayment: "",
                 dueAmount: "",
+                previousAmount: "",
             },
         ]);
     };
-
+    
     return (
         <div className="p-6 w-full max-h-[100vh] relative mb-10 flex">
             <div className="p-6">
@@ -219,7 +239,20 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                 </div>
 
                 <div className="flex items-center justify-between mb-5">
-                    <div className="w-1/4 mx-auto">
+                    <div className="w-1/5 mx-2">
+                        <label className="block text-gray-700 font-medium">Sales man</label>
+                        <input
+                            type="text"
+                            name="saleman"
+                            value={sale}
+                            onChange={(e) => setSale(e.target.value)}
+                            className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                            placeholder="Enter Name"
+                            required
+                        />
+                    </div>
+
+                    <div className="w-1/5 mx-2">
                         <label className="block text-gray-700 font-medium">Name</label>
                         <input
                             type="text"
@@ -232,7 +265,7 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                         />
                     </div>
 
-                    <div className="w-1/5 mx-auto">
+                    <div className="w-1/5 mx-2">
                         <label className="block text-gray-700 font-medium">Bill No</label>
                         <input
                             type="text"
@@ -245,7 +278,7 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                         />
                     </div>
 
-                    <div className="w-1/5 mx-auto">
+                    <div className="w-1/5 mx-2">
                         <label className="block text-gray-700 font-medium">Phone No:</label>
                         <input
                             type="number"
@@ -256,7 +289,7 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                         />
                     </div>
 
-                    <div className="w-1/5 mx-auto">
+                    <div className="w-1/5 mx-2">
                         <label className="block text-gray-700 font-medium">Date</label>
                         <input
                             type="text"
