@@ -10,20 +10,21 @@ export function Header() {
     localStorage.removeItem("token");
     localStorage.removeItem("profilePic");
 
-    navigate("/login"); 
+    navigate("/login");
   };
 
   return (
     <header className="bg-white border-b border-purple-100 py-4 px-6 flex justify-between items-center">
       {/* Centered Text */}
       <div className="flex-1 flex justify-between">
-      <div className="text-purple-400 text-3xl font-bold">
-           Atif Brothers
+        <div className="text-purple-400 text-3xl font-bold" style={{ fontFamily: "'Dancing Script', cursive" }}>
+          Atif Brothers
         </div>
-        <div className="text-purple-400 text-xl ">
-           Passion for Fashion
+
+        <div className="text-purple-400 text-2xl font-bold" style={{ fontFamily: "'Dancing Script', cursive" }}>
+          Passion for Fashion
         </div>
-        <div className="text-purple-400 text-3xl font-bold mr-5">
+        <div className="text-purple-400 text-3xl font-bold mr-5" style={{ fontFamily: "'Dancing Script', cursive" }}>
           عاطف برادرز
         </div>
       </div>
