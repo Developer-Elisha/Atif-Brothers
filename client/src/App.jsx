@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import DailyExpense from "./components/DailyExpense/DailyExpense";
 import KarigerDashboard from "./components/Kariger/KarigerDashboard";
 import Layout from "./components/Layout";
+import ShowroomLayout from "./components/ShowroomLayout";
 import StaffDashboard from "./components/Staff/StaffDashboard";
 import KapraDashboard from "./components/Kapra/KapraDashboard";
 import CustomerDashboard from "./components/Customers/CustomerDashboard";
@@ -16,6 +17,10 @@ import DastiDashboard from "./components/Dasti/DastiDashboard";
 import ReturnDashboard from "./components/Return/ReturnDashboard";
 import TailorDashboard from "./components/Tailor/TailorDashboard";
 import MiscellaneousDashboard from "./components/Miscellaneous/MiscellaneousDashboard";
+import DilNawazDashboard from "./components/DilNawaz/DilNawaz";
+import ShowroomDailyExpense from "./components/ShowroomDailyExpense/ShowroomDailyExpense";
+import ShowroomStaffDashboard from "./components/ShowroomStaff/ShowroomStaffDashboard";
+import ShowroomCustomerDashboard from "./components/ShowroomCustomers/ShowroomCustomerDashboard";
 
 // const PrivateRoute = ({ element }) => {
 //   const token = localStorage.getItem("token");
@@ -26,6 +31,23 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Showroom Routes */}
+        
+        <Route
+          path="/showroom"
+          element={<ShowroomLayout><ShowroomDailyExpense /></ShowroomLayout>}
+        />
+        <Route
+          path="/showroomcustomer"
+          element={<ShowroomLayout><ShowroomCustomerDashboard /></ShowroomLayout>}
+        />
+        <Route
+          path="/showroomstaff"
+          element={<ShowroomLayout><ShowroomStaffDashboard /></ShowroomLayout>}
+        />
+        
+        {/* Showroom Routes */}
+
         {/* <Route
           path="/"
           element={<PrivateRoute element={<Layout><DailyExpense /></Layout>} />}
@@ -93,6 +115,10 @@ function App() {
         <Route
           path="/miscellaneous"
           element={<Layout><MiscellaneousDashboard /></Layout>}
+        />
+        <Route
+          path="/brother"
+          element={<Layout><DilNawazDashboard /></Layout>}
         />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Navigate to="/" replace />} />

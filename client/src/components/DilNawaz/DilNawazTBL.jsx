@@ -9,7 +9,7 @@ const KarigerTBL = ({ records }) => {
     printWindow.document.write(`
       <html>
         <head>
-          <title>Karigar</title>
+          <title>Dil Nawaz</title>
           <style>
             body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
             table { width: 100%; border-collapse: collapse; margin-top: 20px; }
@@ -27,7 +27,7 @@ const KarigerTBL = ({ records }) => {
           </style>
         </head>
         <body>
-          <h2>Karigar</h2>
+          <h2>Dil Nawaz</h2>
           ${printContent}
         </body>
       </html>
@@ -41,7 +41,7 @@ const KarigerTBL = ({ records }) => {
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
       {/* Header Section */}
       <div className="flex justify-between items-center bg-purple-300 p-3 w-full rounded-lg">
-        <h2 className="text-black font-semibold text-xl text-center flex-grow">Karigar</h2>
+        <h2 className="text-black font-semibold text-xl text-center flex-grow">Dil Nawaz</h2>
         <button
           className="bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-100 transition-all duration-200"
           onClick={handlePrint}

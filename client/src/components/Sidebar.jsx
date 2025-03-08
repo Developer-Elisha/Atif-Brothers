@@ -8,7 +8,8 @@ import {
   FaHandHoldingUsd, 
   FaExchangeAlt,
   FaTshirt,
-  FaTasks
+  FaTasks,
+  FaIdBadge
 } from "react-icons/fa";
 
 const Sidebar = () => {
@@ -30,11 +31,12 @@ const Sidebar = () => {
         <SidebarItem to="/" icon={<FaHome size={20} />} label="Daily Expense" isOpen={isOpen} />
         <SidebarItem to="/customer" icon={<FaUsers size={20} />} label="Customers" isOpen={isOpen} />
         <SidebarItem to="/dashboard" icon={<FaUserTie size={20} />} label="Kariger" isOpen={isOpen} />
+        <SidebarItem to="/brother" icon={<FaIdBadge size={20} />} label="Dil Nawaz" isOpen={isOpen} />
         <SidebarItem to="/kapra" icon={<FaBox size={20} />} label="Kapra" isOpen={isOpen} />
         <SidebarItem to="/dealer" icon={<FaWarehouse size={20} />} label="Dealer Kapra" isOpen={isOpen} />
         <SidebarItem to="/expense" icon={<FaMoneyCheckAlt size={20} />} label="Expense" isOpen={isOpen} />
         <SidebarItem to="/staff" icon={<FaUserFriends size={20} />} label="Staff" isOpen={isOpen} />
-        <SidebarItem to="/details" icon={<FaClipboardList size={20} />} label="Details" isOpen={isOpen} />
+        <SidebarItem to="/details" icon={<FaClipboardList size={20} />} label="Bill Review" isOpen={isOpen} />
         <SidebarItem to="/bank" icon={<FaMoneyBillWave size={20} />} label="Bank" isOpen={isOpen} />
         <SidebarItem to="/stitching" icon={<FaCut size={20} />} label="Stitching" isOpen={isOpen} />
         <SidebarItem to="/dasti" icon={<FaHandHoldingUsd size={20} />} label="Dasti" isOpen={isOpen} />

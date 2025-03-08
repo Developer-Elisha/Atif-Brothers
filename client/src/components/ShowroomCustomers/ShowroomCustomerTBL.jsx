@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const CustomerTBL = ({ records }) => {
+const ShowroomCustomerTBL = ({ records }) => {
   const [selectedRecords, setSelectedRecords] = useState([]);
   const [singlePrintRecord, setSinglePrintRecord] = useState(null);
 
@@ -192,4 +192,4 @@ const CustomerTBL = ({ records }) => {
   );
 };
 
-export default CustomerTBL;
+export default ShowroomCustomerTBL;

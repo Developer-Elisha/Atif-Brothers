@@ -1,6 +1,6 @@
 import { useState } from "react";
-import OrderForm from "./MainForm"; // Ensure this component is correctly implemented
-import Modal from "./Modal"; // Ensure this component is correctly implemented
+import MainForm from "./MainForm";
+import Modal from "./Modal";
 
 const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, setLastTagNumber: propSetLastTagNumber }) => {
   const [isOpenAdd, setIsOpenAdd] = useState(false);
@@ -10,7 +10,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
   const [formDataLess, setFormDataLess] = useState({ billNo: "", description: "", amount: "" });
 
   const [lastSuitNumber, setLastSuitNumber] = useState(1);
-  const [lastTagNumber, setLastTagNumber] = useState(propLastTagNumber); // Use the prop value
+  const [lastTagNumber, setLastTagNumber] = useState(propLastTagNumber);
 
   const today = new Date();
   const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
@@ -20,21 +20,25 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
     {
       date: formattedToday,
       role: "",
-      quantity: "5",
+      quantity: "",
       bill: "",
       tag: `AB-101`,
       suit: `S-1`,
-      items: "5",
-      color: "Red",
-      fabric: "Cotton",
-      description: "Red Cotton Shirt",
-      design: "New arrival",
-      rate: "5000",
-      duePayment: "5000",
+      items: "",
+      color: "",
+      fabric: "",
+      description: "",
+      design: "",
+      rate: "",
+      payby: "",
+      duePayment: "",
       payment: "",
       bank: "",
-      dropdown: "Data Entry",
-      cheque: "GPT-99449",
+      dropdown: "",
+      cheque: "",
+      chequeimg: "",
+      tagamount: "", 
+      total: "0",
     },
   ]);
 
@@ -87,11 +91,14 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
       ...(name === "role" && value !== "Shop" ? { bill: "" } : {}),
     };
 
-    if (name === "rate" || name === "quantity") {
+    if (name === "rate" || name === "tagamount") {
       const rate = parseFloat(updatedForms[index].rate) || 0;
-      const quantity = parseFloat(updatedForms[index].quantity) || 0;
-      updatedForms[index].amount = (rate * quantity).toFixed(2);
+      const tagAmount = parseFloat(updatedForms[index].tagamount) || 0;
+      let total = tagAmount + rate;
+    
+      updatedForms[index].total = total % 1 === 0 ? total.toFixed(0) : total.toFixed(2);
     }
+    
 
     setForms(updatedForms);
   };
@@ -102,21 +109,25 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
       {
         date: formattedToday,
         role: "",
-        quantity: "5",
+        quantity: "",
         bill: "",
         tag: `AB-${lastTagNumber + forms.length}`,
         suit: `S-${lastSuitNumber + forms.length}`,
-        items: "5",
-        color: "Red",
-        fabric: "Cotton",
-        description: "Red Cotton Shirt",
-        design: "New arrival",
-        rate: "5000",
-        duePayment: "5000",
+        items: "",
+        color: "",
+        fabric: "",
+        description: "",
+        design: "",
+        payby: "",
+        rate: "",
+        duePayment: "",
         payment: "",
         bank: "",
-        dropdown: "Data Entry",
-        cheque: "GPT-99449",
+        dropdown: "",
+        cheque: "",
+        chequeimg: "",
+        tagamount: "",
+        total: "0",
       },
     ]);
   };
@@ -142,29 +153,32 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
     }));
 
     setRecords([...records, ...newRecords]);
-    propSetLastTagNumber(lastTagNumber + forms.length); // Use the prop function to update the last tag number
+    propSetLastTagNumber(lastTagNumber + forms.length);
     setLastSuitNumber(lastSuitNumber + forms.length);
 
-    // Reset forms after submission
     setForms([
       {
         date: formattedToday,
         role: "",
-        quantity: "5",
+        quantity: "",
         bill: "",
         tag: `AB-${lastTagNumber + forms.length}`,
         suit: `S-${lastSuitNumber + forms.length}`,
-        items: "5",
-        color: "Red",
-        fabric: "Cotton",
-        description: "Red Cotton Shirt",
-        design: "New arrival",
-        rate: "5000",
-        duePayment: "5000",
+        items: "",
+        color: "",
+        fabric: "",
+        description: "",
+        design: "",
+        payby: "",
+        rate: "",
+        duePayment: "",
         payment: "",
         bank: "",
-        dropdown: "Data Entry",
-        cheque: "GPT-99449",
+        dropdown: "",
+        cheque: "",
+        chequeimg: "",
+        tagamount: "",
+        total: "0",
       },
     ]);
   };
@@ -217,7 +231,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
       </div>
 
       {forms.map((formData, index) => (
-        <OrderForm
+        <MainForm
           key={index}
           formData={formData}
           index={index}
@@ -233,7 +247,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
         formData={formDataAdd}
         handleChange={(e) => handleModalChange(e, setFormDataAdd)}
         onSubmit={() => handleSubmitAmountChange(true)}
-        getSuitNumbers={getSuitNumbers} // Pass the function to the Modal
+        getSuitNumbers={getSuitNumbers}
       />
 
       <Modal
@@ -243,7 +257,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
         formData={formDataLess}
         handleChange={(e) => handleModalChange(e, setFormDataLess)}
         onSubmit={() => handleSubmitAmountChange(false)}
-        getSuitNumbers={getSuitNumbers} // Pass the function to the Modal
+        getSuitNumbers={getSuitNumbers}
       />
 
       <div className="flex justify-center">

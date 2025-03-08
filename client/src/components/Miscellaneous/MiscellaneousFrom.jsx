@@ -9,9 +9,17 @@ const MiscellaneousForm = ({ setRecords, records }) => {
   const handleChange = (index, e) => {
     const { name, value } = e.target;
     const updatedForms = [...forms];
+  
     updatedForms[index][name] = value;
+  
+    // If "Shop" is selected, disable bill and set value to "Shop"
+    if (name === "role" && value === "Shop") {
+      updatedForms[index]["bill"] = "Shop";
+    }
+  
     setForms(updatedForms);
   };
+  
 
   const handleAddForm = () => {
     setForms([...forms, { date: formattedToday, bill: "50", amount: "", description: "Black Shirt" }]);
@@ -62,17 +70,32 @@ const MiscellaneousForm = ({ setRecords, records }) => {
             </div>
 
             <div className="w-1/2">
-              <label className="block text-gray-700 font-medium">Bill No</label>
-              <input
-                type="number"
-                name="bill"  // ✅ FIXED (was "Bill")
-                value={formData.bill}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                placeholder="Enter Bill"
-                required
-              />
-            </div>
+                <label className="block text-gray-700 font-medium">Shop/Order</label>
+                <select
+                  name="role"
+                  value={formData.role}
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  required
+                >
+                  <option value="" disabled>Select</option>
+                  <option value="Order">Order</option>
+                  <option value="Shop">Shop</option>
+                </select>
+              </div>
+
+              <div className="w-1/2">
+                <label className="block text-gray-700 font-medium">Bill No</label>
+                <input
+                  type="text"
+                  name="bill"
+                  value={formData.bill}
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  placeholder="Enter Bill No"
+                  required
+                  disabled={formData.role === "Shop"} />
+              </div>
 
             <div className="w-1/2">
               <label className="block text-gray-700 font-medium">Description</label>

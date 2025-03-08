@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccounts = [] }) => {
+  // Assuming balance amount is a constant for now, you can replace it with a prop or state if needed
+  const balanceAmount = 5000; // This can be dynamic based on your application logic
+
+  // Effect to calculate total balance
+  useEffect(() => {
+    if (formData.amount) {
+      const totalBalance = balanceAmount - formData.amount;
+      handleChange(index, { target: { name: 'totalBalance', value: totalBalance } });
+    } else {
+      handleChange(index, { target: { name: 'totalBalance', value: balanceAmount } });
+    }
+  }, [formData.amount, balanceAmount, index, handleChange]);
+
   return (
     <>
       <div key={index}>
@@ -25,6 +38,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
               className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
               required
             >
+              <option value="" disabled>Select</option>
               <option value="Data Entry">Data Entry</option>
               <option value="Payment">Payment</option>
               <option value="Receiving">Receiving</option>
@@ -32,12 +46,12 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
           </div>
 
           <div className="w-1/5">
-            <label className="block text-gray-700 font-medium">Description Amount</label>
+            <label className="block text-gray-700 font-medium">Balance Amount</label>
             <input
               disabled
               type="number"
               name="dues"
-              value="5000"
+              value={balanceAmount} // Use the dynamic balance amount
               className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
             />
           </div>
@@ -45,41 +59,6 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
 
         {formData.dropdown === "Payment" ? (
           <div className="flex gap-4 my-4 justify-center">
-            <div className="w-1/5">
-              <label className="block text-gray-700 font-medium">Amount</label>
-              <input
-                type="number"
-                name="amount"
-                value={formData.amount || ""}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-              />
-            </div>
-
-            <div className="w-1/5">
-              <label className="block text-gray-700 font-medium">Total Balance</label>
-              <input
-                type="number"
-                name="totalBalance"
-                value={formData.totalBalance || ""}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-              />
-            </div>
-
-            <div className="w-1/5">
-              <label className="block text-gray-700 font-medium">Rate</label>
-              <input
-                type="text"
-                name="paymentRate"
-                value={formData.paymentRate || ""}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                placeholder="Enter Rate"
-                required
-              />
-            </div>
-
             <div className="w-1/5">
               <label className="block text-gray-700 font-medium">Payment</label>
               <select
@@ -106,29 +85,53 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
                   required
                 >
                   <option value="" disabled>Select Bank</option>
-                  {bankAccounts.map((bank) => (
-                    <option key={bank} value={bank}>{bank}</option>
-                  ))}
+                  <option value="Meezan">Meezan</option>
+                  <option value="UBL">UBL</option>
+                  <option value="Faisal">Faisal</option>
+                  <option value="Easypaisa">Easypaisa</option>
+                  <option value="JazzCash">JazzCash</option>
                 </select>
               </div>
             )}
+
+            <div className="w-1/5">
+              <label className="block text-gray-700 font-medium">Pay By</label>
+              <input
+                type="text"
+                name="payby"
+                value={formData.payby || ""}
+                onChange={(e) => handleChange(index, e)}
+                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                placeholder="Enter Pay By"
+                required
+              />
+            </div>
+
+            <div className="w-1/5">
+              <label className="block text-gray-700 font-medium">Amount</label>
+              <input
+                type="number"
+                name="amount"
+                value={formData.amount || ""}
+                onChange={(e) => handleChange(index, e)}
+                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+              />
+            </div>
+
+            <div className="w-1/5">
+              <label className="block text-gray-700 font-medium">Total Balance</label>
+              <input
+                type="number"
+                name="totalBalance"
+                value={formData.totalBalance || ""}
+                readOnly
+                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+              />
+            </div>
           </div>
         ) : formData.dropdown === "Receiving" ? (
           <>
             <div className="flex gap-4 my-4 justify-center">
-              <div className="w-1/5">
-                <label className="block text-gray-700 font-medium">Bill No</label>
-                <input
-                  type="text"
-                  name="bill"
-                  value={formData.bill || ""}
-                  onChange={(e) => handleChange(index, e)}
-                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                  placeholder="Enter Bill No"
-                  required
-                />
-              </div>
-              
               <div className="w-1/5">
                 <label className="block text-gray-700 font-medium">Quantity</label>
                 <input
@@ -141,13 +144,28 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
               </div>
 
               <div className="w-1/5">
+                <label className="block text-gray-700 font-medium">Bill No</label>
+                <input
+                  type="text"
+                  name="bill"
+                  value={formData.bill || ""}
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  placeholder="Enter Bill No"
+                  required
+                />
+              </div>
+
+              <div className="w-1/5">
                 <label className="block text-gray-700 font-medium">Tag No</label>
                 <input
                   type="text"
                   name="tag"
                   value={formData.tag || ""}
-                  disabled
-                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1 bg-gray-200 text-gray-600"
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  placeholder="Enter Tag No"
+                  required
                 />
               </div>
 
@@ -162,8 +180,8 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
                   placeholder="Enter Item"
                 />
               </div>
-              
             </div>
+            
             <div className="flex gap-4 my-4 justify-center">
               <div className="w-1/5">
                 <label className="block text-gray-700 font-medium">Color</label>
@@ -214,8 +232,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
               </div>
             </div>
             <div className="flex gap-4 my-4 justify-center">
-              
-            <div className="w-1/5">
+              <div className="w-1/5">
                 <label className="block text-gray-700 font-medium">Rate</label>
                 <input
                   type="text"
@@ -245,17 +262,6 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
               </div>
 
               <div className="w-1/5">
-                <label className="block text-gray-700 font-medium">Tag No</label>
-                <input
-                  type="text"
-                  name="tag"
-                  value={formData.tag || ""}
-                  disabled
-                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1 bg-gray-200 text-gray-600"
-                />
-              </div>
-
-              <div className="w-1/5">
                 <label className="block text-gray-700 font-medium">Bill No</label>
                 <input
                   type="text"
@@ -265,7 +271,20 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm, bankAccount
                   className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
                   placeholder="Enter Bill No"
                   required
-                  disabled={formData.role === "Shop"} />
+                />
+              </div>
+
+              <div className="w-1/5">
+                <label className="block text-gray-700 font-medium">Tag No</label>
+                <input
+                  type="text"
+                  name="tag"
+                  value={formData.tag || ""}
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  placeholder="Enter Tag No"
+                  required
+                />
               </div>
 
               <div className="w-1/5">
