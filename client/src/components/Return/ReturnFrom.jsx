@@ -56,164 +56,152 @@ const ReturnForm = ({ setRecords, records }) => {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit}>
-        {forms.map((formData, index) => (
-          <>
-          <div key={index} className="flex gap-4 my-4 justify-center mt-20">
-            <div className="w-1/5">
-              <label className="block text-gray-700 font-medium">Date</label>
-              <input
-                type="text"
-                name="date"
-                value={formData.date}
-                disabled
-                className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
-              />
-            </div>
+      {forms.map((formData, index) => (
+  <div key={index}> {/* Add the key here */}
+    <div className="flex gap-4 my-4 justify-center mt-20">
+      <div className="w-1/5">
+        <label className="block text-gray-700 font-medium">Date</label>
+        <input
+          type="text"
+          name="date"
+          value={formData.date}
+          disabled
+          className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
+        />
+      </div>
 
-            <div className="w-1/5">
-              <label className="block text-gray-700 font-medium">Return Liya/Diya</label>
-              <select
-                name="dasti"
-                value={formData.dasti}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                required
-              >
-                <option value="" disabled>Select</option>
-                <option value="Dasti Liya">Return Liya</option>
-                <option value="Dasti Diya">Return Diya</option>
-              </select>
-            </div>
+      <div className="w-1/5">
+        <label className="block text-gray-700 font-medium">Return Liya/Diya</label>
+        <select
+          name="dasti"
+          value={formData.dasti}
+          onChange={(e) => handleChange(index, e)}
+          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+          required
+        >
+          <option value="" disabled>Select</option>
+          <option value="Dasti Liya">Return Liya</option>
+          <option value="Dasti Diya">Return Diya</option>
+        </select>
+      </div>
 
-            <div className="w-1/5">
-              <label className="block text-gray-700 font-medium">Cash/Bank</label>
-              <select
-                name="cash"
-                value={formData.cash}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                required
-              >
-                <option value="" disabled>Select</option>
-                <option value="Cash">Cash</option>
-                <option value="Bank">Bank</option>
-              </select>
-            </div>
+      <div className="w-1/5">
+        <label className="block text-gray-700 font-medium">Cash/Bank</label>
+        <select
+          name="cash"
+          value={formData.cash}
+          onChange={(e) => handleChange(index, e)}
+          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+          required
+        >
+          <option value="" disabled>Select</option>
+          <option value="Cash">Cash</option>
+          <option value="Bank">Bank</option>
+        </select>
+      </div>
 
-            {/* Show Bank Dropdown only if 'Bank' is selected */}
-            {formData.cash === "Bank" && (
-              <div className="w-1/5">
-                <label className="block text-gray-700 font-medium">Bank</label>
-                <select
-                  name="bank"
-                  value={formData.bank}
-                  onChange={(e) => handleChange(index, e)}
-                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                  required
-                >
-                  <option value="" disabled>Select</option>
-                  <option value="Meezan">Meezan</option>
-                  <option value="UBL">UBL</option>
-                  <option value="Faysal">Faysal</option>
-                  <option value="Easypaisa">Easypaisa</option>
-                  <option value="Jazzcash">Jazzcash</option>
-                </select>
-              </div>
-            )}
-
-            <div className="w-1/5">
-              <label className="block text-gray-700 font-medium">Name</label>
-              <select
-                name="name"
-                value={formData.name}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                required
-              >
-                <option value="" disabled>Select</option>
-                <option value="Name 1">Name 1</option>
-                <option value="Name 2">Name 2</option>
-              </select>
-            </div>
-            </div>
-
-            <div className="flex gap-4 my-4 justify-center">
-
-            <div className="w-1/5">
-              <label className="block text-gray-700 font-medium">Description</label>
-              <input
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                required
-              />
-            </div>
-
-            <div className="w-1/5">
-              <label className="block text-gray-700 font-medium">Previous Amount</label>
-              <input
-                type="number"
-                name="previous"
-                value={formData.previous}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                placeholder="Enter Previous Amount"
-                required
-              />
-            </div>
-
-            <div className="w-1/5">
-              <label className="block text-gray-700 font-medium">Amount</label>
-              <input
-                type="number"
-                name="amount"
-                value={formData.amount}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                placeholder="Enter Amount"
-                required
-              />
-            </div>
-
-            <div className="w-1/5">
-              <label className="block text-gray-700 font-medium">Balance</label>
-              <input
-                type="text"
-                name="balance"
-                value={formData.balance}
-                readOnly
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                placeholder="Balance will be calculated"
-              />
-            </div>
-
-            {forms.length > 1 && (
-              <button
-                type="button"
-                onClick={() => handleRemoveForm(index)}
-                className="bg-red-500 text-white cursor-pointer mt-7 px-4 py-2 h-10 rounded-lg hover:bg-red-600 transition-all"
-              >
-                ✕
-              </button>
-            )}
-          </div>
-          <div className='mt-20'></div>
-          <hr />
-          </>
-        ))}
-
-        <div className="flex justify-center gap-4 mt-6">
-          <button
-            type="submit"
-            className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all"
+      {formData.cash === "Bank" && (
+        <div className="w-1/5">
+          <label className="block text-gray-700 font-medium">Bank</label>
+          <select
+            name="bank"
+            value={formData.bank}
+            onChange={(e) => handleChange(index, e)}
+            className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+            required
           >
-            Save
-          </button>
+            <option value="" disabled>Select</option>
+            <option value="Meezan">Meezan</option>
+            <option value="UBL">UBL</option>
+            <option value="Faysal">Faysal</option>
+            <option value="Easypaisa">Easypaisa</option>
+            <option value="Jazzcash">Jazzcash</option>
+          </select>
         </div>
-      </form>
+      )}
+
+      <div className="w-1/5">
+        <label className="block text-gray-700 font-medium">Name</label>
+        <select
+          name="name"
+          value={formData.name}
+          onChange={(e) => handleChange(index, e)}
+          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+          required
+        >
+          <option value="" disabled>Select</option>
+          <option value="Name 1">Name 1</option>
+          <option value="Name 2">Name 2</option>
+        </select>
+      </div>
+    </div>
+
+    <div className="flex gap-4 my-4 justify-center">
+      <div className="w-1/5">
+        <label className="block text-gray-700 font-medium">Description</label>
+        <input
+          type="text"
+          name="description"
+          value={formData.description}
+          onChange={(e) => handleChange(index, e)}
+          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+          required
+        />
+      </div>
+
+      <div className="w-1/5">
+        <label className="block text-gray-700 font-medium">Previous Amount</label>
+        <input
+          type="number"
+          name="previous"
+          value={formData.previous}
+          onChange={(e) => handleChange(index, e)}
+          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+          placeholder="Enter Previous Amount"
+          required
+        />
+      </div>
+
+      <div className="w-1/5">
+        <label className="block text-gray-700 font-medium">Amount</label>
+        <input
+          type="number"
+          name="amount"
+          value={formData.amount}
+          onChange={(e) => handleChange(index, e)}
+          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+          placeholder="Enter Amount"
+          required
+        />
+      </div>
+
+      <div className="w-1/5">
+        <label className="block text-gray-700 font-medium">Balance</label>
+        <input
+          type="text"
+          name="balance"
+          value={formData.balance}
+          readOnly
+          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+          placeholder="Balance will be calculated"
+        />
+      </div>
+
+      {forms.length > 1 && (
+        <button
+          type="button"
+          onClick={() => handleRemoveForm(index)}
+          className="bg-red-500 text-white cursor-pointer mt-7 px-4 py-2 h-10 rounded-lg hover:bg-red-600 transition-all"
+        >
+          ✕
+        </button>
+      )}
+    </div>
+    <div className="mt-20"></div>
+    <hr />
+  </div> // Here you should ensure you are wrapping the form inputs with a unique key
+))}
+
     </div>
   );
 };

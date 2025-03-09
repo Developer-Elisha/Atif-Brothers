@@ -49,20 +49,24 @@ const TailorForm = ({ records, setRecords }) => {
         return;
     }
 
-    setRecords((prevRecords) =>
-        prevRecords.map((record) =>
-            record.suit === formData.suitNo
-                ? {
-                    ...record,
-                    description: formData.description || record.description,
-                    rate: (parseFloat(record.rate) + (isAdding ? amountValue : -amountValue)).toString(),
-                    dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
-                    shopName: formData.shopName || record.shopName, 
-                    details: formData.details || record.details, 
-                }
-                : record
-        )
-    );
+    setRecords((prevRecords) => {
+      let isUpdated = false;
+      const updatedRecords = prevRecords.map((record) => {
+        if (record.suit === formData.suitNo) {
+          const newRate = (parseFloat(record.rate) + (isAdding ? amountValue : -amountValue)).toString();
+          const newDueAmount = (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString();
+    
+          if (record.rate !== newRate || record.dueAmount !== newDueAmount) {
+            isUpdated = true;
+            return { ...record, rate: newRate, dueAmount: newDueAmount };
+          }
+        }
+        return record;
+      });
+    
+      return isUpdated ? updatedRecords : prevRecords;
+    });
+    
 
     if (isAdding) {
         setIsOpenAdd(false);
