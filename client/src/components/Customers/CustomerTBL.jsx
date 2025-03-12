@@ -60,6 +60,7 @@ const CustomerTBL = ({ records }) => {
                 <th className="py-3 px-6 text-center">Name</th>
                 <th className="py-3 px-6 text-center">Phone No</th>
                 <th className="py-3 px-6 text-center">Quantity</th>
+                <th className="py-3 px-6 text-center">Rate</th>
                 <th className="py-3 px-6 text-center">Pay Status</th>
                 <th className="py-3 px-6 text-center">Pay With</th>
                 <th className="py-3 px-6 text-center">Bank</th>
@@ -91,6 +92,7 @@ const CustomerTBL = ({ records }) => {
                     <td className="py-3 px-6 text-center">{record.name}</td>
                     <td className="py-3 px-6 text-center">{record.phone}</td>
                     <td className="py-3 px-6 text-center">{record.quantity}</td>
+                    <td className="py-3 px-6 text-center">{record.rate}</td>
                     <td className="py-3 px-6 text-center">{record.paymentType}</td>
                     <td className="py-3 px-6 text-center">{record.payment}</td>
                     <td className="py-3 px-6 text-center">{record.bank}</td>

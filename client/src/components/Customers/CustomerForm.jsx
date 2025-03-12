@@ -20,6 +20,7 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
             payment: "",
             bank: "",
             currentPayment: "",
+            rate: "",
         },
     ]);
 
@@ -81,9 +82,9 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                     description: formData.description || record.description,
                     received: (parseFloat(record.received) + (isAdding ? amountValue : -amountValue)).toString(),
                     dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
-                    shopName: formData.shopName || record.shopName,  // Add this
-                    tagNo: formData.tagNo || record.tagNo,  // Add this
-                    details: formData.details || record.details,  // Add this
+                    shopName: formData.shopName || record.shopName,
+                    tagNo: formData.tagNo || record.tagNo,
+                    details: formData.details || record.details,
                 }
                 : record
         )
@@ -107,12 +108,11 @@ const handleChange = (index, e) => {
             i === index ? { ...form, [name]: value } : form
         );
 
-        // Additional logic for calculating dueAmount, etc.
-        if (["received", "quantity", "advancePayment"].includes(name)) {
-            const received = parseFloat(updatedForms[index].received) || 0;
+        if (["rate", "quantity", "advancePayment"].includes(name)) {
+            const rate = parseFloat(updatedForms[index].rate) || 0;
             const quantity = parseFloat(updatedForms[index].quantity) || 0;
             const advance = parseFloat(updatedForms[index].advancePayment) || 0;
-            const due = received * quantity - advance;
+            const due = rate * quantity - advance;
 
             updatedForms[index].dueAmount = due % 1 === 0 ? due.toString() : due.toFixed(2);
         }
@@ -134,6 +134,7 @@ const handleChange = (index, e) => {
                 advancePayment: "",
                 dueAmount: "",
                 currentPayment: "",
+                rate: "",
             },
         ]);
     };
@@ -202,6 +203,7 @@ const handleChange = (index, e) => {
                 advancePayment: "",
                 dueAmount: "",
                 currentPayment: "",
+                rate: "",
             },
         ]);
     };

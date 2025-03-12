@@ -38,6 +38,21 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                         placeholder="Enter Quantity"
                     />
                 </div>
+
+                
+
+                <div className="w-1/4">
+                    <label className="block text-gray-700 font-medium">Rate</label>
+                    <input
+                        type="text"
+                        name="rate"
+                        value={formData.rate}
+                        onChange={(e) => handleChange(index, e)}
+                        className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                        placeholder="Enter Rate"
+                    />
+                </div>
+                
                 <div className="w-1/4">
                     <label className="block text-gray-700 font-medium">Payment Status</label>
                     <select
