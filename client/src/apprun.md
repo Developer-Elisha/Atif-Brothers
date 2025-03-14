@@ -140,306 +140,422 @@ function App() {
 export default App; -->
 
 
-<!-- <div className="mt-4">
-            <label className="block text-gray-700 font-medium">Payment Type</label>
-            <select name="paymentType" value={formData.paymentType} onChange={(e) => handleChange(index, e)} className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1">
-              <option value="">Select Payment Type</option>
-              <option value="Advance">Advance</option>
-              <option value="Final Pay">Final Pay</option>
-            </select>
-          </div>
+<!-- import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./components/Login";
+import DailyExpense from "./components/DailyExpense/DailyExpense";
+import KarigerDashboard from "./components/Kariger/KarigerDashboard";
+import Layout from "./components/Layout";
+import ShowroomLayout from "./components/ShowroomLayout";
+import StaffDashboard from "./components/Staff/StaffDashboard";
+import KapraDashboard from "./components/Kapra/KapraDashboard";
+import CustomerDashboard from "./components/Customers/CustomerDashboard";
+import ExpenseDashboard from "./components/Expense/ExpenseDashboard";
+import DealerDashboard from "./components/KapraDealer/DealarDashboard";
+import DetailsDashboard from "./components/Details/DetailsDashboard";
+import BankDashboard from "./components/Bank/BankDashboard";
+import StitchingDashboard from "./components/Stitching/StitchingDashboard";
+import DastiDashboard from "./components/Dasti/DastiDashboard";
+import ReturnDashboard from "./components/Return/ReturnDashboard";
+import TailorDashboard from "./components/Tailor/TailorDashboard";
+import MiscellaneousDashboard from "./components/Miscellaneous/MiscellaneousDashboard";
+import DilNawazDashboard from "./components/DilNawaz/DilNawaz";
+import ShowroomDailyExpense from "./components/ShowroomDailyExpense/ShowroomDailyExpense";
+import ShowroomStaffDashboard from "./components/ShowroomStaff/ShowroomStaffDashboard";
+import ShowroomCustomerDashboard from "./components/ShowroomCustomers/ShowroomCustomerDashboard";
 
-          {formData.paymentType === "Advance" && (
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              <div>
-                <label className="block text-gray-700 font-medium">Advance Payment</label>
-                <input type="text" name="advancePayment" value={formData.advancePayment} onChange={(e) => handleChange(index, e)} className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1" placeholder="Enter Advance Payment" required />
-              </div>
-              <div>
-                <label className="block text-gray-700 font-medium">Due Amount</label>
-                <input type="text" name="dueAmount" value={formData.dueAmount} onChange={(e) => handleChange(index, e)} className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1" placeholder="Enter Due Amount" required />
-              </div>
-            </div>
-          )} -->
+const PrivateRoute = ({ element }) => {
+  const token = localStorage.getItem("token");
+  return token ? element : <Navigate to="/login" replace />;
+};
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        {/* Showroom Routes */}
+
+        {/* <Route
+          path="/showroom"
+          element={<ShowroomLayout><ShowroomDailyExpense /></ShowroomLayout>}
+        /> 
+        
+        <Route
+          path="/showroomcustomer"
+          element={<ShowroomLayout><ShowroomCustomerDashboard /></ShowroomLayout>}
+        /> 
+        
+        <Route
+          path="/showroomstaff"
+          element={<ShowroomLayout><ShowroomStaffDashboard /></ShowroomLayout>}
+        />*/}
+
+        <Route
+          path="/showroom"
+          element={<PrivateRoute element={<ShowroomLayout><ShowroomDailyExpense /></ShowroomLayout>} />}
+        />
+
+        <Route
+          path="/showroomcustomer"
+          element={<PrivateRoute element={<ShowroomLayout><ShowroomCustomerDashboard /></ShowroomLayout>} />}
+        />
+
+        <Route
+          path="/showroomstaff"
+          element={<PrivateRoute element={<ShowroomLayout><ShowroomStaffDashboard /></ShowroomLayout>} />}
+        />
 
 
 
+        {/* Showroom Routes */}
 
+        <Route
+          path="/"
+          element={<PrivateRoute element={<Layout><DailyExpense /></Layout>} />}
+        />
+        {/* <Route
+          path="/"
+          element={<Layout><DailyExpense /></Layout>}
+        /> */}
 
+        <Route
+          path="/staff"
+          element={<PrivateRoute element={<Layout><StaffDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/staff"
+          element={<Layout><StaffDashboard /></Layout>}
+        /> */}
 
+        <Route
+          path="/dashboard"
+          element={<PrivateRoute element={<Layout><KarigerDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/dashboard"
+          element={<Layout><KarigerDashboard /></Layout>}
+        /> */}
 
+        <Route
+          path="/kapra"
+          element={<PrivateRoute element={<Layout><KapraDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/kapra"
+          element={<Layout><KapraDashboard /></Layout>}
+        /> */}
 
+        <Route
+          path="/customer"
+          element={<PrivateRoute element={<Layout><CustomerDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/customer"
+          element={<Layout><CustomerDashboard /></Layout>}
+        /> */}
 
+        <Route
+          path="/expense"
+          element={<PrivateRoute element={<Layout><ExpenseDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/expense"
+          element={<Layout><ExpenseDashboard /></Layout>}
+        /> */}
 
+        <Route
+          path="/dealer"
+          element={<PrivateRoute element={<Layout><DealerDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/dealer"
+          element={<Layout><DealerDashboard /></Layout>}
+        /> */}
 
+        <Route
+          path="/details"
+          element={<PrivateRoute element={<Layout><DetailsDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/details"
+          element={<Layout><DetailsDashboard /></Layout>}
+        /> */}
 
+        <Route
+          path="/bank"
+          element={<PrivateRoute element={<Layout><BankDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/bank"
+          element={<Layout><BankDashboard /></Layout>}
+        /> */}
 
-          
+        <Route
+          path="/stitching"
+          element={<PrivateRoute element={<Layout><StitchingDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/stitching"
+          element={<Layout><StitchingDashboard /></Layout>}
+        /> */}
 
-      {forms.map((formData, index) => (
-        <div key={index}>
-          <div className="flex gap-4 my-4 mt-20">
-            <div className="w-1/2">
-              <label className="block text-gray-700 font-medium">Date</label>
-              <input
-                type="date"
-                name="date"
-                value={formData.date}
-                disabled
-                className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
-              />
-            </div>
+        <Route
+          path="/dasti"
+          element={<PrivateRoute element={<Layout><DastiDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/dasti"
+          element={<Layout><DastiDashboard /></Layout>}
+        /> */}
 
-            <div className="w-1/2">
-              <label className="block text-gray-700 font-medium">Payment / Data Entry</label>
-              <select
-                name="dropdown"
-                value={formData.dropdown}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                required
-              >
-                <option value="Data Entry">Data Entry</option>
-                <option value="Payment">Payment</option>
-              </select>
-            </div>
+        <Route
+          path="/return"
+          element={<PrivateRoute element={<Layout><ReturnDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/return"
+          element={<Layout><ReturnDashboard /></Layout>}
+        /> */}
 
-            <div className="w-1/2">
-              <label className="block text-gray-700 font-medium">Due Amount</label>
-              <input
-                disabled
-                type="number"
-                name="dues"
-                value="5000"
-                onChange={handleChange}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-              />
-            </div>
-          </div>
+        <Route
+          path="/tailor"
+          element={<PrivateRoute element={<Layout><TailorDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/tailor"
+          element={<Layout><TailorDashboard /></Layout>}
+        /> */}
 
-          {formData.dropdown === "Payment" ? (
-            <div className="flex gap-4 my-4">
-              <div className="w-1/2">
-                <label className="block text-gray-700 font-medium">Amount</label>
-                <input
-                  type="number"
-                  name="amount"
-                  value={formData.amount || ""}
-                  onChange={(e) => handleChange(index, e)}
-                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                />
-              </div>
+        <Route
+          path="/miscellaneous"
+          element={<PrivateRoute element={<Layout><MiscellaneousDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/miscellaneous"
+          element={<Layout><MiscellaneousDashboard /></Layout>}
+        /> */}
 
-              <div className="w-1/2">
-                <label className="block text-gray-700 font-medium">Total Balance</label>
-                <input
-                  type="number"
-                  name="totalBalance"
-                  value={formData.totalBalance || ""}
-                  onChange={(e) => handleChange(index, e)}
-                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                />
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div className="flex gap-4 my-4">
-                <div className="w-1/2">
-                  <label className="block text-gray-700 font-medium">Shop/Order</label>
-                  <select
-                    name="role"
-                    value={formData.role}
-                    onChange={(e) => handleChange(index, e)}
-                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                    required
-                  >
-                    <option value="" disabled>Select</option>
-                    <option value="Shop">Shop</option>
-                    <option value="Order">Order</option>
-                  </select>
-                </div>
+        <Route
+          path="/brother"
+          element={<PrivateRoute element={<Layout><DilNawazDashboard /></Layout>} />}
+        />
+        {/* <Route
+          path="/brother"
+          element={<Layout><DilNawazDashboard /></Layout>}
+        /> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
+  );
+}
 
-                <div className="w-1/2">
-                  <label className="block text-gray-700 font-medium">Quantity</label>
-                  <input
-                    type="number"
-                    name="quantity"
-                    value={formData.quantity}
-                    onChange={(e) => handleChange(index, e)}
-                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                  />
-                </div>
+export default App;  -->
 
-                <div className="w-1/2">
-                  <label className="block text-gray-700 font-medium">Tag No</label>
-                  <input
-                    type="text"
-                    name="tag"
-                    value={formData.tag}
-                    disabled
-                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1 bg-gray-200 text-gray-600"
-                  />
-                </div>
+<!-- import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./components/Login";
+import DailyExpense from "./components/DailyExpense/DailyExpense";
+import KarigerDashboard from "./components/Kariger/KarigerDashboard";
+import Layout from "./components/Layout";
+import ShowroomLayout from "./components/ShowroomLayout";
+import StaffDashboard from "./components/Staff/StaffDashboard";
+import KapraDashboard from "./components/Kapra/KapraDashboard";
+import CustomerDashboard from "./components/Customers/CustomerDashboard";
+import ExpenseDashboard from "./components/Expense/ExpenseDashboard";
+import DealerDashboard from "./components/KapraDealer/DealarDashboard";
+import DetailsDashboard from "./components/Details/DetailsDashboard";
+import BankDashboard from "./components/Bank/BankDashboard";
+import StitchingDashboard from "./components/Stitching/StitchingDashboard";
+import DastiDashboard from "./components/Dasti/DastiDashboard";
+import ReturnDashboard from "./components/Return/ReturnDashboard";
+import TailorDashboard from "./components/Tailor/TailorDashboard";
+import MiscellaneousDashboard from "./components/Miscellaneous/MiscellaneousDashboard";
+import DilNawazDashboard from "./components/DilNawaz/DilNawaz";
+import ShowroomDailyExpense from "./components/ShowroomDailyExpense/ShowroomDailyExpense";
+import ShowroomStaffDashboard from "./components/ShowroomStaff/ShowroomStaffDashboard";
+import ShowroomCustomerDashboard from "./components/ShowroomCustomers/ShowroomCustomerDashboard";
 
-                <div className="w-1/2">
-                  <label className="block text-gray-700 font-medium">Suit No</label>
-                  <input
-                    type="text"
-                    name="suit"
-                    value={formData.suit}
-                    disabled
-                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1 bg-gray-200 text-gray-600"
-                  />
-                </div>
+const PrivateRoute = ({ element }) => {
+  const token = localStorage.getItem("token");
+  return token ? element : <Navigate to="/login" replace />;
+};
 
-                <div className="w-1/2">
-                  <label className="block text-gray-700 font-medium">Bill No</label>
-                  <input
-                    type="text"
-                    name="bill"
-                    value={formData.bill}
-                    onChange={(e) => handleChange(index, e)}
-                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                    placeholder="Enter Bill No"
-                    required
-                    disabled={formData.role === "Shop"} />
-                </div>
+function App() {
+  return (
+    <Router>
+      <Routes>
+        {/* Showroom Routes */}
+        <Route
+          path="/showroom"
+          element={<PrivateRoute element={<ShowroomLayout><ShowroomDailyExpense /></ShowroomLayout>} />}
+        />
 
-                <div className="w-1/2">
-                  <label className="block text-gray-700 font-medium">Item</label>
-                  <input
-                    type="text"
-                    name="items"
-                    value={formData.items}
-                    onChange={(e) => handleChange(index, e)}
-                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                    placeholder="Enter Item"
-                  />
-                </div>
-              </div>
+        <Route
+          path="/showroomcustomer"
+          element={<PrivateRoute element={<ShowroomLayout><ShowroomCustomerDashboard /></ShowroomLayout>} />}
+        />
 
-              <div className="flex gap-4 my-4">
-                <div className="w-1/2">
-                  <label className="block text-gray-700 font-medium">Color</label>
-                  <input
-                    type="text"
-                    name="color"
-                    value={formData.color}
-                    onChange={(e) => handleChange(index, e)}
-                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                    placeholder="Enter Color"
-                  />
-                </div>
+        <Route
+          path="/showroomstaff"
+          element={<PrivateRoute element={<ShowroomLayout><ShowroomStaffDashboard /></ShowroomLayout>} />}
+        />
+        {/* Showroom Routes */}
 
-                <div className="w-1/2">
-                  <label className="block text-gray-700 font-medium">Fabric</label>
-                  <input
-                    name="fabric"
-                    type="text"
-                    value={formData.fabric}
-                    onChange={(e) => handleChange(index, e)}
-                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                    required
-                  />
-                </div>
+        {/* <Route
+          path="/showroom"
+          element={<ShowroomLayout><ShowroomDailyExpense /></ShowroomLayout>}
+        /> 
+        
+        <Route
+          path="/showroomcustomer"
+          element={<ShowroomLayout><ShowroomCustomerDashboard /></ShowroomLayout>}
+        /> 
+        
+        <Route
+          path="/showroomstaff"
+          element={<ShowroomLayout><ShowroomStaffDashboard /></ShowroomLayout>}
+        />
+        <Route
+          path="/"
+          element={<Layout><DailyExpense /></Layout>}
+        /> 
+        <Route
+          path="/staff"
+          element={<Layout><StaffDashboard /></Layout>}
+        />
+        <Route
+          path="/dashboard"
+          element={<Layout><KarigerDashboard /></Layout>}
+        />
+        <Route
+          path="/kapra"
+          element={<Layout><KapraDashboard /></Layout>}
+        />
+        <Route
+          path="/customer"
+          element={<Layout><CustomerDashboard /></Layout>}
+        /> 
+        <Route
+          path="/expense"
+          element={<Layout><ExpenseDashboard /></Layout>}
+        /> 
+        <Route
+          path="/dealer"
+          element={<Layout><DealerDashboard /></Layout>}
+        /> 
+        <Route
+          path="/details"
+          element={<Layout><DetailsDashboard /></Layout>}
+        /> 
+        <Route
+          path="/bank"
+          element={<Layout><BankDashboard /></Layout>}
+        /> 
+        <Route
+          path="/stitching"
+          element={<Layout><StitchingDashboard /></Layout>}
+        /> 
+        <Route
+          path="/dasti"
+          element={<Layout><DastiDashboard /></Layout>}
+        /> 
+        <Route
+          path="/return"
+          element={<Layout><ReturnDashboard /></Layout>}
+        /> 
+        <Route
+          path="/tailor"
+          element={<Layout><TailorDashboard /></Layout>}
+        /> 
+        <Route
+          path="/miscellaneous"
+          element={<Layout><MiscellaneousDashboard /></Layout>}
+        /> 
+        <Route
+          path="/brother"
+          element={<Layout><DilNawazDashboard /></Layout>}
+        /> */}
 
-                <div className="w-1/2">
-                  <label className="block text-gray-700 font-medium">Description</label>
-                  <input
-                    type="text"
-                    name="description"
-                    value={formData.description}
-                    onChange={(e) => handleChange(index, e)}
-                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                    placeholder="Enter Description"
-                  />
-                </div>
+        <Route
+          path="/"
+          element={<PrivateRoute element={<Layout><DailyExpense /></Layout>} />}
+        />
 
-                <div className="w-1/2">
-                  <label className="block text-gray-700 font-medium">Design</label>
-                  <input
-                    type="text"
-                    name="design"
-                    value={formData.design}
-                    onChange={(e) => handleChange(index, e)}
-                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                    placeholder="Enter Design"
-                  />
-                </div>
+        <Route
+          path="/staff"
+          element={<PrivateRoute element={<Layout><StaffDashboard /></Layout>} />}
+        />
 
-                <div className="w-1/2">
-                  <label className="block text-gray-700 font-medium">Rate</label>
-                  <input
-                    type="text"
-                    name="rate"
-                    value={formData.rate}
-                    onChange={(e) => handleChange(index, e)}
-                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                    placeholder="Enter Rate"
-                    required
-                  />
-                </div>
+        <Route
+          path="/dashboard"
+          element={<PrivateRoute element={<Layout><KarigerDashboard /></Layout>} />}
+        />
 
-                <div className="w-1/2">
-                  <label className="block text-gray-700 font-medium">Amount</label>
-                  <input
-                    type="text"
-                    disabled
-                    name="amount"
-                    value={formData.amount}
-                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1 text-gray-600"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
+        <Route
+          path="/kapra"
+          element={<PrivateRoute element={<Layout><KapraDashboard /></Layout>} />}
+        />
 
-          <div className="flex gap-4 my-4 mt-20">
-            <div className="w-1/2">
-              <label className="block text-gray-700 font-medium">Payment</label>
-              <select
-                name="payment"
-                value={formData.payment}
-                onChange={(e) => handleChange(index, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                required
-              >
-                <option value="" disabled>Select</option>
-                <option value="Bank">Bank</option>
-                <option value="Cash">Cash</option>
-              </select>
-            </div>
+        <Route
+          path="/customer"
+          element={<PrivateRoute element={<Layout><CustomerDashboard /></Layout>} />}
+        />
 
-            {formData.payment === "Bank" && (
-              <div className="w-1/2">
-                <label className="block text-gray-700 font-medium">Select Bank</label>
-                <select
-                  name="bank"
-                  value={formData.bank}
-                  onChange={(e) => handleChange(index, e)}
-                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                  required
-                >
-                  <option value="" disabled>Select Bank</option>
-                  {bankAccounts.map((bank, i) => (
-                    <option key={i} value={bank}>
-                      {bank}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-          </div>
+        <Route
+          path="/expense"
+          element={<PrivateRoute element={<Layout><ExpenseDashboard /></Layout>} />}
+        />
 
-          <div className="flex justify-end">
-            <button
-              onClick={() => handleRemoveForm(index)}
-              className="bg-red-500 mb-5 text-white px-3 cursor-pointer py-1 rounded-lg hover:bg-red-600 transition-all"
-            >
-              ✕
-            </button>
-          </div>
+        <Route
+          path="/dealer"
+          element={<PrivateRoute element={<Layout><DealerDashboard /></Layout>} />}
+        />
 
-          <hr />
-        </div>
-      ))}
+        <Route
+          path="/details"
+          element={<PrivateRoute element={<Layout><DetailsDashboard /></Layout>} />}
+        />
+
+        <Route
+          path="/bank"
+          element={<PrivateRoute element={<Layout><BankDashboard /></Layout>} />}
+        />
+
+        <Route
+          path="/stitching"
+          element={<PrivateRoute element={<Layout><StitchingDashboard /></Layout>} />}
+        />
+
+        <Route
+          path="/dasti"
+          element={<PrivateRoute element={<Layout><DastiDashboard /></Layout>} />}
+        />
+
+        <Route
+          path="/return"
+          element={<PrivateRoute element={<Layout><ReturnDashboard /></Layout>} />}
+        />
+
+        <Route
+          path="/tailor"
+          element={<PrivateRoute element={<Layout><TailorDashboard /></Layout>} />}
+        />
+
+        <Route
+          path="/miscellaneous"
+          element={<PrivateRoute element={<Layout><MiscellaneousDashboard /></Layout>} />}
+        />
+
+        <Route
+          path="/brother"
+          element={<PrivateRoute element={<Layout><DilNawazDashboard /></Layout>} />}
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;  -->

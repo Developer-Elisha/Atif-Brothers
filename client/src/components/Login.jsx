@@ -17,7 +17,16 @@ const Login = () => {
             const res = await loginUser(formData);
             if (res.data && res.data.token) {
                 localStorage.setItem("token", res.data.token);
-                navigate("/");
+                // Store the role from the decoded token
+                const decodedToken = JSON.parse(atob(res.data.token.split('.')[1]));
+                localStorage.setItem("userRole", decodedToken.role);
+                
+                // Redirect based on role
+                if (decodedToken.role === 'admin') {
+                    navigate("/");
+                } else {
+                    navigate("/showroom");
+                }
             } else {
                 throw new Error("Invalid credentials");
             }

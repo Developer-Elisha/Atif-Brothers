@@ -12,6 +12,7 @@ import {
   Store,
   Building,
 } from "lucide-react";
+import { FaExchangeAlt, FaHandHoldingUsd } from "react-icons/fa";
 
 export function StatsCards() {
   const [selectedAccount, setSelectedAccount] = useState(null);
@@ -38,16 +39,20 @@ export function StatsCards() {
     { title: "Kapra", value: 924, change: 1.1, icon: ShoppingBag, period: "Today" },
     { title: "Kapra Dealer", value: 1000, change: 12, icon: Store, period: "Since last month" },
     { title: "Staff Salary", value: 3000, change: 1.1, icon: Banknote, period: "Since last month" },
-    { title: "Total Balance", value: selectedAccount ? selectedAccount.balance : 1000, icon: BarChart2, period: "Since last month"},
-    { title: "Bank Balance", value: "Select Account", icon: Banknote, period: "Today"  },
+    { title: "Dasti Liya", value: 3000, change: 1.1, icon: FaHandHoldingUsd, period: "Since last month" },
+    { title: "Dasti Diya", value: 3000, change: 1.1, icon: FaHandHoldingUsd, period: "Since last month" },
+    { title: "Return Liya", value: 3000, change: 1.1, icon: FaExchangeAlt, period: "Since last month" },
+    { title: "Return Diya", value: 3000, change: 1.1, icon: FaExchangeAlt, period: "Since last month" },
     { title: "Stock", value: 3000, change: 1.1, icon: Package, period: "Since last month" },
+    { title: "Bank Balance", value: "Select Account", icon: Banknote, period: "Today"  },
+    { title: "Total Balance", value: 1000, change: 1.1, icon: BarChart2, period: "Since last month"},
   ];
 
   return (
     <div className="flex flex-wrap justify-center items-center gap-6 p-4">
       {stats.map(({ title, value, change, icon: Icon, period }, index) => (
         <div key={index} className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-start w-full sm:w-100 relative">
-          <div className="absolute -top-5 left-5 bg-purple-300 p-4 rounded-xl shadow-md">
+          <div className="absolute -top-2 left-5 bg-purple-300 p-4 rounded-xl shadow-md">
             <Icon className="text-white" />
           </div>
           <h3 className="text-gray-500 mt-10">{title}</h3>

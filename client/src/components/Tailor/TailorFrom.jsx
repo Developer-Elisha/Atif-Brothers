@@ -9,7 +9,7 @@ const TailorForm = ({ records, setRecords }) => {
   const [formDataAdd, setFormDataAdd] = useState({ billNo: "", description: "", amount: "" });
   const [formDataLess, setFormDataLess] = useState({ billNo: "", description: "", amount: "" });
 
-  const [bankAccounts, setBankAccounts] = useState(["Faisal"]);
+  const [bankAccounts, setBankAccounts] = useState(["Faysal"]);
   
   const today = new Date();
   const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;

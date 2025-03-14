@@ -70,7 +70,7 @@ const PaymentModal = ({ isOpen, onClose, formData, handleChange }) => {
               <option value="" disabled>Select Bank</option>
               <option value="Meezan">Meezan</option>
               <option value="UBL">UBL</option>
-              <option value="Faisal">Faisal</option>
+              <option value="Faysal">Faysal</option>
               <option value="Easypaisa">Easypaisa</option>
               <option value="JazzCash">JazzCash</option>
             </select>

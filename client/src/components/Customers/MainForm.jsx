@@ -52,7 +52,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                         placeholder="Enter Rate"
                     />
                 </div>
-                
+
                 <div className="w-1/4">
                     <label className="block text-gray-700 font-medium">Payment Status</label>
                     <select
@@ -126,7 +126,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                             <option value="" disabled>Select Bank</option>
                             <option value="Meezan">Meezan</option>
                             <option value="UBL">UBL</option>
-                            <option value="Faisal">Faisal</option>
+                            <option value="Faysal">Faysal</option>
                             <option value="Easypaisa">Easypaisa</option>
                             <option value="JazzCash">JazzCash</option>
                         </select>
