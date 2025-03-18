@@ -26,7 +26,7 @@ const CustomerDashboard = () => {
         >
           <p className="ml-2 mt-2">{formattedDate}</p>
           <p className="ml-4">{dayName}</p>
-          <Form
+          <Form 
             setRecords={setRecords}
             records={records}
             lastTagNumber={lastTagNumber}

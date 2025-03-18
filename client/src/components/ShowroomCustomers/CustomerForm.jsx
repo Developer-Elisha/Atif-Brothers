@@ -215,7 +215,7 @@ const handleChange = (index, e) => {
                         className="bg-purple-200 hover:bg-purple-300 text-black text-lg cursor-pointer py-2 px-4 rounded-lg"
                         onClick={() => setShowMeasurement((prev) => !prev)}
                     >
-                        + Measurements
+                        Measurements
                     </button>
                     <button
                         className="bg-purple-200 ml-5 hover:bg-purple-300 text-black text-lg cursor-pointer py-2 px-4 rounded-lg"

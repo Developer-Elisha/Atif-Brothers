@@ -24,7 +24,7 @@ const ReturnTBL = ({ records }) => {
           </style>
         </head>
         <body>
-          <h2>Bank</h2>
+          <h2>Dasti Return</h2>
           ${printContent}
         </body>
       </html>
@@ -38,7 +38,7 @@ const ReturnTBL = ({ records }) => {
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
       {/* Header Section */}
       <div className="flex justify-between items-center bg-purple-300 p-3 rounded-lg">
-        <h2 className="text-black font-semibold text-xl text-center flex-grow">Return</h2>
+        <h2 className="text-black font-semibold text-xl text-center flex-grow">Dasti Return</h2>
         <button
           className="bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-100 transition-all duration-200"
           onClick={handlePrint}

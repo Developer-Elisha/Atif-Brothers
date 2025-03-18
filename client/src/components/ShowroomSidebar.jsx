@@ -31,7 +31,7 @@ const Sidebar = () => {
         <SidebarItem to="/showroom" icon={<FaHome size={20} />} label="Daily Expense" isOpen={isOpen} />
         <SidebarItem to="/showroomcustomer" icon={<FaUsers size={20} />} label="Customers" isOpen={isOpen} />
         <SidebarItem to="/showroomstaff" icon={<FaUserFriends size={20} />} label="Staff" isOpen={isOpen} />
-        <SidebarItem to="/" icon={<FaStore size={20} />} label="Main" isOpen={isOpen} />
+        {/* <SidebarItem to="/" icon={<FaStore size={20} />} label="Main" isOpen={isOpen} /> */}
 
 
       </ul>

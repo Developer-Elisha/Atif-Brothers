@@ -27,6 +27,8 @@ const KarigerDashboard = () => {
         />
       </div>
     </div>
+
+    
     <div className="bg-white shadow-lg rounded-lg p-4 w-[90vw] max-h-[100vh] mt-28 overflow-auto flex flex-col gap-4">
       <div className="overflow-x-auto flex-1 scrollbar-purple max-h-[80%]">
         <Table records={records} />

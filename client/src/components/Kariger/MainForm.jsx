@@ -5,12 +5,34 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm = [] }) => {
 
   const [file, setFile] = useState(null);
 
+  const calculateTagAmount = (total) => {
+    if (!total) return '';
+
+    const amount = parseInt(total);
+    if (isNaN(amount)) return '';
+
+    if (amount >= 260000 && amount < 270000) {
+      const numberPart = Math.floor((amount - 260000) / 1000);
+      return `Z${numberPart}k`;
+    }
+
+    if (amount >= 1000 && amount < 260000) {
+      const letterCode = amount < 10000 ? '' :
+        String.fromCharCode(65 + Math.floor((amount - 10000) / 10000));
+      const numberPart = Math.floor((amount % 10000) / 1000);
+      return `${letterCode}${numberPart}k`;
+    }
+
+    return '';
+  };
+
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       setFile(URL.createObjectURL(selectedFile));
     }
   };
+
 
   const handleCancel = () => {
     setFile(null);
@@ -165,7 +187,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm = [] }) => {
                       </button>
                     </div>
                   )}
-                  
+
                   <label className="block text-gray-700 font-medium">Upload Cheque</label>
 
                   <input
@@ -205,25 +227,6 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm = [] }) => {
               </div>
 
               <div className="w-1/2">
-                <label className="block text-gray-700 font-medium">Tag Amount</label>
-                <select
-                  name="tagamount"
-                  value={formData.tagamount}
-                  onChange={(e) => {
-                    handleChange(index, e);
-                    formData.total = calculateTotal();
-                  }}
-                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                  required
-                >
-                  <option value="" disabled>Select</option>
-                  <option value="4000">Praty Ware</option>
-                  <option value="10000">Bridal</option>
-                  <option value="25000">Heavy Bridal</option>
-                </select>
-              </div>
-
-              <div className="w-1/2">
                 <label className="block text-gray-700 font-medium">Quantity</label>
                 <input
                   type="number"
@@ -231,7 +234,6 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm = [] }) => {
                   value={formData.quantity}
                   onChange={(e) => {
                     handleChange(index, e);
-                    formData.total = calculateTotal();
                   }}
                   className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
                 />
@@ -271,9 +273,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm = [] }) => {
                   required
                   disabled={formData.role === "Shop"} />
               </div>
-            </div>
-
-            <div className="flex gap-4 my-4">
+              
               <div className="w-1/2">
                 <label className="block text-gray-700 font-medium">Item</label>
                 <input
@@ -297,6 +297,9 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm = [] }) => {
                   placeholder="Enter Color"
                 />
               </div>
+            </div>
+
+            <div className="flex gap-4 my-4">
 
               <div className="w-1/2">
                 <label className="block text-gray-700 font-medium">Fabric</label>
@@ -335,6 +338,24 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm = [] }) => {
               </div>
 
               <div className="w-1/2">
+                <label className="block text-gray-700 font-medium">Category</label>
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={(e) => {
+                    handleChange(index, e);
+                  }}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  required
+                >
+                  <option value="" disabled>Select</option>
+                  <option value="4000">Praty Ware</option>
+                  <option value="10000">Bridal</option>
+                  <option value="25000">Heavy Bridal</option>
+                </select>
+              </div>
+
+              <div className="w-1/2">
                 <label className="block text-gray-700 font-medium">Rate</label>
                 <input
                   type="text"
@@ -342,7 +363,6 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm = [] }) => {
                   value={formData.rate}
                   onChange={(e) => {
                     handleChange(index, e);
-                    formData.total = calculateTotal();
                   }}
                   className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
                   placeholder="Enter Rate"
@@ -355,9 +375,23 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm = [] }) => {
                 <input
                   type="text"
                   name="total"
-                  value={formData.total || calculateTotal()}
+                  value={formData.total}
                   readOnly
                   className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1 bg-gray-200 text-gray-600"
+                />
+              </div>
+              
+
+              <div className="w-1/2">
+                <label className="block text-gray-700 font-medium">Tag Amount</label>
+                <input
+                  type="tagamount"
+                  name="tagamount"
+                  value={calculateTagAmount(formData.total)}
+                  onChange={(e) => {
+                    handleChange(index, e);
+                  }}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
                 />
               </div>
             </div>

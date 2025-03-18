@@ -27,7 +27,7 @@ const ExpenseTBL = ({ records }) => {
           </style>
         </head>
         <body>
-          <h2>Kapra Dealer</h2>
+          <h2>Expense</h2>
           ${printContent}
         </body>
       </html>

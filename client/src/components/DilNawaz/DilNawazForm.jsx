@@ -1,11 +1,8 @@
 import { useState } from "react";
 import OrderForm from "./MainForm";
 import Modal from "./Modal";
-import CancelModal from "./Cancel";
 
-
-
-const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
+const DilNawazForm = ({ records, setRecords, setShowMeasurement }) => {
     const today = new Date();
     const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
@@ -24,17 +21,15 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
             bank: "",
             currentPayment: "",
             rate: "",
+            tagNo: "",
         },
     ]);
 
-    const [sale, setSale] = useState("Sales Man 1");
-    const [name, setName] = useState("Customer1");
-    const [phone, setPhone] = useState("03123456789");
+    const [name, setName] = useState("Dil Nawaz");
     const [bill, setBill] = useState("10");
     const [date, setDate] = useState(formattedToday);
     const [isOpenAdd, setIsOpenAdd] = useState(false);
     const [isOpenLess, setIsOpenLess] = useState(false);
-    const [isOpenCancel, setIsOpenCancel] = useState(false);
 
     const [formDataAdd, setFormDataAdd] = useState({
         billNo: "",
@@ -70,59 +65,60 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
     };
 
     const handleSubmitAmountChange = (isAdding) => {
-        const formData = isAdding ? formDataAdd : formDataLess;
-        const amountValue = parseFloat(formData.amount);
+    const formData = isAdding ? formDataAdd : formDataLess;
+    const amountValue = parseFloat(formData.amount);
 
-        if (!formData.suitNo || isNaN(amountValue)) {
-            alert("Please enter Suit No and a valid Amount");
-            return;
-        }
+    if (!formData.suitNo || isNaN(amountValue)) {
+        alert("Please enter Suit No and a valid Amount");
+        return;
+    }
 
-        setRecords((prevRecords) =>
-            prevRecords.map((record) =>
-                record.suit === formData.suitNo
-                    ? {
-                        ...record,
-                        description: formData.description || record.description,
-                        received: (parseFloat(record.received) + (isAdding ? amountValue : -amountValue)).toString(),
-                        dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
-                        shopName: formData.shopName || record.shopName,
-                        tagNo: formData.tagNo || record.tagNo,
-                        details: formData.details || record.details,
-                    }
-                    : record
-            )
+    setRecords((prevRecords) =>
+        prevRecords.map((record) =>
+            record.suit === formData.suitNo
+                ? {
+                    ...record,
+                    description: formData.description || record.description,
+                    received: (parseFloat(record.received) + (isAdding ? amountValue : -amountValue)).toString(),
+                    dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
+                    shopName: formData.shopName || record.shopName,
+                    tagNo: formData.tagNo || record.tagNo,
+                    details: formData.details || record.details,
+                }
+                : record
+        )
+    );
+
+    if (isAdding) {
+        setIsOpenAdd(false);
+        setFormDataAdd({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "", currentPayment: "" });
+    } else {
+        setIsOpenLess(false);
+        setFormDataLess({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "", currentPayment: "" });
+    }
+};
+
+
+const handleChange = (index, e) => {
+    const { name, value } = e.target;
+
+    setForms((prevForms) => {
+        const updatedForms = prevForms.map((form, i) =>
+            i === index ? { ...form, [name]: value } : form
         );
 
-        if (isAdding) {
-            setIsOpenAdd(false);
-            setFormDataAdd({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "", currentPayment: "" });
-        } else {
-            setIsOpenLess(false);
-            setFormDataLess({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "", currentPayment: "" });
+        if (["rate", "quantity", "advancePayment"].includes(name)) {
+            const rate = parseFloat(updatedForms[index].rate) || 0;
+            const quantity = parseFloat(updatedForms[index].quantity) || 0;
+            const advance = parseFloat(updatedForms[index].advancePayment) || 0;
+            const due = rate * quantity - advance;
+
+            updatedForms[index].dueAmount = due % 1 === 0 ? due.toString() : due.toFixed(2);
         }
-    };
 
-    const handleChange = (index, e) => {
-        const { name, value } = e.target;
-
-        setForms((prevForms) => {
-            const updatedForms = prevForms.map((form, i) =>
-                i === index ? { ...form, [name]: value } : form
-            );
-
-            if (["rate", "quantity", "advancePayment"].includes(name)) {
-                const rate = parseFloat(updatedForms[index].rate) || 0;
-                const quantity = parseFloat(updatedForms[index].quantity) || 0;
-                const advance = parseFloat(updatedForms[index].advancePayment) || 0;
-                const due = rate * quantity - advance;
-
-                updatedForms[index].dueAmount = due % 1 === 0 ? due.toString() : due.toFixed(2);
-            }
-
-            return updatedForms;
-        });
-    };
+        return updatedForms;
+    });
+};
 
     const handleAddForm = () => {
         setForms([
@@ -138,6 +134,7 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                 dueAmount: "",
                 currentPayment: "",
                 rate: "",
+                tagNo: "",
             },
         ]);
     };
@@ -152,49 +149,42 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
             alert("Please enter a name!");
             return;
         }
-
-        if (!phone.trim()) {
-            alert("Please enter a phone number!");
-            return;
-        }
-
+    
         if (!bill.trim()) {
             alert("Please enter a bill number!");
             return;
         }
-
+    
         const isValid = forms.every((form) => {
             const requiredFields = ["kariger", "description", "received", "paymentType"];
             if (requiredFields.some((field) => !form[field]?.trim())) return false;
-
+    
             if (form.paymentType === "Advance" && (!form.advancePayment?.trim() || !form.dueAmount?.trim())) {
                 return false;
             }
-
+    
             return true;
         });
-
+    
         if (!isValid) {
             alert("Please fill all required fields correctly.");
             return;
         }
-
+    
         const newRecords = forms.map((form, index) => ({
             ...form,
             name,
-            phone, // Include phone number
             bill,  // Include bill number
-            sale,  // Include sales man name
             date: `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`,
             suit: `S-${lastSuitNumber + index}`,
             paymentType: form.paymentType || "-",
             advancePayment: form.paymentType === "Advance" ? form.advancePayment : "-",
             dueAmount: form.paymentType === "Advance" ? form.dueAmount : "",
         }));
-
+    
         setRecords([...records, ...newRecords]);
         setLastSuitNumber(lastSuitNumber + forms.length);
-
+    
         setForms([
             {
                 suit: `S-${lastSuitNumber + forms.length}`,
@@ -207,53 +197,22 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                 dueAmount: "",
                 currentPayment: "",
                 rate: "",
+                tagNo: "",
             },
         ]);
     };
-
-    const handleCancelConfirm = () => {
-        // Reset all form fields to their initial state
-        setSale("Sales Man 1");
-        setName("Customer1");
-        setPhone("03123456789");
-        setBill("10");
-        setDate(formattedToday);
-        setForms([{
-            suit: `S-1`,
-            kariger: "Kariger1",
-            quantity: "5",
-            description: "Black Suit",
-            received: "5000",
-            paymentType: "",
-            advancePayment: "",
-            dueAmount: "",
-            payment: "",
-            bank: "",
-            currentPayment: "",
-            rate: "",
-        }]);
-        setIsOpenCancel(false); // Close the cancel modal
-    };
-
+    
     return (
         <div className="p-6 w-full max-h-[100vh] relative mb-10 flex">
             <div className="p-6">
-                <h2 className="text-xl font-semibold text-center mb-6">Customer</h2>
+                <h2 className="text-xl font-semibold text-center mb-6">Dil Nawaz</h2>
                 <div className="flex items-center justify-center mb-5">
                     <button
                         className="bg-purple-200 hover:bg-purple-300 text-black text-lg cursor-pointer py-2 px-4 rounded-lg"
                         onClick={() => setShowMeasurement((prev) => !prev)}
                     >
-                        Measurements
+                    Measurements
                     </button>
-
-                    <button
-                        className="bg-purple-200 ml-5 hover:bg-purple-300 text-black text-lg cursor-pointer py-2 px-4 rounded-lg"
-                        onClick={() => setIsOpenCancel(true)}
-                    >
-                        Cancel
-                    </button>
-
                     <button
                         className="bg-purple-200 ml-5 hover:bg-purple-300 text-black text-lg cursor-pointer py-2 px-4 rounded-lg"
                         onClick={() => setIsOpenAdd(true)}
@@ -276,20 +235,8 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                 </div>
 
                 <div className="flex items-center justify-between mb-5">
-                    <div className="w-1/5 mx-2">
-                        <label className="block text-gray-700 font-medium">Sales man</label>
-                        <input
-                            type="text"
-                            name="saleman"
-                            value={sale}
-                            onChange={(e) => setSale(e.target.value)}
-                            className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                            placeholder="Enter Name"
-                            required
-                        />
-                    </div>
 
-                    <div className="w-1/5 mx-2">
+                    <div className="w-1/4 mx-2">
                         <label className="block text-gray-700 font-medium">Name</label>
                         <input
                             type="text"
@@ -302,7 +249,7 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                         />
                     </div>
 
-                    <div className="w-1/5 mx-2">
+                    <div className="w-1/4 mx-2">
                         <label className="block text-gray-700 font-medium">Bill No</label>
                         <input
                             type="text"
@@ -315,18 +262,7 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                         />
                     </div>
 
-                    <div className="w-1/5 mx-2">
-                        <label className="block text-gray-700 font-medium">Phone No:</label>
-                        <input
-                            type="number"
-                            name="phone"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                        />
-                    </div>
-
-                    <div className="w-1/5 mx-2">
+                    <div className="w-1/4 mx-2">
                         <label className="block text-gray-700 font-medium">Date</label>
                         <input
                             type="text"
@@ -377,14 +313,8 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                 onSubmit={() => handleSubmitAmountChange(false)}
                 getSuitNumbers={getSuitNumbers}
             />
-
-            <CancelModal
-                isOpen={isOpenCancel}
-                onClose={() => setIsOpenCancel(false)}
-                onConfirm={handleCancelConfirm}
-            />
         </div>
     );
 };
 
-export default CustomerForm;
+export default DilNawazForm;

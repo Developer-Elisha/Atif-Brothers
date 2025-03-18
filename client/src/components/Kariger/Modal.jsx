@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Modal = ({ title, isOpen, onClose, formData, handleChange, onSubmit, getSuitNumbers }) => {
     if (!isOpen) return null;
 
@@ -8,8 +10,6 @@ const Modal = ({ title, isOpen, onClose, formData, handleChange, onSubmit, getSu
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-sm">
             <div className="bg-white p-6 rounded-lg shadow-lg w-96">
                 <h2 className="text-xl font-semibold mb-4">{title}</h2>
-
-                
 
                 <div className="flex space-x-2 mb-3">
                     <div className="flex-1">

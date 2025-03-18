@@ -27,7 +27,7 @@ const DastiTBL = ({ records }) => {
           </style>
         </head>
         <body>
-          <h2>Bank</h2>
+          <h2>Dasti</h2>
           ${printContent}
         </body>
       </html>

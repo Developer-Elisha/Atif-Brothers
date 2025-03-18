@@ -45,7 +45,7 @@ const ReturnForm = ({ setRecords, records }) => {
 
   return (
     <div className="p-6 w-full">
-      <h2 className="text-xl font-semibold text-center mb-6">Return Form</h2>
+      <h2 className="text-xl font-semibold text-center mb-6">Dasti Return Form</h2>
 
       <div className="flex justify-end gap-4 mt-6">
         <button
