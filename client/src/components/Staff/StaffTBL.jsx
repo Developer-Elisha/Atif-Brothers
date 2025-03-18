@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
-const StaffTBL = ({ records }) => {
+const StaffTBL = ({ records, onEdit }) => {
   const handlePrint = () => {
     const printContent = document.getElementById("printTable").innerHTML;
     const printWindow = window.open("", "", "width=1000,height=700");
@@ -37,6 +37,10 @@ const StaffTBL = ({ records }) => {
     printWindow.close();
   };
 
+  const handleEdit = (record) => {
+    onEdit(record);
+  };
+
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
       {/* Header Section */}
@@ -56,7 +60,9 @@ const StaffTBL = ({ records }) => {
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-center">Date</th>
               <th className="py-3 px-6 text-center">Name</th>
+              <th className="py-3 px-6 text-center">Salary</th>
               <th className="py-3 px-6 text-center">Amount</th>
+              <th className="py-3 px-6 text-center">Remaining Salary</th>
               <th className="py-3 px-6 text-center">Actions</th>
             </tr>
           </thead>
@@ -66,9 +72,14 @@ const StaffTBL = ({ records }) => {
                 <tr key={index} className="border-b border-gray-200">
                   <td className="py-3 px-6 text-center">{record.date}</td>
                   <td className="py-3 px-6 text-center">{record.name}</td>
+                  <td className="py-3 px-6 text-center">{record.salary}</td>
                   <td className="py-3 px-6 text-center">{record.amount}</td>
+                  <td className="py-3 px-6 text-center">{record.remainingSalary}</td>
                   <td className="py-3 px-6 text-center">
-                    <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                    <button 
+                      className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200"
+                      onClick={() => handleEdit(record)}
+                    >
                       <FaEdit />
                     </button>
                     <button className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
@@ -79,7 +90,7 @@ const StaffTBL = ({ records }) => {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="py-4 text-center text-gray-500">No records found</td>
+                <td colSpan="6" className="py-4 text-center text-gray-500">No records found</td>
               </tr>
             )}
           </tbody>
