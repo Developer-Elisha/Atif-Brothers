@@ -13,10 +13,10 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
     const [forms, setForms] = useState([
         {
             suit: `S-1`,
-            kariger: "Kariger1",
-            quantity: "5",
-            description: "Black Suit",
-            received: "5000",
+            kariger: "",
+            quantity: "",
+            description: "",
+            received: "",
             paymentType: "",
             advancePayment: "",
             dueAmount: "",
@@ -27,10 +27,10 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
         },
     ]);
 
-    const [sale, setSale] = useState("Sales Man 1");
-    const [name, setName] = useState("Customer1");
-    const [phone, setPhone] = useState("03123456789");
-    const [bill, setBill] = useState("10");
+    const [sale, setSale] = useState("");
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [bill, setBill] = useState("");
     const [date, setDate] = useState(formattedToday);
     const [isOpenAdd, setIsOpenAdd] = useState(false);
     const [isOpenLess, setIsOpenLess] = useState(false);
@@ -129,10 +129,10 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
             ...forms,
             {
                 suit: `S-${lastSuitNumber + forms.length}`,
-                kariger: "Kariger1",
-                quantity: "5",
-                description: "Black Suit",
-                received: "5000",
+                kariger: "",
+                quantity: "",
+                description: "",
+                received: "",
                 paymentType: "",
                 advancePayment: "",
                 dueAmount: "",
@@ -198,10 +198,10 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
         setForms([
             {
                 suit: `S-${lastSuitNumber + forms.length}`,
-                kariger: "Kariger1",
-                quantity: "5",
-                description: "Black Suit",
-                received: "5000",
+                kariger: "",
+                quantity: "",
+                description: "",
+                received: "",
                 paymentType: "",
                 advancePayment: "",
                 dueAmount: "",
@@ -220,10 +220,10 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
         setDate(formattedToday);
         setForms([{
             suit: `S-1`,
-            kariger: "Kariger1",
-            quantity: "5",
-            description: "Black Suit",
-            received: "5000",
+            kariger: "",
+            quantity: "",
+            description: "",
+            received: "",
             paymentType: "",
             advancePayment: "",
             dueAmount: "",

@@ -132,6 +132,7 @@ const KarigerTBL = ({ records }) => {
                 <th className="py-3 px-6 text-center">Fabric</th>
                 <th className="py-3 px-6 text-center">Desc</th>
                 <th className="py-3 px-6 text-center">Design</th>
+                <th className="py-3 px-6 text-center">Shop Name</th>
                 <th className="py-3 px-6 text-center">Rate</th>
                 <th className="py-3 px-6 text-center">Tag Amount</th>
                 <th className="py-3 px-6 text-center">Pay By</th>
@@ -139,7 +140,6 @@ const KarigerTBL = ({ records }) => {
                 <th className="py-3 px-6 text-center">Bank / Cheque</th>
                 <th className="py-3 px-6 text-center">Cheque</th>
                 <th className="py-3 px-6 text-center">Due Pay</th>
-                <th className="py-3 px-6 text-center">Shop</th>
                 <th className="py-3 px-6 text-center">Tag</th>
                 <th className="py-3 px-6 text-center">Details</th>
                 <th className="py-3 px-6 text-center">Actions</th>
@@ -170,6 +170,7 @@ const KarigerTBL = ({ records }) => {
                     <td className="py-3 px-6 text-center">{record.fabric}</td>
                     <td className="py-3 px-6 text-center">{record.description}</td>
                     <td className="py-3 px-6 text-center">{record.design}</td>
+                    <td className="py-3 px-6 text-center">{record.shopName}</td>
                     <td className="py-3 px-6 text-center">{record.rate}</td>
                     <td className="py-3 px-6 text-center">{record.tagAmount}</td>
                     <td className="py-3 px-6 text-center">{record.payby}</td>
@@ -177,7 +178,6 @@ const KarigerTBL = ({ records }) => {
                     <td className="py-3 px-6 text-center">{record.bank || record.cheque}</td>
                     <td className="py-3 px-6 text-center">{record.chequeimg}</td>
                     <td className="py-3 px-6 text-center">{record.duePayment}</td>
-                    <td className="py-3 px-6 text-center">{record.shopName}</td>
                     <td className="py-3 px-6 text-center">{record.tagNo}</td>
                     <td className="py-3 px-6 text-center">{record.details}</td>
                     <td className="py-3 px-6 text-center">

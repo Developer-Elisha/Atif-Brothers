@@ -65,6 +65,7 @@ const CustomerTBL = ({ records }) => {
                 <th className="py-3 px-6 text-center">Pay With</th>
                 <th className="py-3 px-6 text-center">Bank</th>
                 <th className="py-3 px-6 text-center">Description</th>
+                <th className="py-3 px-6 text-center">Shop Name</th>
                 <th className="py-3 px-6 text-center">Received</th>
                 <th className="py-3 px-6 text-center">Advance Payment</th>
                 <th className="py-3 px-6 text-center">Due Payment</th>
@@ -97,6 +98,7 @@ const CustomerTBL = ({ records }) => {
                     <td className="py-3 px-6 text-center">{record.payment}</td>
                     <td className="py-3 px-6 text-center">{record.bank}</td>
                     <td className="py-3 px-6 text-center">{record.description}</td>
+                    <td className="py-3 px-6 text-center">{record.shopName}</td>
                     <td className="py-3 px-6 text-center">{record.received}</td>
                     <td className="py-3 px-6 text-center">{record.advancePayment}</td>
                     <td className="py-3 px-6 text-center">{record.dueAmount}</td>
