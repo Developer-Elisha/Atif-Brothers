@@ -12,7 +12,6 @@ import ExpenseDashboard from "./components/Expense/ExpenseDashboard";
 import DealerDashboard from "./components/KapraDealer/DealarDashboard";
 import DetailsDashboard from "./components/Details/DetailsDashboard";
 import BankDashboard from "./components/Bank/BankDashboard";
-import StitchingDashboard from "./components/Stitching/StitchingDashboard";
 import DastiDashboard from "./components/Dasti/DastiDashboard";
 import ReturnDashboard from "./components/Return/ReturnDashboard";
 import TailorDashboard from "./components/Tailor/TailorDashboard";
@@ -80,10 +79,6 @@ function App() {
         <Route
           path="/bank"
           element={<Layout><BankDashboard /></Layout>}
-        /> 
-        <Route
-          path="/stitching"
-          element={<Layout><StitchingDashboard /></Layout>}
         /> 
         <Route
           path="/dasti"
