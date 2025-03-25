@@ -44,7 +44,7 @@ const Sidebar = () => {
         <SidebarItem to="/return" icon={<FaExchangeAlt size={20} />} label="Return" isOpen={isOpen} />
         <SidebarItem to="/tailor" icon={<FaTshirt size={20} />} label="Tailor" isOpen={isOpen} />
         <SidebarItem to="/miscellaneous" icon={<FaTasks size={20} />} label="Miscellaneous" isOpen={isOpen} />
-        {/* <SidebarItem to="/showroom" icon={<FaStore size={20} />} label="Showroom" isOpen={isOpen} /> */}
+        <SidebarItem to="/showroom" icon={<FaStore size={20} />} label="Showroom" isOpen={isOpen} />
 
       </ul>
     </div>
