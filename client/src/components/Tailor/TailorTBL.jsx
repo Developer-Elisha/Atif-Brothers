@@ -1,7 +1,7 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const TailorTBL = ({ records }) => {
+const TailorTBL = ({ records, onEdit, onDelete }) => {
   const handlePrint = () => {
     const printContent = document.getElementById("printTable").innerHTML;
     const printWindow = window.open("", "", "width=1000,height=700");
@@ -35,6 +35,10 @@ const TailorTBL = ({ records }) => {
     printWindow.document.close();
     printWindow.print();
     printWindow.close();
+  };
+
+  const handleDelete = (index) => {
+    onDelete(index);
   };
 
   return (
@@ -93,10 +97,10 @@ const TailorTBL = ({ records }) => {
                   <td className="py-3 px-6 text-center">{record.payby}</td>
                   <td className="py-3 px-6 text-center">{record.bank}</td>
                   <td className="py-3 px-6 text-center">
-                    <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                    <button  onClick={() => onEdit(index)} className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
                       <FaEdit />
                     </button>
-                    <button className="bg-red-400 text-white p-2 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
+                    <button onClick={() => handleDelete(index)} className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
                       <FaTrash />
                     </button>
                   </td>

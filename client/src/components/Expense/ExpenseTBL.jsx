@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import ConfirmationModal from './ConfirmationModal'; // Import the ConfirmationModal
 
-const ExpenseTBL = ({ records }) => {
+const ExpenseTBL = ({ records, setRecords, setEditingRecord }) => {
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [recordToEdit, setRecordToEdit] = useState(null); // State to hold the record to edit
+  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
+  const [recordToDelete, setRecordToDelete] = useState(null);
+
   const handlePrint = () => {
     const printContent = document.getElementById("printTable").innerHTML;
     const printWindow = window.open("", "", "width=1000,height=700");
@@ -9,7 +15,7 @@ const ExpenseTBL = ({ records }) => {
     printWindow.document.write(`
       <html>
         <head>
-          <title>Kapra Dealer</title>
+          <title>Expense</title>
           <style>
             body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
             table { width: 100%; border-collapse: collapse; margin-top: 20px; }
@@ -36,6 +42,26 @@ const ExpenseTBL = ({ records }) => {
     printWindow.print();
     printWindow.close();
   };
+
+  const handleEdit = (record) => {
+    setRecordToEdit(record); // Set the record to be edited
+    setIsConfirmationOpen(true); // Open the confirmation modal
+  };
+
+  const confirmEdit = () => {
+    setEditingRecord(recordToEdit); // Set the editing record
+    setIsConfirmationOpen(false); // Close the confirmation modal
+  };
+
+  const handleDelete = (record) => {
+    setRecordToDelete(record);
+    setIsDeleteConfirmationOpen(true);
+  };
+
+  const confirmDelete = () => {
+    setRecords(records.filter(r => r !== recordToDelete)); // Update records state
+    setIsDeleteConfirmationOpen(false); // Close the confirmation modal
+};
 
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
@@ -68,10 +94,16 @@ const ExpenseTBL = ({ records }) => {
                   <td className="py-3 px-6 text-center">{record.item}</td>
                   <td className="py-3 px-6 text-center">{record.amount}</td>
                   <td className="py-3 px-6 text-center">
-                    <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                    <button
+                      className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200"
+                      onClick={() => handleEdit(record)}
+                    >
                       <FaEdit />
                     </button>
-                    <button className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
+                    <button
+                      className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200"
+                      onClick={() => handleDelete(record)}
+                    >
                       <FaTrash />
                     </button>
                   </td>
@@ -85,6 +117,22 @@ const ExpenseTBL = ({ records }) => {
           </tbody>
         </table>
       </div>
+
+      {/* Edit Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={isConfirmationOpen}
+        onClose={() => setIsConfirmationOpen(false)}
+        onConfirm={confirmEdit}
+        message="Are you sure you want to edit this record?"
+      />
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={isDeleteConfirmationOpen}
+        onClose={() => setIsDeleteConfirmationOpen(false)}
+        onConfirm={confirmDelete}
+        message="Are you sure you want to delete this record?"
+      />
     </div>
   );
 };

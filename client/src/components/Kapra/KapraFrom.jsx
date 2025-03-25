@@ -1,9 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 
-const KapraForm = ({ setRecords, records }) => {
+const KapraForm = ({ setRecords, records, lastTagNumber, setLastTagNumber, editIndex, setEditIndex }) => {
   const today = new Date();
   const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
-  const [forms, setForms] = useState([{ description: "Silk", amount: "500", bill: "500", date: formattedToday }]);
+  const [forms, setForms] = useState([{ description: "", amount: "", bill: "", date: formattedToday }]);
+
+  useEffect(() => {
+    if (editIndex !== null) {
+      const recordToEdit = records[editIndex];
+      setForms([recordToEdit]); // Load the record into the form
+    } else {
+      setForms([{ description: "", amount: "", bill: "", date: formattedToday }]); // Reset form
+    }
+  }, [editIndex, records]);
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
@@ -13,7 +22,7 @@ const KapraForm = ({ setRecords, records }) => {
   };
 
   const handleAddForm = () => {
-    setForms([...forms, { description: "Silk", amount: "500", bill: "500", date: formattedToday }]);
+    setForms([...forms, { description: "", amount: "", bill: "", date: formattedToday }]);
   };
 
   const handleRemoveForm = (index) => {
@@ -27,8 +36,16 @@ const KapraForm = ({ setRecords, records }) => {
       return;
     }
 
-    setRecords([...records, ...forms]);
-    setForms([{ description: "Silk", amount: "500", bill: "500", date: formattedToday }]);
+    if (editIndex !== null) {
+      const updatedRecords = [...records];
+      updatedRecords[editIndex] = forms[0]; // Update the record
+      setRecords(updatedRecords);
+      setEditIndex(null); // Reset edit index
+    } else {
+      setRecords([...records, ...forms]);
+    }
+
+    setForms([{ description: "", amount: "", bill: "", date: formattedToday }]);
   };
 
   return (
@@ -45,7 +62,6 @@ const KapraForm = ({ setRecords, records }) => {
 
       {forms.map((formData, index) => (
         <div key={index} className="flex gap-4 my-4">
-
           <div className="w-1/2">
             <label className="block text-gray-700 font-medium">Date</label>
             <input
@@ -107,7 +123,7 @@ const KapraForm = ({ setRecords, records }) => {
           onClick={handleSubmit}
           className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all"
         >
-          Save
+          {editIndex !== null ? "Update" : "Save"}
         </button>
       </div>
     </div>

@@ -39,8 +39,6 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                     />
                 </div>
 
-                
-
                 <div className="w-1/4">
                     <label className="block text-gray-700 font-medium">Rate</label>
                     <input
@@ -66,6 +64,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                         <option value="Final Pay">Final Pay</option>
                     </select>
                 </div>
+
                 {formData.paymentType === "Advance" && (
                     <>
                         <div className="w-1/4">
@@ -94,6 +93,7 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                         </div>
                     </>
                 )}
+
             </div>
 
             <div className="flex gap-4 my-4">
@@ -145,8 +145,6 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                     />
                 </div>
 
-
-
                 {formData.paymentType === "Final Pay" && (
                     <>
                         <div className="w-1/4">
@@ -176,8 +174,6 @@ const MainForm = ({ formData, index, handleChange, handleRemoveForm }) => {
                         </div>
                     </>
                 )}
-
-
 
                 <div className="w-10 mt-8">
                     <button

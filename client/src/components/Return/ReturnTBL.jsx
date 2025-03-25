@@ -1,13 +1,13 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const ReturnTBL = ({ records }) => {
+const ReturnTBL = ({ records, onEdit, onDelete }) => {
   const handlePrint = () => {
     const printContent = document.getElementById("printTable").innerHTML;
     const printWindow = window.open("", "", "width=800,height=600");
 
     printWindow.document.write(`
       <html>
-        <head>
+        <head> 
           <title>Dasti Records</title>
           <style>
             body { font-family: Arial, sans-serif; text-align: center; }
@@ -34,6 +34,10 @@ const ReturnTBL = ({ records }) => {
     printWindow.close();
   };
 
+  const handleDelete = (index) => {
+    onDelete(index);
+  };
+
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
       {/* Header Section */}
@@ -53,7 +57,7 @@ const ReturnTBL = ({ records }) => {
           <thead>
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-center">Date</th>
-              <th className="py-3 px-6 text-center">Dasti Liya/Diya</th>
+              <th className="py-3 px-6 text-center">Return Liya/Diya</th>
               <th className="py-3 px-6 text-center">Cash/Bank</th>
               <th className="py-3 px-6 text-center">Name</th>
               <th className="py-3 px-6 text-center">Description</th>
@@ -76,10 +80,10 @@ const ReturnTBL = ({ records }) => {
                   <td className="py-3 px-6 text-center">{record.amount}</td>
                   <td className="py-3 px-6 text-center">{record.balance}</td>
                   <td className="py-3 px-6 text-center no-print">
-                    <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                    <button  onClick={() => onEdit(index)} className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
                       <FaEdit />
                     </button>
-                    <button className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
+                    <button onClick={() => handleDelete(index)} className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
                       <FaTrash />
                     </button>
                   </td>

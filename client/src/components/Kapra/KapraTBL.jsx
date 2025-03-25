@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
-const KapraTBL = ({ records }) => {
+const KapraTBL = ({ records, onEdit, onDelete }) => {
   const handlePrint = () => {
     const printContent = document.getElementById("printTable").innerHTML;
     const printWindow = window.open("", "", "width=1000,height=700");
@@ -37,9 +37,12 @@ const KapraTBL = ({ records }) => {
     printWindow.close();
   };
 
+  const handleDelete = (index) => {
+    onDelete(index);
+  };
+
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-      {/* Header Section */}
       <div className="flex justify-between items-center bg-purple-300 p-3 rounded-lg">
         <h2 className="text-black font-semibold text-xl text-center flex-grow">Kapra</h2>
         <button
@@ -50,15 +53,14 @@ const KapraTBL = ({ records }) => {
         </button>
       </div>
 
-      {/* Printable Section */}
       <div id="printTable" className="p-4">
         <table className="min-w-full border-collapse">
           <thead>
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-center">Date</th>
+              <th className="py-3 px-6 text-center">Bill No</th>
               <th className="py-3 px-6 text-center">Description</th>
               <th className="py-3 px-6 text-center">Amount</th>
-              <th className="py-3 px-6 text-center">Bill No</th>
               <th className="py-3 px-6 text-center">Actions</th>
             </tr>
           </thead>
@@ -67,14 +69,14 @@ const KapraTBL = ({ records }) => {
               records.map((record, index) => (
                 <tr key={index} className="border-b border-gray-200">
                   <td className="py-3 px-6 text-center">{record.date}</td>
+                  <td className="py-3 px-6 text-center">{record.bill}</td>
                   <td className="py-3 px-6 text-center">{record.description}</td>
                   <td className="py-3 px-6 text-center">{record.amount}</td>
-                  <td className="py-3 px-6 text-center">{record.bill}</td>
                   <td className="py-3 px-6 text-center">
-                    <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                    <button onClick={() => onEdit(index)} className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
                       <FaEdit />
                     </button>
-                    <button className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
+                    <button onClick={() => handleDelete(index)} className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
                       <FaTrash />
                     </button>
                   </td>

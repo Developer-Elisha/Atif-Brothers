@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaEdit, FaTrash, FaTag } from "react-icons/fa";
 
-const KarigerTBL = ({ records }) => {
+const KarigerTBL = ({ records, onEdit, onDelete }) => {
   const [selectedRecords, setSelectedRecords] = useState([]);
 
   const handleCheckboxChange = (record) => {
@@ -91,6 +91,10 @@ const KarigerTBL = ({ records }) => {
     printWindow.close();
   };
 
+  const handleDelete = (index) => {
+    onDelete(index);
+  };
+
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
       <div className="flex justify-between items-center bg-purple-300 p-3 w-full rounded-lg">
@@ -140,7 +144,7 @@ const KarigerTBL = ({ records }) => {
                 <th className="py-3 px-6 text-center">Bank / Cheque</th>
                 <th className="py-3 px-6 text-center">Cheque</th>
                 <th className="py-3 px-6 text-center">Due Pay</th>
-                <th className="py-3 px-6 text-center">Tag</th>
+                <th className="py-3 px-6 text-center">Tag Add/Less</th>
                 <th className="py-3 px-6 text-center">Details</th>
                 <th className="py-3 px-6 text-center">Actions</th>
               </tr>
@@ -181,12 +185,12 @@ const KarigerTBL = ({ records }) => {
                     <td className="py-3 px-6 text-center">{record.tagNo}</td>
                     <td className="py-3 px-6 text-center">{record.details}</td>
                     <td className="py-3 px-6 text-center">
-                      <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
-                        <FaEdit />
-                      </button>
-                      <button className="bg-red-400 text-white p-2 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
-                        <FaTrash />
-                      </button>
+                    <button  onClick={() => onEdit(index)} className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                      <FaEdit />
+                    </button>
+                    <button onClick={() => handleDelete(index)} className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
+                      <FaTrash />
+                    </button>
                     </td>
                   </tr>
                 ))

@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OrderForm from "./MainForm";
 import Modal from "./Modal";
 
-const DilNawazForm = ({ records, setRecords, setShowMeasurement }) => {
+const DilNawazForm = ({ records, setRecords, setShowMeasurement, editIndex, setEditIndex }) => {
     const today = new Date();
     const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
@@ -24,6 +24,13 @@ const DilNawazForm = ({ records, setRecords, setShowMeasurement }) => {
             tagNo: "",
         },
     ]);
+
+    useEffect(() => {
+        if (editIndex !== null) {
+          const recordToEdit = records[editIndex];
+          setForms([recordToEdit]);
+        }
+      }, [editIndex, records]);
 
     const [name, setName] = useState("Dil Nawaz");
     const [bill, setBill] = useState("10");
@@ -65,60 +72,60 @@ const DilNawazForm = ({ records, setRecords, setShowMeasurement }) => {
     };
 
     const handleSubmitAmountChange = (isAdding) => {
-    const formData = isAdding ? formDataAdd : formDataLess;
-    const amountValue = parseFloat(formData.amount);
+        const formData = isAdding ? formDataAdd : formDataLess;
+        const amountValue = parseFloat(formData.amount);
 
-    if (!formData.suitNo || isNaN(amountValue)) {
-        alert("Please enter Suit No and a valid Amount");
-        return;
-    }
-
-    setRecords((prevRecords) =>
-        prevRecords.map((record) =>
-            record.suit === formData.suitNo
-                ? {
-                    ...record,
-                    description: formData.description || record.description,
-                    received: (parseFloat(record.received) + (isAdding ? amountValue : -amountValue)).toString(),
-                    dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
-                    shopName: formData.shopName || record.shopName,
-                    tagNo: formData.tagNo || record.tagNo,
-                    details: formData.details || record.details,
-                }
-                : record
-        )
-    );
-
-    if (isAdding) {
-        setIsOpenAdd(false);
-        setFormDataAdd({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "", currentPayment: "" });
-    } else {
-        setIsOpenLess(false);
-        setFormDataLess({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "", currentPayment: "" });
-    }
-};
-
-
-const handleChange = (index, e) => {
-    const { name, value } = e.target;
-
-    setForms((prevForms) => {
-        const updatedForms = prevForms.map((form, i) =>
-            i === index ? { ...form, [name]: value } : form
-        );
-
-        if (["rate", "quantity", "advancePayment"].includes(name)) {
-            const rate = parseFloat(updatedForms[index].rate) || 0;
-            const quantity = parseFloat(updatedForms[index].quantity) || 0;
-            const advance = parseFloat(updatedForms[index].advancePayment) || 0;
-            const due = rate * quantity - advance;
-
-            updatedForms[index].dueAmount = due % 1 === 0 ? due.toString() : due.toFixed(2);
+        if (!formData.suitNo || isNaN(amountValue)) {
+            alert("Please enter Suit No and a valid Amount");
+            return;
         }
 
-        return updatedForms;
-    });
-};
+        setRecords((prevRecords) =>
+            prevRecords.map((record) =>
+                record.suit === formData.suitNo
+                    ? {
+                        ...record,
+                        description: formData.description || record.description,
+                        received: (parseFloat(record.received) + (isAdding ? amountValue : -amountValue)).toString(),
+                        dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
+                        shopName: formData.shopName || record.shopName,
+                        tagNo: formData.tagNo || record.tagNo,
+                        details: formData.details || record.details,
+                    }
+                    : record
+            )
+        );
+
+        if (isAdding) {
+            setIsOpenAdd(false);
+            setFormDataAdd({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "", currentPayment: "" });
+        } else {
+            setIsOpenLess(false);
+            setFormDataLess({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "", currentPayment: "" });
+        }
+    };
+
+
+    const handleChange = (index, e) => {
+        const { name, value } = e.target;
+
+        setForms((prevForms) => {
+            const updatedForms = prevForms.map((form, i) =>
+                i === index ? { ...form, [name]: value } : form
+            );
+
+            if (["rate", "quantity", "advancePayment"].includes(name)) {
+                const rate = parseFloat(updatedForms[index].rate) || 0;
+                const quantity = parseFloat(updatedForms[index].quantity) || 0;
+                const advance = parseFloat(updatedForms[index].advancePayment) || 0;
+                const due = rate * quantity - advance;
+
+                updatedForms[index].dueAmount = due % 1 === 0 ? due.toString() : due.toFixed(2);
+            }
+
+            return updatedForms;
+        });
+    };
 
     const handleAddForm = () => {
         setForms([
@@ -156,11 +163,24 @@ const handleChange = (index, e) => {
         }
     
         const isValid = forms.every((form) => {
-            const requiredFields = ["kariger", "description", "received", "paymentType"];
+            const requiredFields = ["kariger", "description"];
             if (requiredFields.some((field) => !form[field]?.trim())) return false;
     
-            if (form.paymentType === "Advance" && (!form.advancePayment?.trim() || !form.dueAmount?.trim())) {
-                return false;
+            if (form.paymentType === "Advance") {
+                if (!form.advancePayment?.trim() || !form.dueAmount?.trim()) {
+                    return false;
+                }
+            }
+    
+            if (form.paymentType === "Final Pay") {
+                if (!form.received?.trim() || !form.currentPayment?.trim()) {
+                    return false;
+                }
+            }
+    
+            // Check if payment method is "Bank" and bank name is required
+            if (form.payment === "Bank" && !form.bank?.trim()) {
+                return false; // Bank name is required
             }
     
             return true;
@@ -171,20 +191,36 @@ const handleChange = (index, e) => {
             return;
         }
     
-        const newRecords = forms.map((form, index) => ({
-            ...form,
-            name,
-            bill,  // Include bill number
-            date: `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`,
-            suit: `S-${lastSuitNumber + index}`,
-            paymentType: form.paymentType || "-",
-            advancePayment: form.paymentType === "Advance" ? form.advancePayment : "-",
-            dueAmount: form.paymentType === "Advance" ? form.dueAmount : "",
-        }));
+        const newRecords = forms.map((form, index) => {
+            // If editing, retain the original suit value
+            const originalRecord = editIndex !== null ? records[editIndex] : null;
     
-        setRecords([...records, ...newRecords]);
-        setLastSuitNumber(lastSuitNumber + forms.length);
+            return {
+                ...form,
+                name,
+                bill,
+                date: formattedToday,
+                suit: originalRecord ? originalRecord.suit : `S-${lastSuitNumber + index}`, // Use original suit if editing
+                paymentType: form.paymentType || "-",
+                advancePayment: form.advancePayment?.trim() || "-",
+                dueAmount: form.dueAmount?.trim() || "-",
+                received: form.received?.trim() || "-",
+                currentPayment: form.currentPayment?.trim() || "-",
+                bank: form.bank?.trim() || "-", // Ensure bank is included
+            };
+        });
     
+        if (editIndex !== null) {
+            const updatedRecords = [...records];
+            updatedRecords[editIndex] = newRecords[0]; // Update the edited record
+            setRecords(updatedRecords);
+            setEditIndex(null);
+        } else {
+            setRecords([...records, ...newRecords]);
+            setLastSuitNumber(lastSuitNumber + forms.length); // Increment only if not editing
+        }
+    
+        // Reset the form
         setForms([
             {
                 suit: `S-${lastSuitNumber + forms.length}`,
@@ -201,7 +237,7 @@ const handleChange = (index, e) => {
             },
         ]);
     };
-    
+
     return (
         <div className="p-6 w-full max-h-[100vh] relative mb-10 flex">
             <div className="p-6">
@@ -211,7 +247,7 @@ const handleChange = (index, e) => {
                         className="bg-purple-200 hover:bg-purple-300 text-black text-lg cursor-pointer py-2 px-4 rounded-lg"
                         onClick={() => setShowMeasurement((prev) => !prev)}
                     >
-                    Measurements
+                        Measurements
                     </button>
                     <button
                         className="bg-purple-200 ml-5 hover:bg-purple-300 text-black text-lg cursor-pointer py-2 px-4 rounded-lg"
@@ -286,10 +322,10 @@ const handleChange = (index, e) => {
 
                 <div className="flex justify-center">
                     <button
-                        className="mt-6 w-[20%] bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-300 transition-all duration-200"
                         onClick={handleSubmit}
+                        className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all"
                     >
-                        Save Records
+                        {editIndex !== null ? "Update" : "Save"}
                     </button>
                 </div>
             </div>

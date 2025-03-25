@@ -1,4 +1,7 @@
-const BankTBL = ({ records }) => {
+import React from 'react';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+
+const BankTBL = ({ records, onEdit, onDelete }) => {
   const handlePrint = () => {
     const printContent = document.getElementById("printTable").innerHTML;
     const printWindow = window.open("", "", "width=800,height=600");
@@ -49,6 +52,7 @@ const BankTBL = ({ records }) => {
               <th className="py-3 px-6 text-center">Credit/Debit</th>
               <th className="py-3 px-6 text-center">Amount</th>
               <th className="py-3 px-6 text-center">Current Balance</th>
+              <th className="py-3 px-6 text-center">Actions</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 text-sm">
@@ -60,11 +64,19 @@ const BankTBL = ({ records }) => {
                   <td className="py-3 px-6 text-center">{record.credit}</td>
                   <td className="py-3 px-6 text-center">{record.amount}</td>
                   <td className="py-3 px-6 text-center">{record.current}</td>
+                  <td className="py-3 px-6 text-center">
+                    <button onClick={() => onEdit(index)} className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                      <FaEdit />
+                    </button>
+                    <button onClick={() => onDelete(index)} className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
+                      <FaTrash />
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="py-4 text-center text-gray-500">No records found</td>
+                <td colSpan="6" className="py-4 text-center text-gray-500">No records found</td>
               </tr>
             )}
           </tbody>

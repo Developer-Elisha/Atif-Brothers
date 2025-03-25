@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MainForm from "./MainForm"; // Ensure this component is correctly implemented
 import Modal from "./Modal"; // Ensure this component is correctly implemented
 
-const TailorForm = ({ records, setRecords }) => {
+const TailorForm = ({ records, setRecords, editIndex, setEditIndex }) => {
   const [isOpenAdd, setIsOpenAdd] = useState(false);
   const [isOpenLess, setIsOpenLess] = useState(false);
 
@@ -10,7 +10,7 @@ const TailorForm = ({ records, setRecords }) => {
   const [formDataLess, setFormDataLess] = useState({ billNo: "", description: "", amount: "" });
 
   const [bankAccounts, setBankAccounts] = useState(["Faysal"]);
-  
+
   const today = new Date();
   const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
@@ -20,7 +20,7 @@ const TailorForm = ({ records, setRecords }) => {
       date: formattedToday,
       quantity: "",
       bill: "",
-      tag: "", 
+      tag: "",
       payby: "",
       items: "",
       color: "",
@@ -35,6 +35,13 @@ const TailorForm = ({ records, setRecords }) => {
     },
   ]);
 
+  useEffect(() => {
+    if (editIndex !== null) {
+      const recordToEdit = records[editIndex];
+      setForms([recordToEdit]);
+    }
+  }, [editIndex, records]);
+
   const handleModalChange = (e, setFormData) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -45,8 +52,8 @@ const TailorForm = ({ records, setRecords }) => {
     const amountValue = parseFloat(formData.amount);
 
     if (!formData.suitNo || isNaN(amountValue)) {
-        alert("Please enter Suit No and a valid Amount");
-        return;
+      alert("Please enter Suit No and a valid Amount");
+      return;
     }
 
     setRecords((prevRecords) => {
@@ -55,7 +62,7 @@ const TailorForm = ({ records, setRecords }) => {
         if (record.suit === formData.suitNo) {
           const newRate = (parseFloat(record.rate) + (isAdding ? amountValue : -amountValue)).toString();
           const newDueAmount = (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString();
-    
+
           if (record.rate !== newRate || record.dueAmount !== newDueAmount) {
             isUpdated = true;
             return { ...record, rate: newRate, dueAmount: newDueAmount };
@@ -63,17 +70,17 @@ const TailorForm = ({ records, setRecords }) => {
         }
         return record;
       });
-    
+
       return isUpdated ? updatedRecords : prevRecords;
     });
-    
+
 
     if (isAdding) {
-        setIsOpenAdd(false);
-        setFormDataAdd({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "" });
+      setIsOpenAdd(false);
+      setFormDataAdd({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "" });
     } else {
-        setIsOpenLess(false);
-        setFormDataLess({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "" });
+      setIsOpenLess(false);
+      setFormDataLess({ billNo: "", suitNo: "", description: "", amount: "", order: "", shopName: "", tagNo: "", details: "" });
     }
   };
 
@@ -104,7 +111,7 @@ const TailorForm = ({ records, setRecords }) => {
 
         quantity: "",
         bill: "",
-        tag: "", 
+        tag: "",
         payby: "",
         items: "",
         color: "",
@@ -134,11 +141,18 @@ const TailorForm = ({ records, setRecords }) => {
     const newRecords = forms.map((form, index) => ({
       ...form,
       name,
-      date: form.date, 
+      date: form.date,
       duePayment: form.duePayment.trim() === "" ? "-" : form.duePayment,
     }));
 
-    setRecords([...records, ...newRecords]);
+    if (editIndex !== null) {
+      const updatedRecords = [...records];
+      updatedRecords[editIndex] = forms[0];
+      setRecords(updatedRecords);
+      setEditIndex(null);
+    } else {
+      setRecords([...records, ...forms]);
+    }
 
     setForms([
       {
@@ -242,10 +256,10 @@ const TailorForm = ({ records, setRecords }) => {
 
       <div className="flex justify-center">
         <button
-          className="mt-6 w-[20%] bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-300 transition-all duration-200"
           onClick={handleSubmit}
+          className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all"
         >
-          Save Records
+          {editIndex !== null ? "Update" : "Save"}
         </button>
       </div>
     </div>

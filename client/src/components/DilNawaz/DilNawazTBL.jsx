@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const DilNawazTBL = ({ records }) => {
+const DilNawazTBL = ({ records, onEdit, onDelete }) => {
   const [selectedRecords, setSelectedRecords] = useState([]);
   const [singlePrintRecord, setSinglePrintRecord] = useState(null);
 
@@ -31,6 +31,10 @@ const DilNawazTBL = ({ records }) => {
   const totalAmount = selectedRecords.reduce((sum, r) => sum + Number(r.rate), 0);
   const totalAdvance = selectedRecords.reduce((sum, r) => sum + Number(r.advancePayment), 0);
   const totalDue = selectedRecords.reduce((sum, r) => sum + Number(r.dueAmount), 0);
+
+  const handleDelete = (index) => {
+    onDelete(index);
+  };
 
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
@@ -111,12 +115,12 @@ const DilNawazTBL = ({ records }) => {
                     </td>
                     <td className="py-3 px-6 text-center">
 
-                      <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
-                        <FaEdit />
-                      </button>
-                      <button className="bg-red-400 text-white p-2 ml-3 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
-                        <FaTrash />
-                      </button>
+                    <button  onClick={() => onEdit(index)} className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                      <FaEdit />
+                    </button>
+                    <button onClick={() => handleDelete(index)} className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
+                      <FaTrash />
+                    </button>
                     </td>
                   </tr>
                 ))

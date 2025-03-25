@@ -31,13 +31,15 @@ const MeasurementForm = ({ setShowMeasurementForm, setMeasurementsRecords, custo
     },
   });
 
-  // Effect to update suitOptions based on billNo
   useEffect(() => {
     if (billNo) {
-      const suits = customerRecords.filter(record => record.bill === billNo);
-      setSuitOptions(suits.map(suit => suit.suit)); // Collect all suit numbers
+      console.log('Current Bill No:', billNo);
+      console.log('Customer Records:', customerRecords);
+      const suits = customerRecords.filter(record => record.billNo === billNo);
+      console.log('Filtered Suits:', suits);
+      setSuitOptions(suits.map(suit => suit.suit));
     } else {
-      setSuitOptions([]); // Reset if billNo is empty
+      setSuitOptions([]);
     }
   }, [billNo, customerRecords]);
 

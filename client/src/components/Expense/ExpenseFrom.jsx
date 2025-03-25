@@ -1,9 +1,16 @@
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 
-const ExpenseFrom = ({ records, setRecords }) => {
+const ExpenseFrom = ({ records, setRecords, editingRecord, setEditingRecord }) => {
     const today = new Date();
     const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
-    const [forms, setForms] = useState([{ item: "20", amount: 50000, date: formattedToday }]);
+    const [forms, setForms] = useState([{ item: "", amount: "", date: formattedToday }]);
+
+    useEffect(() => {
+        if (editingRecord) {
+            // Populate the form with the editing record data
+            setForms([editingRecord]);
+        }
+    }, [editingRecord]);
 
     const handleChange = (index, e) => {
         const { name, value } = e.target;
@@ -12,9 +19,8 @@ const ExpenseFrom = ({ records, setRecords }) => {
         setForms(updatedForms);
     };
 
-
     const handleAddForm = () => {
-        setForms([...forms, { item: "20", amount: 50000 , date: formattedToday}]);
+        setForms([...forms, { item: "", amount: "", date: formattedToday }]);
     };
 
     const handleRemoveForm = (index) => {
@@ -27,10 +33,20 @@ const ExpenseFrom = ({ records, setRecords }) => {
             alert("Please fill in both item and amount fields!");
             return;
         }
-        setRecords([...records, ...forms]);
-        setForms([{ item: "20", amount: cursor - pointer50000, date: formattedToday}]);
-    };
 
+        if (editingRecord) {
+            // Update the existing record
+            const updatedRecords = records.map(record => 
+                record === editingRecord ? forms[0] : record
+            );
+            setRecords(updatedRecords);
+            setEditingRecord(null); // Clear editing record after saving
+        } else {
+            setRecords([...records, ...forms]);
+        }
+
+        setForms([{ item: "", amount: "", date: formattedToday }]); // Reset form
+    };
 
     return (
         <div className="p-6 w-full">
@@ -46,7 +62,6 @@ const ExpenseFrom = ({ records, setRecords }) => {
 
             {forms.map((formData, index) => (
                 <div key={index} className="flex gap-4 my-4">
-
                     <div className="w-1/2">
                         <label className="block text-gray-700 font-medium">Date</label>
                         <input
@@ -69,7 +84,6 @@ const ExpenseFrom = ({ records, setRecords }) => {
                             placeholder="Enter Item"
                             required
                         />
-
                     </div>
 
                     <div className="w-1/2">
@@ -93,12 +107,12 @@ const ExpenseFrom = ({ records, setRecords }) => {
                 </div>
             ))}
 
-            <div className="flex justify-center  gap-4 mt-6">
+            <div className="flex justify-center gap-4 mt-6">
                 <button
                     onClick={handleSubmit}
                     className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all"
                 >
-                    Save
+                    {editingRecord ? "Update" : "Save"} {/* Change button text based on editing state */}
                 </button>
             </div>
         </div>

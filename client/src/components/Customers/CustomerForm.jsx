@@ -1,11 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OrderForm from "./MainForm";
 import Modal from "./Modal";
 import CancelModal from "./Cancel";
 
-
-
-const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
+const CustomerForm = ({ records, setRecords, setShowMeasurement, editIndex, setEditIndex  }) => {
     const today = new Date();
     const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
@@ -13,6 +11,7 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
     const [forms, setForms] = useState([
         {
             suit: `S-1`,
+            tag: "",
             kariger: "",
             quantity: "",
             description: "",
@@ -26,6 +25,13 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
             rate: "",
         },
     ]);
+
+    useEffect(() => {
+          if (editIndex !== null) {
+            const recordToEdit = records[editIndex];
+            setForms([recordToEdit]);
+          }
+        }, [editIndex, records]);
 
     const [sale, setSale] = useState("");
     const [name, setName] = useState("");
@@ -129,6 +135,7 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
             ...forms,
             {
                 suit: `S-${lastSuitNumber + forms.length}`,
+                tag: "",
                 kariger: "",
                 quantity: "",
                 description: "",
@@ -152,67 +159,95 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
             alert("Please enter a name!");
             return;
         }
-
+    
         if (!phone.trim()) {
             alert("Please enter a phone number!");
             return;
         }
-
+    
         if (!bill.trim()) {
             alert("Please enter a bill number!");
             return;
         }
-
+    
         const isValid = forms.every((form) => {
-            const requiredFields = ["kariger", "description", "received", "paymentType"];
+            const requiredFields = ["kariger", "description"];
             if (requiredFields.some((field) => !form[field]?.trim())) return false;
-
-            if (form.paymentType === "Advance" && (!form.advancePayment?.trim() || !form.dueAmount?.trim())) {
+    
+            if (form.paymentType === "Advance") {
+                if (!form.advancePayment?.trim() || !form.dueAmount?.trim()) {
+                    return false;
+                }
+            }
+    
+            if (form.paymentType === "Final Pay") {
+                if (!form.received?.trim() || !form.currentPayment?.trim()) {
+                    return false;
+                }
+            }
+    
+            if (form.payment === "Bank" && !form.bank?.trim()) {
                 return false;
             }
-
+    
             return true;
         });
-
+    
         if (!isValid) {
             alert("Please fill all required fields correctly.");
             return;
         }
-
-        const newRecords = forms.map((form, index) => ({
-            ...form,
-            name,
-            phone, // Include phone number
-            bill,  // Include bill number
-            sale,  // Include sales man name
-            date: `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`,
-            suit: `S-${lastSuitNumber + index}`,
-            paymentType: form.paymentType || "-",
-            advancePayment: form.paymentType === "Advance" ? form.advancePayment : "-",
-            dueAmount: form.paymentType === "Advance" ? form.dueAmount : "",
-        }));
-
-        setRecords([...records, ...newRecords]);
-        setLastSuitNumber(lastSuitNumber + forms.length);
-
-        setForms([
-            {
-                suit: `S-${lastSuitNumber + forms.length}`,
-                kariger: "",
-                quantity: "",
-                description: "",
-                received: "",
-                paymentType: "",
-                advancePayment: "",
-                dueAmount: "",
-                currentPayment: "",
-                rate: "",
-            },
-        ]);
+    
+        const newRecords = forms.map((form, index) => {
+            // If editing, retain the original suit value
+            const originalRecord = editIndex !== null ? records[editIndex] : null;
+    
+            return {
+                ...form,
+                name: name.trim(),
+                phone: phone.trim(),
+                billNo: bill.trim(),
+                sale: sale.trim(),
+                date: date.trim(),
+                suit: originalRecord ? originalRecord.suit : `S-${lastSuitNumber + index}`, // Use original suit if editing
+                paymentType: form.paymentType || "-",
+                advancePayment: form.advancePayment?.trim() || "-",
+                dueAmount: form.dueAmount?.trim() || "-",
+                received: form.received?.trim() || "-",
+                currentPayment: form.currentPayment?.trim() || "-",
+                bank: form.bank?.trim() || "-",
+            };
+        });
+    
+        console.log('New records being created:', newRecords);
+    
+        if (editIndex !== null) {
+            const updatedRecords = [...records];
+            updatedRecords[editIndex] = newRecords[0];
+            setRecords(updatedRecords);
+            setEditIndex(null);
+        } else {
+            setRecords([...records, ...newRecords]);
+            setLastSuitNumber(lastSuitNumber + forms.length); // Increment only if not editing
+        }
+    
+        // Reset the form
+        setForms([{
+            suit: `S-${lastSuitNumber + forms.length}`,
+            tag: "",
+            kariger: "",
+            quantity: "",
+            description: "",
+            received: "",
+            paymentType: "",
+            advancePayment: "",
+            dueAmount: "",
+            currentPayment: "",
+            rate: "",
+        }]);
     };
 
     const handleCancelConfirm = () => {
-        // Reset all form fields to their initial state
         setSale("Sales Man 1");
         setName("Customer1");
         setPhone("03123456789");
@@ -220,6 +255,7 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
         setDate(formattedToday);
         setForms([{
             suit: `S-1`,
+            tag: "",
             kariger: "",
             quantity: "",
             description: "",
@@ -232,8 +268,9 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
             currentPayment: "",
             rate: "",
         }]);
-        setIsOpenCancel(false); // Close the cancel modal
+        setIsOpenCancel(false);
     };
+    
 
     return (
         <div className="p-6 w-full max-h-[100vh] relative mb-10 flex">
@@ -353,7 +390,7 @@ const CustomerForm = ({ records, setRecords, setShowMeasurement }) => {
                         className="mt-6 w-[20%] bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-300 transition-all duration-200"
                         onClick={handleSubmit}
                     >
-                        Save Records
+                        {editIndex !== null ? "Update" : "Save Record"}
                     </button>
                 </div>
             </div>

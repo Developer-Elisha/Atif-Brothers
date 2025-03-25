@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Form from "./KapraFrom";
 import Table from "./KapraTBL";
+import ConfirmationModal from './ConfirmationModal';
 
 const KapraDashboard = () => {
-  
   const today = new Date();
   const formattedDate = `${today.getDate().toString().padStart(2, "0")}-${(today.getMonth() + 1)
     .toString()
@@ -11,27 +11,59 @@ const KapraDashboard = () => {
   const dayName = today.toLocaleDateString("en-US", { weekday: "long" }); 
   const [records, setRecords] = useState([]);
   const [lastTagNumber, setLastTagNumber] = useState(101);
+  const [editIndex, setEditIndex] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [actionType, setActionType] = useState(null);
+  const [recordIndex, setRecordIndex] = useState(null);
+
+  const handleEdit = (index) => {
+    setActionType('edit');
+    setRecordIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = (index) => {
+    setActionType('delete');
+    setRecordIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const confirmAction = () => {
+    if (actionType === 'edit') {
+      setEditIndex(recordIndex);
+    } else if (actionType === 'delete') {
+      setRecords(records.filter((_, i) => i !== recordIndex));
+    }
+    setIsModalOpen(false);
+  };
 
   return (
     <>
-    <div className="bg-white shadow-lg rounded-lg p-4 w-full max-h-[100vh] overflow-auto flex flex-col gap-4">
-      <div className="max-h-[50vh] overflow-y-auto scrollbar-purple">
-        
-      <p>{formattedDate}</p>
-        <p>{dayName}</p>
-        <Form
-          setRecords={setRecords} // Pass setRecords here
-          records={records}
-          lastTagNumber={lastTagNumber}
-          setLastTagNumber={setLastTagNumber}
-        />
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={confirmAction}
+        message={`Are you sure you want to ${actionType === 'edit' ? 'edit' : 'delete'} this record?`}
+      />
+      <div className="bg-white shadow-lg rounded-lg p-4 w-full max-h-[100vh] overflow-auto flex flex-col gap-4">
+        <div className="max-h-[50vh] overflow-y-auto scrollbar-purple">
+          <p>{formattedDate}</p>
+          <p>{dayName}</p>
+          <Form
+            setRecords={setRecords}
+            records={records}
+            lastTagNumber={lastTagNumber}
+            setLastTagNumber={setLastTagNumber}
+            editIndex={editIndex}
+            setEditIndex={setEditIndex}
+          />
+        </div>
       </div>
-    </div>
-    <div className="bg-white shadow-lg rounded-lg p-4 w-full mt-28 max-h-[100vh] overflow-auto flex flex-col gap-4">
-      <div className="overflow-x-auto flex-1 scrollbar-purple max-h-[50vh]">
-        <Table records={records} />
+      <div className="bg-white shadow-lg rounded-lg p-4 w-full mt-28 max-h-[100vh] overflow-auto flex flex-col gap-4">
+        <div className="overflow-x-auto flex-1 scrollbar-purple max-h-[50vh]">
+          <Table records={records} onEdit={handleEdit} onDelete={handleDelete} />
+        </div>
       </div>
-    </div>
     </>
   );
 }

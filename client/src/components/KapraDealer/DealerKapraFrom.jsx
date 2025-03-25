@@ -1,29 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-const DealerKapraForm = ({ setRecords, records }) => {
+const DealerKapraForm = ({ setRecords, records, lastTagNumber, setLastTagNumber, editingRecord, setEditingRecord }) => {
   const today = new Date();
   const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
-  const [forms, setForms] = useState([
-    {
-      name: "Dealer1",
-      description: "Silk",
-      descriptionAmount: "500",
-      payment: "",
-      duePayment: "10000",
-      bank: "",
-      cheque: "",
-      total: "500",
-      date: formattedToday,
-      dropdown: ""
-    },
-  ]);
+  const [forms, setForms] = useState([{
+    name: "",
+    description: "",
+    descriptionAmount: "",
+    payment: "",
+    duePayment: "",
+    bank: "",
+    cheque: "",
+    total: "",
+    date: formattedToday,
+    dropdown: ""
+  }]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalFormData, setModalFormData] = useState({ description: "", descriptionAmount: "" });
+
+  useEffect(() => {
+    if (editingRecord) {
+      // Populate the form with the editing record data
+      setForms([editingRecord]);
+    }
+  }, [editingRecord]);
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
@@ -39,21 +44,16 @@ const DealerKapraForm = ({ setRecords, records }) => {
     setForms(updatedForms);
   };
 
-  const handleModalChange = (e) => {
-    const { name, value } = e.target;
-    setModalFormData({ ...modalFormData, [name]: value });
-  };
-
   const handleAddForm = () => {
     setForms([...forms, {
-      name: "Dealer1",
-      description: "Silk",
-      descriptionAmount: "500",
+      name: "",
+      description: "",
+      descriptionAmount: "",
       payment: "",
-      duePayment: "10000",
+      duePayment: "",
       bank: "",
       cheque: "",
-      total: "500",
+      total: "",
       date: formattedToday,
       dropdown: ""
     }]);
@@ -68,57 +68,37 @@ const DealerKapraForm = ({ setRecords, records }) => {
     return forms.every(form => form.name && form.description && form.descriptionAmount && form.payment && form.duePayment);
   };
 
-  const validateModalForm = () => {
-    return modalFormData.description && modalFormData.descriptionAmount;
-  };
-
   const handleSubmit = () => {
     if (!validateMainForm()) {
       alert("Please fill in all fields in the main form!");
       return;
     }
-    // Submit the main form data to the records
-    setRecords([...records, ...forms]);
+
+    if (editingRecord) {
+      // Update the existing record
+      const updatedRecords = records.map(record => 
+        record === editingRecord ? forms[0] : record
+      );
+      setRecords(updatedRecords);
+      setEditingRecord(null); // Clear editing record after saving
+    } else {
+      // Submit the main form data to the records
+      setRecords([...records, ...forms]);
+    }
 
     // Reset the main form
     setForms([{
-      name: "Dealer1",
-      description: "Silk",
-      descriptionAmount: "500",
+      name: "",
+      description: "",
+      descriptionAmount: "",
       payment: "",
-      duePayment: "10000",
+      duePayment: "",
       bank: "",
       cheque: "",
-      total: "500",
+      total: "",
       date: formattedToday,
       dropdown: ""
     }]);
-  };
-
-  const handleModalSubmit = () => {
-    if (!validateModalForm()) {
-      alert("Please fill in all fields in the modal!");
-      return;
-    }
-
-    // Create a new record from modal data
-    const newRecord = {
-      name: forms[0].name, // Use the name from the main form
-      description: modalFormData.description,
-      descriptionAmount: modalFormData.descriptionAmount,
-      payment: "", // Default payment
-      bank: "", // No bank info in modal
-      cheque: "", // No cheque info in modal
-      total: modalFormData.descriptionAmount, // Set total to description amount
-      date: formattedToday,
-    };
-
-    // Add the new record to the records
-    setRecords([...records, newRecord]);
-
-    // Reset modal data
-    setModalFormData({ description: "", descriptionAmount: "" });
-    setIsModalOpen(false);
   };
 
   return (
@@ -245,60 +225,12 @@ const DealerKapraForm = ({ setRecords, records }) => {
       ))}
 
       <div className="flex justify-center gap-4 mt-6">
-        <button onClick={handleSubmit} className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all">Save</button>
+        <button onClick={handleSubmit} className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all">
+          {editingRecord ? "Update" : "Save"} {/* Change button text based on editing state */}
+        </button>
       </div>
 
-      <Modal isOpen={isModalOpen} onRequestClose={() => setIsModalOpen(false)} className="modal" overlayClassName="overlay">
-        <div>
-          <h3 className="text-lg font-semibold mb-4">Data Entry</h3>
-          <div className="gap-4 my-4">
-            <div className="w-full">
-              <label className="block text-gray-700 font-medium">Name</label>
-              <input
-                type="text"
-                name="name"
-                value={forms[0].name}
-                onChange={(e) => handleChange(0, e)}
-                className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-                placeholder="Enter Name"
-              />
-            </div>
-
-            <div className="w-full">
-            <input type="text" name="form" value="Payment Form" onChange={handleModalChange} placeholder="Enter Form" hidden className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" />
-            </div>
-
-            <div className="w-full">
-              <label className="block text-gray-700 font-medium">Date</label>
-              <input
-                type="text"
-                name="date"
-                value={forms[0].date}
-                disabled
-                className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
-              />
-            </div>
-
-            <div className="w-full">
-              <label className='block text-gray-700 font-medium'>Description</label>
-              <input type="text" name="description" value={modalFormData.description} onChange={handleModalChange} placeholder="Enter Description" className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" />
-            </div>
-
-            <div className="w-full">
-              <input type="text" name="form" value="Data Entry" onChange={handleModalChange} placeholder="Enter Form" hidden className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" />
-            </div>
-
-            <div className="w-full">
-              <label className='block text-gray-700 font-medium'>Description Amount</label>
-              <input type="number" name="descriptionAmount" value={modalFormData.descriptionAmount} onChange={handleModalChange} placeholder="Enter Amount" className="h-10 w-full border-2 border-gray-300 rounded-lg p-2" />
-            </div>
-          </div>
-          <div className="flex justify-center gap-4 mt-6">
-            <button onClick={handleModalSubmit} className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all">Save</button>
-            <button onClick={() => setIsModalOpen(false)} className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all">Close</button>
-          </div>
-        </div>
-      </Modal>
+      {/* Modal for Data Entry can be implemented here if needed */}
     </div>
   );
 };

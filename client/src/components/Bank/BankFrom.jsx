@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const BankForm = ({ setRecords, records }) => {
+const BankForm = ({ setRecords, records, editIndex, setEditIndex }) => {
   const today = new Date();
   const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
   const [forms, setForms] = useState([
-    { date: formattedToday, credit: "", amount: "500", bank: "", current: "1000000" }
+    { date: formattedToday, credit: "", amount: "", bank: "", current: "10000" }
   ]);
 
   const handleChange = (index, e) => {
@@ -14,7 +14,7 @@ const BankForm = ({ setRecords, records }) => {
     updatedForms[index][name] = value;
 
     let amount = parseFloat(updatedForms[index].amount) || 0;
-    let initialBalance = parseFloat(updatedForms[index].current) || 1000000; // Default balance
+    let initialBalance = parseFloat(updatedForms[index].current) || 10000; // Default balance
 
     if (updatedForms[index].credit === "Credit") {
       updatedForms[index].current = (initialBalance + amount).toString();
@@ -26,7 +26,7 @@ const BankForm = ({ setRecords, records }) => {
   };
 
   const handleAddForm = () => {
-    setForms([...forms, { date: formattedToday, credit: "", amount: "", bank: "", current: "1000000" }]);
+    setForms([...forms, { date: formattedToday, credit: "", amount: "", bank: "", current: "10000" }]);
   };
 
   const handleRemoveForm = (index) => {
@@ -42,9 +42,24 @@ const BankForm = ({ setRecords, records }) => {
       return;
     }
 
-    setRecords([...records, ...forms]);
-    setForms([{ date: formattedToday, credit: "", amount: "500", bank: "", current: "1000000" }]);
+    if (editIndex !== null) {
+      const updatedRecords = [...records];
+      updatedRecords[editIndex] = forms[0]; // Update the record at editIndex
+      setRecords(updatedRecords);
+      setEditIndex(null); // Reset edit index
+    } else {
+      setRecords([...records, ...forms]);
+    }
+
+    setForms([{ date: formattedToday, credit: "", amount: "", bank: "", current: "10000" }]);
   };
+
+  // Populate form with existing data if editing
+  useEffect(() => {
+    if (editIndex !== null) {
+      setForms([records[editIndex]]);
+    }
+  }, [editIndex, records]);
 
   return (
     <div className="p-6 w-full">
@@ -148,7 +163,7 @@ const BankForm = ({ setRecords, records }) => {
             type="submit"
             className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all"
           >
-            Save
+            {editIndex !== null ? "Update" : "Save"}
           </button>
         </div>
       </form>

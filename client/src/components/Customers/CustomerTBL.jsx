@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-const CustomerTBL = ({ records }) => {
+const CustomerTBL = ({ records, onEdit, onDelete }) => {
   const [selectedRecords, setSelectedRecords] = useState([]);
   const [singlePrintRecord, setSinglePrintRecord] = useState(null);
 
@@ -32,6 +32,10 @@ const CustomerTBL = ({ records }) => {
   const totalAdvance = selectedRecords.reduce((sum, r) => sum + Number(r.advancePayment), 0);
   const totalDue = selectedRecords.reduce((sum, r) => sum + Number(r.dueAmount), 0);
 
+  const handleDelete = (index) => {
+    onDelete(index);
+  };
+
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
       <div className="flex justify-between items-center bg-purple-300 p-3 rounded-lg">
@@ -59,6 +63,7 @@ const CustomerTBL = ({ records }) => {
                 <th className="py-3 px-6 text-center">Sales Man</th>
                 <th className="py-3 px-6 text-center">Name</th>
                 <th className="py-3 px-6 text-center">Phone No</th>
+                <th className="py-3 px-6 text-center">Kariger</th>
                 <th className="py-3 px-6 text-center">Quantity</th>
                 <th className="py-3 px-6 text-center">Rate</th>
                 <th className="py-3 px-6 text-center">Pay Status</th>
@@ -87,11 +92,12 @@ const CustomerTBL = ({ records }) => {
                     </td>
                     <td className="py-3 px-6 text-center">{index + 1}</td>
                     <td className="py-3 px-6 text-center">{record.date}</td>
-                    <td className="py-3 px-6 text-center">{record.bill}</td>
+                    <td className="py-3 px-6 text-center">{record.billNo}</td>
                     <td className="py-3 px-6 text-center">{record.suit}</td>
                     <td className="py-3 px-6 text-center">{record.sale}</td>
                     <td className="py-3 px-6 text-center">{record.name}</td>
                     <td className="py-3 px-6 text-center">{record.phone}</td>
+                    <td className="py-3 px-6 text-center">{record.kariger}</td>
                     <td className="py-3 px-6 text-center">{record.quantity}</td>
                     <td className="py-3 px-6 text-center">{record.rate}</td>
                     <td className="py-3 px-6 text-center">{record.paymentType}</td>
@@ -113,10 +119,10 @@ const CustomerTBL = ({ records }) => {
                     </td>
                     <td className="py-3 px-6 text-center">
 
-                      <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                      <button onClick={() => onEdit(index)} className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
                         <FaEdit />
                       </button>
-                      <button className="bg-red-400 text-white p-2 ml-3 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
+                      <button onClick={() => handleDelete(index)} className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
                         <FaTrash />
                       </button>
                     </td>

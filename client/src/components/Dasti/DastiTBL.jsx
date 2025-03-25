@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
-const DastiTBL = ({ records }) => {
+const DastiTBL = ({ records, onEdit, onDelete }) => {
   const handlePrint = () => {
     const printContent = document.getElementById("printTable").innerHTML;
     const printWindow = window.open("", "", "width=800,height=600");
@@ -35,6 +35,10 @@ const DastiTBL = ({ records }) => {
     printWindow.document.close();
     printWindow.print();
     printWindow.close();
+  };
+
+  const handleDelete = (index) => {
+    onDelete(index);
   };
 
   return (
@@ -77,10 +81,10 @@ const DastiTBL = ({ records }) => {
                   <td className="py-3 px-6 text-center">{record.description}</td>
                   <td className="py-3 px-6 text-center">{record.amount}</td>
                   <td className="py-3 px-6 text-center">
-                    <button className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
+                    <button onClick={() => onEdit(index)} className="bg-green-400 text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-all duration-200">
                       <FaEdit />
                     </button>
-                    <button className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
+                    <button onClick={() => handleDelete(index)} className="bg-red-400 text-white p-2 ml-4 cursor-pointer rounded-lg hover:bg-red-500 transition-all duration-200">
                       <FaTrash />
                     </button>
                   </td>

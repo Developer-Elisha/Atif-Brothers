@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const ReturnForm = ({ setRecords, records }) => {
+const ReturnForm = ({ setRecords, records, editIndex, setEditIndex }) => {
   const today = new Date();
   const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
   const [forms, setForms] = useState([
     { date: formattedToday, cash: "", dasti: "", name: "dasti 1", amount: "", description: "dasti 1", previous: "50000", balance: "" }
   ]);
+
+  useEffect(() => {
+    if (editIndex !== null) {
+      const recordToEdit = records[editIndex];
+      setForms([recordToEdit]);
+    }
+  }, [editIndex, records]); 
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
@@ -32,14 +39,21 @@ const ReturnForm = ({ setRecords, records }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (forms.some(form => !form.date || !form.cash || !form.amount || !form.dasti || !form.name || !form.description)) {
       alert("Please fill in all fields!");
       return;
     }
 
-    setRecords([...records, ...forms]);
+    if (editIndex !== null) {
+      const updatedRecords = [...records];
+      updatedRecords[editIndex] = forms[0];
+      setRecords(updatedRecords);
+      setEditIndex(null);
+    } else {
+      setRecords([...records, ...forms]);
+    }
     setForms([{ date: formattedToday, cash: "", dasti: "", name: "dasti 1", amount: "", description: "dasti 1", previous: "50000", balance: "" }]);
   };
 
@@ -47,161 +61,172 @@ const ReturnForm = ({ setRecords, records }) => {
     <div className="p-6 w-full">
       <h2 className="text-xl font-semibold text-center mb-6">Dasti Return Form</h2>
 
-      <div className="flex justify-end gap-4 mt-6">
-        <button
-          className="bg-purple-200 hover:bg-purple-300 text-black text-2xl cursor-pointer py-2 px-4 rounded-lg"
-          onClick={handleAddForm}
-        >
-          +
-        </button>
-      </div>
-
-      {forms.map((formData, index) => (
-  <div key={index}> {/* Add the key here */}
-    <div className="flex gap-4 my-4 justify-center mt-20">
-      <div className="w-1/5">
-        <label className="block text-gray-700 font-medium">Date</label>
-        <input
-          type="text"
-          name="date"
-          value={formData.date}
-          disabled
-          className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
-        />
-      </div>
-
-      <div className="w-1/5">
-        <label className="block text-gray-700 font-medium">Return Liya/Diya</label>
-        <select
-          name="dasti"
-          value={formData.dasti}
-          onChange={(e) => handleChange(index, e)}
-          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-          required
-        >
-          <option value="" disabled>Select</option>
-          <option value="Dasti Liya">Return Liya</option>
-          <option value="Dasti Diya">Return Diya</option>
-        </select>
-      </div>
-
-      <div className="w-1/5">
-        <label className="block text-gray-700 font-medium">Cash/Bank</label>
-        <select
-          name="cash"
-          value={formData.cash}
-          onChange={(e) => handleChange(index, e)}
-          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-          required
-        >
-          <option value="" disabled>Select</option>
-          <option value="Cash">Cash</option>
-          <option value="Bank">Bank</option>
-        </select>
-      </div>
-
-      {formData.cash === "Bank" && (
-        <div className="w-1/5">
-          <label className="block text-gray-700 font-medium">Bank</label>
-          <select
-            name="bank"
-            value={formData.bank}
-            onChange={(e) => handleChange(index, e)}
-            className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-            required
+      <form onSubmit={handleSubmit}>
+        <div className="flex justify-end gap-4 mt-6">
+          <button
+            type="button"
+            className="bg-purple-200 hover:bg-purple-300 text-black text-2xl cursor-pointer py-2 px-4 rounded-lg"
+            onClick={handleAddForm}
           >
-            <option value="" disabled>Select</option>
-            <option value="Meezan">Meezan</option>
-            <option value="UBL">UBL</option>
-            <option value="Faysal">Faysal</option>
-            <option value="Easypaisa">Easypaisa</option>
-            <option value="Jazzcash">Jazzcash</option>
-          </select>
+            +
+          </button>
         </div>
-      )}
 
-      <div className="w-1/5">
-        <label className="block text-gray-700 font-medium">Name</label>
-        <select
-          name="name"
-          value={formData.name}
-          onChange={(e) => handleChange(index, e)}
-          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-          required
-        >
-          <option value="" disabled>Select</option>
-          <option value="Name 1">Name 1</option>
-          <option value="Name 2">Name 2</option>
-        </select>
-      </div>
-    </div>
+        {forms.map((formData, index) => (
+          <div key={index}>
+            <div className="flex gap-4 my-4 justify-center mt-20">
+              <div className="w-1/5">
+                <label className="block text-gray-700 font-medium">Date</label>
+                <input
+                  type="text"
+                  name="date"
+                  value={formData.date}
+                  disabled
+                  className="h-10 w-full border-2 text-gray-400 border-gray-300 rounded-lg p-2 mt-1"
+                />
+              </div>
 
-    <div className="flex gap-4 my-4 justify-center">
-      <div className="w-1/5">
-        <label className="block text-gray-700 font-medium">Description</label>
-        <input
-          type="text"
-          name="description"
-          value={formData.description}
-          onChange={(e) => handleChange(index, e)}
-          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-          required
-        />
-      </div>
+              <div className="w-1/5">
+                <label className="block text-gray-700 font-medium">Return Liya/Diya</label>
+                <select
+                  name="dasti"
+                  value={formData.dasti}
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  required
+                >
+                  <option value="" disabled>Select</option>
+                  <option value="Return Liya">Return Liya</option>
+                  <option value="Return Diya">Return Diya</option>
+                </select>
+              </div>
 
-      <div className="w-1/5">
-        <label className="block text-gray-700 font-medium">Previous Amount</label>
-        <input
-          type="number"
-          name="previous"
-          value={formData.previous}
-          onChange={(e) => handleChange(index, e)}
-          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-          placeholder="Enter Previous Amount"
-          required
-        />
-      </div>
+              <div className="w-1/5">
+                <label className="block text-gray-700 font-medium">Cash/Bank</label>
+                <select
+                  name="cash"
+                  value={formData.cash}
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  required
+                >
+                  <option value="" disabled>Select</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Bank">Bank</option>
+                </select>
+              </div>
 
-      <div className="w-1/5">
-        <label className="block text-gray-700 font-medium">Amount</label>
-        <input
-          type="number"
-          name="amount"
-          value={formData.amount}
-          onChange={(e) => handleChange(index, e)}
-          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-          placeholder="Enter Amount"
-          required
-        />
-      </div>
+              {formData.cash === "Bank" && (
+                <div className="w-1/5">
+                  <label className="block text-gray-700 font-medium">Bank</label>
+                  <select
+                    name="bank"
+                    value={formData.bank}
+                    onChange={(e) => handleChange(index, e)}
+                    className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                    required
+                  >
+                    <option value="" disabled>Select</option>
+                    <option value="Meezan">Meezan</option>
+                    <option value="UBL">UBL</option>
+                    <option value="Faysal">Faysal</option>
+                    <option value="Easypaisa">Easypaisa</option>
+                    <option value="Jazzcash">Jazzcash</option>
+                  </select>
+                </div>
+              )}
 
-      <div className="w-1/5">
-        <label className="block text-gray-700 font-medium">Balance</label>
-        <input
-          type="text"
-          name="balance"
-          value={formData.balance}
-          readOnly
-          className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
-          placeholder="Balance will be calculated"
-        />
-      </div>
+              <div className="w-1/5">
+                <label className="block text-gray-700 font-medium">Name</label>
+                <select
+                  name="name"
+                  value={formData.name}
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  required
+                >
+                  <option value="" disabled>Select</option>
+                  <option value="Name 1">Name 1</option>
+                  <option value="Name 2">Name 2</option>
+                </select>
+              </div>
+            </div>
 
-      {forms.length > 1 && (
-        <button
-          type="button"
-          onClick={() => handleRemoveForm(index)}
-          className="bg-red-500 text-white cursor-pointer mt-7 px-4 py-2 h-10 rounded-lg hover:bg-red-600 transition-all"
-        >
-          ✕
-        </button>
-      )}
-    </div>
-    <div className="mt-20"></div>
-    <hr />
-  </div> // Here you should ensure you are wrapping the form inputs with a unique key
-))}
+            <div className="flex gap-4 my-4 justify-center">
+              <div className="w-1/5">
+                <label className="block text-gray-700 font-medium">Description</label>
+                <input
+                  type="text"
+                  name="description"
+                  value={formData.description}
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  required
+                />
+              </div>
 
+              <div className="w-1/5">
+                <label className="block text-gray-700 font-medium">Previous Amount</label>
+                <input
+                  type="number"
+                  name="previous"
+                  value={formData.previous}
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  placeholder="Enter Previous Amount"
+                  required
+                />
+              </div>
+
+              <div className="w-1/5">
+                <label className="block text-gray-700 font-medium">Amount</label>
+                <input
+                  type="number"
+                  name="amount"
+                  value={formData.amount}
+                  onChange={(e) => handleChange(index, e)}
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  placeholder="Enter Amount"
+                  required
+                />
+              </div>
+
+              <div className="w-1/5">
+                <label className="block text-gray-700 font-medium">Balance</label>
+                <input
+                  type="text"
+                  name="balance"
+                  value={formData.balance}
+                  readOnly
+                  className="h-10 w-full border-2 border-gray-300 rounded-lg p-2 mt-1"
+                  placeholder="Balance will be calculated"
+                />
+              </div>
+
+              {forms.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => handleRemoveForm(index)}
+                  className="bg-red-500 text-white cursor-pointer mt-7 px-4 py-2 h-10 rounded-lg hover:bg-red-600 transition-all"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+            <div className="mt-20"></div>
+            <hr />
+          </div>
+        ))}
+
+        <div className="flex justify-center gap-4 mt-6">
+          <button
+            onClick={handleSubmit}
+            className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all"
+          >
+            {editIndex !== null ? "Update" : "Save"}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

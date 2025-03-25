@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainForm from "./MainForm";
 import Modal from "./Modal";
 import Given from "./Given"; // Import the Given component
 
-const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, setLastTagNumber: propSetLastTagNumber }) => {
+const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, setLastTagNumber: propSetLastTagNumber, editIndex, setEditIndex }) => {
   const [isOpenAdd, setIsOpenAdd] = useState(false);
   const [isOpenLess, setIsOpenLess] = useState(false);
   const [isGivenOpen, setIsGivenOpen] = useState(false);
@@ -16,28 +16,35 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
   const [name, setName] = useState(""); // Added state for name
   const [shortCode, setShortCode] = useState("");
 
+  useEffect(() => {
+    if (editIndex !== null) {
+      const recordToEdit = records[editIndex];
+      setForms([recordToEdit]);
+    }
+  }, [editIndex, records]);
+
   const today = new Date();
   const formattedToday = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
   const nameOptions = [
-    { name: "Kashif Orangi", code: "KSH" },
-    { name: "Riyaz Alipur", code: "RYZ" },
-    { name: "Amjad Orangi", code: "AMJ" },
-    { name: "Ilyas Orangi", code: "ILY" },
-    { name: "Amir Orangi", code: "AMR" },
-    { name: "Sabir Landhi", code: "SBL" },
-    { name: "Faheem bhai", code: "FHM" },
-    { name: "Dilshad Korangi", code: "DILS" },
     { name: "Adnan attari", code: "ADN" },
+    { name: "Amir Orangi", code: "AMR" },
+    { name: "Amjad Orangi", code: "AMJ" },
     { name: "Arosi Libas", code: "ALM" },
     { name: "Atta Bhai Alipur", code: "ATA" },
+    { name: "Dilshad Korangi", code: "DILS" },
+    { name: "Faheem bhai", code: "FHM" },
+    { name: "Haider Ali qasoor", code: "HYDQ" },
+    { name: "Ilyas Orangi", code: "ILY" },
     { name: "Irfan Korangi", code: "IRF" },
     { name: "Ishaq Gujranwala", code: "ISHQ" },
+    { name: "Kashif Orangi", code: "KSH" },
     { name: "Qari yaseen", code: "QY" },
+    { name: "Riyaz Alipur", code: "RYZ" },
+    { name: "Sabir Landhi", code: "SBL" },
     { name: "Shehbaz korangi", code: "SHBZ" },
-    { name: "Tanveer qasoor", code: "TANQ" },
-    { name: "Haider Ali qasoor", code: "HYDQ" },
     { name: "Tanveer Orangi", code: "TANO" },
+    { name: "Tanveer qasoor", code: "TANQ" },
     { name: "Waseem khanewal", code: "WS" },
   ];
 
@@ -69,7 +76,7 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
       dropdown: "",
       cheque: "",
       chequeimg: "",
-      category: "", 
+      category: "",
       total: "0",
     },
   ]);
@@ -92,14 +99,14 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
       prevRecords.map((record) =>
         record.suit === formData.suitNo
           ? {
-              ...record,
-              description: formData.description || record.description,
-              rate: (parseFloat(record.rate) + (isAdding ? amountValue : -amountValue)).toString(),
-              dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
-              shopName: formData.shopName || record.shopName,
-              tagNo: formData.tagNo || record.tagNo,
-              details: formData.details || record.details,
-            }
+            ...record,
+            description: formData.description || record.description,
+            rate: (parseFloat(record.rate) + (isAdding ? amountValue : -amountValue)).toString(),
+            dueAmount: (parseFloat(record.dueAmount) + (isAdding ? amountValue : -amountValue)).toString(),
+            shopName: formData.shopName || record.shopName,
+            tagNo: formData.tagNo || record.tagNo,
+            details: formData.details || record.details,
+          }
           : record
       )
     );
@@ -127,10 +134,10 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
       const rate = parseFloat(updatedForms[index].rate) || 0;
       const category = parseFloat(updatedForms[index].category) || 0;
       let total = category + rate;
-    
+
       updatedForms[index].total = total % 1 === 0 ? total.toFixed(0) : total.toFixed(2);
     }
-    
+
     setForms(updatedForms);
   };
 
@@ -173,18 +180,18 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
       alert("Please enter a name!");
       return;
     }
-
+  
     const newRecords = forms.map((form, index) => {
       const calculateTagAmount = (total) => {
         if (!total) return '';
         const amount = parseInt(total);
         if (isNaN(amount)) return '';
-    
+  
         if (amount >= 260000 && amount < 270000) {
           const numberPart = Math.floor((amount - 260000) / 1000);
           return `Z${numberPart}k`;
         }
-    
+  
         if (amount >= 1000 && amount < 260000) {
           const letterCode = amount < 10000 ? '' :
             String.fromCharCode(65 + Math.floor((amount - 10000) / 10000));
@@ -193,23 +200,38 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
         }
         return '';
       };
-
+  
+      // If editing, retain the original tag and suit values
+      const originalRecord = editIndex !== null ? records[editIndex] : null;
+  
       return {
         ...form,
-        name,
-        shortCode,
+        name: name,
+        shortCode: shortCode,
         tagAmount: calculateTagAmount(form.total),
-        tag: `AB-${propLastTagNumber + index}`,
-        suit: `S-${lastSuitNumber + index}`,
+        tag: originalRecord ? originalRecord.tag : `AB-${propLastTagNumber + index}`, // Use original tag if editing
+        suit: originalRecord ? originalRecord.suit : `S-${lastSuitNumber + index}`, // Use original suit if editing
         date: form.date,
-        duePayment: form.duePayment.trim() === "" ? "-" : form.duePayment,
+        duePayment: form.duePayment || "-",
+        total: form.total || "0"
       };
     });
-
-    setRecords([...records, ...newRecords]);
-    propSetLastTagNumber(propLastTagNumber + forms.length);
-    setLastSuitNumber(lastSuitNumber + forms.length);
-
+  
+    if (editIndex !== null) {
+      const updatedRecords = [...records];
+      updatedRecords[editIndex] = newRecords[0];
+      setRecords(updatedRecords);
+      setEditIndex(null);
+    } else {
+      setRecords([...records, ...newRecords]);
+    }
+  
+    // Only increment lastTagNumber and lastSuitNumber if not editing
+    if (editIndex === null) {
+      propSetLastTagNumber(propLastTagNumber + forms.length);
+      setLastSuitNumber(lastSuitNumber + forms.length);
+    }
+  
     // Reset the form
     setForms([
       {
@@ -324,10 +346,10 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
       {isGivenOpen && (
         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-opacity-50">
           <div className="bg-white rounded-lg w-[500px]">
-            <Given 
-              records={records} 
-              setRecords={setRecords} 
-              setIsGivenOpen={setIsGivenOpen} 
+            <Given
+              records={records}
+              setRecords={setRecords}
+              setIsGivenOpen={setIsGivenOpen}
             />
           </div>
         </div>
@@ -355,10 +377,10 @@ const KarigerForm = ({ records, setRecords, lastTagNumber: propLastTagNumber, se
 
       <div className="flex justify-center">
         <button
-          className="mt-6 w-[20%] bg-purple-200 text-black cursor-pointer py-2 px-4 rounded-lg hover:bg-purple-300 transition-all duration-200"
           onClick={handleSubmit}
+          className="bg-purple-200 text-black px-4 py-2 w-[15%] rounded-lg cursor-pointer hover:bg-purple-300 transition-all"
         >
-          Save Records
+          {editIndex !== null ? "Update" : "Save Record"}
         </button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Form from "./ReturnFrom";
 import Table from "./ReturnTBL";
+import ConfirmationModal from './ConfirmationModal';
 
 const ReturnDashboard = () => {
   
@@ -11,9 +12,40 @@ const ReturnDashboard = () => {
   const dayName = today.toLocaleDateString("en-US", { weekday: "long" }); 
   const [records, setRecords] = useState([]);
   const [lastTagNumber, setLastTagNumber] = useState(101);
+    const [editIndex, setEditIndex] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [actionType, setActionType] = useState(null);
+    const [recordIndex, setRecordIndex] = useState(null);
+  
+    const handleEdit = (index) => {
+      setActionType('edit');
+      setRecordIndex(index);
+      setIsModalOpen(true);
+    };
+  
+    const handleDelete = (index) => {
+      setActionType('delete');
+      setRecordIndex(index);
+      setIsModalOpen(true);
+    };
+  
+    const confirmAction = () => {
+      if (actionType === 'edit') {
+        setEditIndex(recordIndex);
+      } else if (actionType === 'delete') {
+        setRecords(records.filter((_, i) => i !== recordIndex));
+      }
+      setIsModalOpen(false);
+    };
 
   return (
     <>
+    <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={confirmAction}
+        message={`Are you sure you want to ${actionType === 'edit' ? 'edit' : 'delete'} this record?`}
+      />
     <div className="bg-white shadow-lg rounded-lg p-4 w-full max-h-[100vh] overflow-auto flex flex-col gap-4">
       <div className="max-h-[80vh] overflow-y-auto scrollbar-purple">
         
@@ -24,12 +56,14 @@ const ReturnDashboard = () => {
           records={records}
           lastTagNumber={lastTagNumber}
           setLastTagNumber={setLastTagNumber}
+          editIndex={editIndex}
+          setEditIndex={setEditIndex}
         />
       </div>
     </div>
     <div className="bg-white shadow-lg rounded-lg p-4 w-full mt-28 max-h-[100vh] overflow-auto flex flex-col gap-4">
       <div className="overflow-x-auto flex-1 scrollbar-purple max-h-[50vh]">
-        <Table records={records} />
+        <Table records={records} onEdit={handleEdit} onDelete={handleDelete} />
       </div>
     </div>
     </>

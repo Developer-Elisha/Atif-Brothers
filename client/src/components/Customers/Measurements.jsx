@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 
 const MeasurementForm = ({ setShowMeasurementForm, setMeasurementsRecords, customerRecords }) => {
   const [billNo, setBillNo] = useState("");
-  const [suitNo, setSuitNo] = useState(""); // Changed to a single suit number
-  const [suitOptions, setSuitOptions] = useState([]); // Options for the suit dropdown
+  const [suitNo, setSuitNo] = useState(""); 
+  const [suitOptions, setSuitOptions] = useState([]); 
   const [selectedOption, setSelectedOption] = useState("both");
 
   const [measurements, setMeasurements] = useState({
@@ -34,10 +34,19 @@ const MeasurementForm = ({ setShowMeasurementForm, setMeasurementsRecords, custo
   // Effect to update suitOptions based on billNo
   useEffect(() => {
     if (billNo) {
-      const suits = customerRecords.filter(record => record.bill === billNo);
-      setSuitOptions(suits.map(suit => suit.suit)); // Collect all suit numbers
+      console.log('Current Bill No:', billNo);
+      console.log('Customer Records:', customerRecords);
+      const suits = customerRecords.filter(record => {
+        console.log('Checking record:', record);
+        console.log('Record billNo:', record.billNo);
+        return record.billNo === billNo;
+      });
+      console.log('Filtered Suits:', suits);
+      const suitNumbers = suits.map(suit => suit.suit);
+      console.log('Available Suit Numbers:', suitNumbers);
+      setSuitOptions(suitNumbers);
     } else {
-      setSuitOptions([]); // Reset if billNo is empty
+      setSuitOptions([]);
     }
   }, [billNo, customerRecords]);
 
@@ -52,7 +61,9 @@ const MeasurementForm = ({ setShowMeasurementForm, setMeasurementsRecords, custo
   };
 
   const handleSuitChange = (e) => {
-    setSuitNo(e.target.value); // Set the selected suit number
+    const selectedSuit = e.target.value;
+    console.log('Selected Suit:', selectedSuit);
+    setSuitNo(selectedSuit);
   };
 
   const handleSubmit = () => {
